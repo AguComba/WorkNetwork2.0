@@ -64,26 +64,29 @@ let switchC2 = document.querySelector("#switch-c2");
 let switchC23 = document.querySelector("#switch-c23");
 let switchCircle = document.querySelectorAll(".switch__circle");
 let switchBtn = document.querySelectorAll(".switch-btn");
-let aContainer = document.querySelector("#a-container");
+let aContainer = document.querySelector("#a-container");    
 let aContainer12 = document.querySelector("#a-container12");
 let bContainer = document.querySelector("#b-container");
 let bContainer12 = document.querySelector("#b-container12");
 let allButtons = document.querySelectorAll(".submit");
-
+//let form13 = document.getElementById("b-form");
 let getButtons = (e) => e.preventDefault()
 
 let changeForm = (e) => {
 
     switchCtn.classList.add("is-gx");
     setTimeout(function () {
+        //$('#b-form').addClass("visually-hidden");
         switchCtn.classList.remove("is-gx");
     }, 1500)
 
     switchCtn12.classList.add("is-gx");
     setTimeout(function () {
+        //$('#b-form').addClass("visually-hidden");
         switchCtn12.classList.remove("is-gx");
     }, 1500)
 
+        //$('#b-form').addClass("visually-hidden");
     switchCtn.classList.toggle("is-txr");
     switchCtn12.classList.toggle("is-txr");
     switchCircle[0].classList.toggle("is-txr");
@@ -93,12 +96,17 @@ let changeForm = (e) => {
     switchC12.classList.toggle("is-hidden");
     switchC2.classList.toggle("is-hidden");
     switchC23.classList.toggle("is-hidden");
+
     aContainer.classList.toggle("is-txl");
     aContainer12.classList.toggle("is-txl");
     bContainer.classList.toggle("is-txl");
     bContainer.classList.toggle("is-z200");
     bContainer12.classList.toggle("is-txl");
     bContainer12.classList.toggle("is-z200");
+
+
+    //aContainer.classList.toggle("is-hidden");
+    //bContainer12.classList.toggle("is-hidden");
 }
 
 let mainF = (e) => {
