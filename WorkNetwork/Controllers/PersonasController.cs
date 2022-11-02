@@ -24,7 +24,7 @@
 
                 var personaUsuario = (from p in _context.PersonaUsuarios where p.UsuarioID == usuarioActual select p).Count();
                 if(personaUsuario == 0){
-                     return RedirectToAction("NewPerson","Personas");
+                    return RedirectToAction("NewPerson","Personas");
                 }
             }
             return View();
@@ -47,7 +47,22 @@
             var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
             //SEGUN EL ID DE LA PERSONA OBTENGO TODA LA COLUMNA
             var persona= _context.Persona.Where(u => u.PersonaID == personaUsuario.PersonaID).FirstOrDefault();
-            ViewData["persona"] = persona;
+            var localidadNombre = _context.Localidad.Where(u=>u.LocalidadID == persona.LocalidadID).Select(l => l.NombreLocalidad);
+            var personaMostrar = new PersonaMostrar
+            {
+                PersonaID = persona.PersonaID,
+                NombrePersona = persona.NombrePersona,
+                ApellidoPersona = persona.ApellidoPersona,
+                TipoDocumento = persona.TipoDocumento,
+                NumeroDocumento = persona.NumeroDocumento,
+                FechaNacimiento = persona.FechaNacimiento,
+                DomicilioPersona = persona.DomicilioPersona,
+                ImagenPersona = persona.Imagen,
+                TipoImagen = persona.TipoImagen,
+                Imagen = Convert.ToBase64String(persona.Imagen),
+                Eliminado = persona.Eliminado
+            };
+            ViewData["persona"] = personaMostrar;
             return View();
         }
 

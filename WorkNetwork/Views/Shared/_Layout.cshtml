@@ -1,5 +1,5 @@
 ﻿@{
-  var personaInfo = ViewData["persona"] as Persona;
+    var personaInfo = ViewData["persona"] as PersonaMostrar;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +82,7 @@
                 @if(personaInfo?.NombrePersona is not null)
                 {
                     <a class="profile-btn" asp-area="" asp-controller="Personas" asp-action="PerfilUser">
-                        <img src=@personaInfo.Imagen />
+                        <img src="data:@personaInfo.TipoImagen;base64,@personaInfo.Imagen" />
                         <span>@personaInfo.NombrePersona</span>
                     </a>       
                 }

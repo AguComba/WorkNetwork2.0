@@ -34,9 +34,31 @@
             return View();
         }
 
-        public async Task<IActionResult> GestionDeVacante(int vacanteId)
+        public IActionResult GestionDeVacante(int id)
         {
-            var vacante = _context.Vacante.FirstOrDefault();
+            var vacante = _context.Vacante.Where(v=>v.VacanteID == id).FirstOrDefault();
+            var rubroNombre = _context.Rubro.Where(r=>r.RubroID == vacante.RubroID).Select(n => n.NombreRubro).Single();
+            var localidadNombre = _context.Localidad.Where(l => l.LocalidadID == vacante.LocalidadID).Select(l => l.NombreLocalidad).Single();
+            var vacanteMostrar = new VacanteMostrar
+            {
+                VacanteID = vacante.VacanteID,
+                Nombre = vacante.Nombre,
+                Descripcion = vacante.Descripcion,
+                ExperienciaRequerida = vacante.ExperienciaRequerida,
+                LocalidadNombre = localidadNombre,
+                RubroNombre = rubroNombre,
+                FechaDeFinalizacion = vacante.FechaDeFinalizacion,
+                Idiomas = vacante.Idiomas,
+                Eliminado = vacante.Eliminado
+            };
+            var personas = new List<Persona>();
+            var personasVacante = _context.PersonaVacante.Where(v => v.VacanteID == id).ToList();
+            foreach (var personaVacante in personasVacante)
+            {
+                var persona = _context.Persona.Where(p => p.PersonaID == personaVacante.PersonaID).Single();
+                personas.Add(persona);
+            }
+            ViewBag.PersonasMostrar = personas.ToList();
             return View(vacante);
         }
 
@@ -56,9 +78,8 @@
             var vacantes = _context.Vacante.ToList();
             foreach (var vacante in vacantes)
             {
-                var existePostulacion = vacantesEmpresa.Where(v => v.VacanteID == vacante.VacanteID).Count();
-                if (existePostulacion == 0)
-                {
+                var existeRelacion = vacantesEmpresa.Where(v => v.VacanteID == vacante.VacanteID).Count();
+                if(existeRelacion != 0){
                     listaVacantes.Add(vacante);
                 }
             }
@@ -91,9 +112,9 @@
         }
 
         public JsonResult GuardarVacante(int vacanteID, string tituloVacante,
-               string descripcionVacante, string experienciaRequerida, int LocalidadID, int RubroID,
-               DateTime fechaFinalizacion, string idiomaVacante, string ImagenString,
-               string Estado, int disponibilidadHoraria, int modalidadVacante)
+            string descripcionVacante, string experienciaRequerida, int LocalidadID, int RubroID,
+            DateTime fechaFinalizacion, string idiomaVacante, string ImagenString,
+            string Estado, int disponibilidadHoraria, int modalidadVacante)
         {
             var resultado = true;
             var disponibilidadHorariaEnum = DisponibilidadHoraria.fulltime;

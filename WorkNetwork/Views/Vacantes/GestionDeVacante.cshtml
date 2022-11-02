@@ -200,6 +200,16 @@ img.left {
             <th>Botones</th>
         </tr>
     </thead>
+    <tbody>
+      @foreach (var persona in ViewBag.PersonasMostrar)
+      {
+       <tr>
+          <td>@persona.NombrePersona @persona.ApellidoPersona</td>
+          <td>@persona.Telefono1</td>
+          <td class="text-center"><button class="btn btn-sm btn-dark">Ver perfil</button> <button>Ver CV</button></td>
+       </tr> 
+      }
+    </tbody>
 </table>
 </div>
 

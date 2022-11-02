@@ -23,24 +23,16 @@ const CompletarTablaVacantes = () => {
                         <td class = 'text-center'>
                         ${botones}
                         </td>
-                 </tr>`
+                </tr>`
 
             )
         })
     }).fail(e => console.error('Error al cargar tabla localidades ', e));
 }
-const GestionarVacante = vacanteID =>{
-    console.log('esta si')
-    $('#idVacante').val(vacanteID);
-    const url = '../../Vacantes/GestionDeVacante';
-    const data = {vacanteId:vacanteID}
-    $.post(url,data).done(vacante =>{
-        window.location.href='../Vacantes/GestionDeVacante'
-    }).fail(e=>console.log(e))
+function GestionarVacante(vacanteID){
+    location.href = "../../Vacantes/GestionDeVacante/"+vacanteID;
 }
-const prueba = (vacante)=>{
-    $('#vacanteGestion').append(`${vacante}`)
-}
+
 const BuscarVacante = idVacante=>{
     $('#vacanteID').val(idVacante);
     let data = {vacanteID: idVacante};
@@ -52,7 +44,6 @@ const BuscarVacante = idVacante=>{
 }
 
 const EditarVacantes = vacanteID =>{
-//    #idVacante
     $('#idVacante').val(vacanteID);
     const url = '../../Vacantes/BuscarVacante';
     const data = {vacanteID:vacanteID}
@@ -74,11 +65,12 @@ const EditarVacantes = vacanteID =>{
 } 
 
 const MostrarVacantes = () => {
-    console.log('ejecuto')
     const url = '../../Vacantes/MostrarVantes';
     $.get(url).done(vacantes => {
         $('#cardVacantes').empty();
         let color = '#e9e7fd'
+        $('#vacantesTotal').text(vacantes.length)
+        console.log()
         $.each(vacantes, function (index, vacante) {
             let operecion = index % 2
             $('#cardVacantes').append(

@@ -25,11 +25,11 @@
 
                 var empresaUsuario = (from e in _context.EmpresaUsuarios where e.UsuarioID == usuarioActual select e).Count();
                 if (empresaUsuario is 0)
-                  return RedirectToAction("Index","Empresas");
+                    return RedirectToAction("Index","Empresas");
                 
             }
 
-            var persona = new Object();
+            var personaMostrar = new PersonaMostrar();
             if (rolNombre is "Usuario"){
 
                 var personaUsuarioCount = (from p in _context.PersonaUsuarios where p.UsuarioID == usuarioActual select p).Count();
@@ -37,16 +37,18 @@
                     return RedirectToAction("NewPerson","Personas");
                 }
                 var personaActual = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
-                persona = _context.Persona.Where(u => u.PersonaID == personaActual!.PersonaID).FirstOrDefault();
+                var persona = _context.Persona.Where(u => u.PersonaID == personaActual.PersonaID).FirstOrDefault();
+                personaMostrar.NombrePersona = persona.NombrePersona;
+                personaMostrar.ImagenPersona = persona.Imagen;
+                personaMostrar.TipoImagen = persona.TipoImagen;
+                personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
             }
             
 
             //var empresaActual = _context.EmpresaUsuarios.Where(u => u.EmpresaID == usuarioActual).FirstOrDefault();
-            ViewData["persona"] = persona;
-
+            ViewData["persona"] = personaMostrar;
             return View();
         }
-      
         public IActionResult Privacy()
         {
             return View();
