@@ -9,7 +9,7 @@
             <div class="profile">
                 <div class="profile-avatar">
                     <img src="data:@infoUser.TipoImagen;base64,@infoUser.Imagen" alt="" class="profile-img">
-                    <div class="profile-name" id='nombre'></div>
+                    <div class="profile-name">@infoUser.NombrePersona @infoUser.ApellidoPersona</div>
                 </div>
                 <img src="https://images.unsplash.com/photo-1508247967583-7d982ea01526?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" alt="" class="profile-cover">
                 <div class="profile-menu">
@@ -171,7 +171,4 @@
 
 @section Scripts{
     <script src='~/js/Personas.js'></script>
-    <script>
-        window.onload = PerfilPersona() 
-    </script>
 }

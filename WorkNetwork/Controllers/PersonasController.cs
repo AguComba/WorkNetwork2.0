@@ -1,6 +1,5 @@
 ﻿namespace WorkNetwork.Controllers
 {
-    [Authorize(Roles ="Usuario, SuperUsuario")]
     public class PersonasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -15,20 +14,23 @@
         {
             // BUSCO EL USUARIO ACTUAL
             var usuarioActual = _userManager.GetUserId(HttpContext.User);
-            
+
             var rolUsuario = _context.UserRoles.Where(u => u.UserId == usuarioActual).FirstOrDefault();
             //EN BASE A ESE ID BUSCAMOS EN LA TABLA DE RELACION USUARRIO-ROL QUE REGISTRO TIENE
-            var rolNombre = _context.Roles.Where(u => u.Id == rolUsuario.RoleId).Select(r=>r.Name).FirstOrDefault();
+            var rolNombre = _context.Roles.Where(u => u.Id == rolUsuario.RoleId).Select(r => r.Name).FirstOrDefault();
             //EN BASE AL USUARIO BUSCO EN LA TABLA PARA VER SI ESTA RELACIONADO A ALGUAN PERSONA. 
-            if (rolNombre is "Usuario"){
+            if (rolNombre is "Usuario")
+            {
 
                 var personaUsuario = (from p in _context.PersonaUsuarios where p.UsuarioID == usuarioActual select p).Count();
-                if(personaUsuario == 0){
-                    return RedirectToAction("NewPerson","Personas");
+                if (personaUsuario == 0)
+                {
+                    return RedirectToAction("NewPerson", "Personas");
                 }
             }
             return View();
         }
+
         public JsonResult PerfilInfo()
         {
             //BUSCO L USUARIO ACTUAL
@@ -36,32 +38,52 @@
             //BUSCO LA RELACION ENTRE PERSONA USUARIO
             var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
             //SEGUN EL ID DE LA PERSONA OBTENGO TODA LA COLUMNA
-            var persona= _context.Persona.Where(u => u.PersonaID == personaUsuario.PersonaID).FirstOrDefault();
+            var persona = _context.Persona.Where(u => u.PersonaID == personaUsuario.PersonaID).FirstOrDefault();
             return Json(persona);
         }
-        public IActionResult PerfilUser()
+
+        public IActionResult PerfilUser(int? id)
         {
-            //BUSCO L USUARIO ACTUAL
-            var usuarioActual = _userManager.GetUserId(HttpContext.User);
-            //BUSCO LA RELACION ENTRE PERSONA USUARIO
-            var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
-            //SEGUN EL ID DE LA PERSONA OBTENGO TODA LA COLUMNA
-            var persona= _context.Persona.Where(u => u.PersonaID == personaUsuario.PersonaID).FirstOrDefault();
-            var localidadNombre = _context.Localidad.Where(u=>u.LocalidadID == persona.LocalidadID).Select(l => l.NombreLocalidad);
-            var personaMostrar = new PersonaMostrar
+            var personaMostrar = new PersonaMostrar();
+            if (id == null)
             {
-                PersonaID = persona.PersonaID,
-                NombrePersona = persona.NombrePersona,
-                ApellidoPersona = persona.ApellidoPersona,
-                TipoDocumento = persona.TipoDocumento,
-                NumeroDocumento = persona.NumeroDocumento,
-                FechaNacimiento = persona.FechaNacimiento,
-                DomicilioPersona = persona.DomicilioPersona,
-                ImagenPersona = persona.Imagen,
-                TipoImagen = persona.TipoImagen,
-                Imagen = Convert.ToBase64String(persona.Imagen),
-                Eliminado = persona.Eliminado
-            };
+                //BUSCO L USUARIO ACTUAL
+                var usuarioActual = _userManager.GetUserId(HttpContext.User);
+                //BUSCO LA RELACION ENTRE PERSONA USUARIO
+                var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+                //SEGUN EL ID DE LA PERSONA OBTENGO TODA LA COLUMNA
+                var persona = _context.Persona.Where(u => u.PersonaID == personaUsuario.PersonaID).FirstOrDefault();
+                var localidadNombre = _context.Localidad.Where(u => u.LocalidadID == persona.LocalidadID).Select(l => l.NombreLocalidad);
+                personaMostrar.PersonaID = persona.PersonaID;
+                personaMostrar.NombrePersona = persona.NombrePersona;
+                personaMostrar.ApellidoPersona = persona.ApellidoPersona;
+                personaMostrar.TipoDocumento = persona.TipoDocumento;
+                personaMostrar.NumeroDocumento = persona.NumeroDocumento;
+                personaMostrar.FechaNacimiento = persona.FechaNacimiento;
+                personaMostrar.DomicilioPersona = persona.DomicilioPersona;
+                personaMostrar.ImagenPersona = persona.Imagen;
+                personaMostrar.TipoImagen = persona.TipoImagen;
+                personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                personaMostrar.Eliminado = persona.Eliminado;
+            }
+            else
+            {
+                var persona = _context.Persona.Where(u => u.PersonaID == id).FirstOrDefault();
+                var localidadNombre = _context.Localidad.Where(u => u.LocalidadID == persona.LocalidadID).Select(l => l.NombreLocalidad);
+
+                personaMostrar.PersonaID = persona.PersonaID;
+                personaMostrar.NombrePersona = persona.NombrePersona;
+                personaMostrar.ApellidoPersona = persona.ApellidoPersona;
+                personaMostrar.TipoDocumento = persona.TipoDocumento;
+                personaMostrar.NumeroDocumento = persona.NumeroDocumento;
+                personaMostrar.FechaNacimiento = persona.FechaNacimiento;
+                personaMostrar.DomicilioPersona = persona.DomicilioPersona;
+                personaMostrar.ImagenPersona = persona.Imagen;
+                personaMostrar.TipoImagen = persona.TipoImagen;
+                personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                personaMostrar.Eliminado = persona.Eliminado;
+            }
+
             ViewData["persona"] = personaMostrar;
             return View();
         }
@@ -79,7 +101,7 @@
             var localidad = _context.Localidad.ToList();
             localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
             ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
-            
+
             return View();
         }
         public JsonResult TablaPersonas()
@@ -88,71 +110,72 @@
             return Json(personas);
         }
 
-    
+
         //--------------------PARAMETROS DEL GUARDAR PERSONA ---------------------------
         //Metodo para limpiar el numero telefonico
-        static string ClearNumber (string numero)=> new string((numero ?? "").Where(c=> c == '+' || char.IsNumber(c)).ToArray());
-        public JsonResult GuardarPersona(int idPersona, string nombrePersona, string apellidoPersona, int tipoDocumentoid, int numeroDocumento, int Generoid, DateTime fechaNacimiento,string domicilioPersona, int numeroDomicilio, int SituacionLaboralid, int LocalidadID, string telefono1, string telefono2, string estadoCivil, int cantidadHijos, string tituloAcademico, IFormFile adjunto)
+        static string ClearNumber(string numero) => new string((numero ?? "").Where(c => c == '+' || char.IsNumber(c)).ToArray());
+        public JsonResult GuardarPersona(int idPersona, string nombrePersona, string apellidoPersona, int tipoDocumentoid, int numeroDocumento, int Generoid, DateTime fechaNacimiento, string domicilioPersona, int numeroDomicilio, int SituacionLaboralid, int LocalidadID, string telefono1, string telefono2, string estadoCivil, int cantidadHijos, string tituloAcademico, IFormFile adjunto)
         {
             byte[] img = null;
-            string tipoImg = null; 
+            string tipoImg = null;
             string domicilioCompleto = domicilioPersona + numeroDomicilio;
-            if (adjunto!= null){
-            if (adjunto.Length > 0)
+            if (adjunto != null)
             {
-                using (var ms = new MemoryStream())
+                if (adjunto.Length > 0)
                 {
-                    adjunto.CopyTo(ms);
-                    img = ms.ToArray();
-                    tipoImg = adjunto.ContentType;
+                    using (var ms = new MemoryStream())
+                    {
+                        adjunto.CopyTo(ms);
+                        img = ms.ToArray();
+                        tipoImg = adjunto.ContentType;
+                    }
                 }
             }
-        }
             bool resultado = true;
 
-             var situacionLaboralEnum = SituacionLaboral.Desempleado;
-             if (SituacionLaboralid is 1)
-             {
-                 situacionLaboralEnum = SituacionLaboral.Empleado;
-             }
+            var situacionLaboralEnum = SituacionLaboral.Desempleado;
+            if (SituacionLaboralid is 1)
+            {
+                situacionLaboralEnum = SituacionLaboral.Empleado;
+            }
 
-             var generoEnum = Genero.Masculino;
+            var generoEnum = Genero.Masculino;
 
-             if (Generoid is 1)
-             {
-                 generoEnum = Genero.Femenino;
-             }
-             if(Generoid is 2)
-             {
-                 generoEnum = Genero.Otro;
-             }
+            if (Generoid is 1)
+            {
+                generoEnum = Genero.Femenino;
+            }
+            if (Generoid is 2)
+            {
+                generoEnum = Genero.Otro;
+            }
 
-             var tipoDocumentoEnum = TipoDocumento.dni;
-             if (tipoDocumentoid is 1)
-             {
-                 tipoDocumentoEnum = TipoDocumento.LE;
-             }
-            var telefono1Clean = ClearNumber(telefono1); 
+            var tipoDocumentoEnum = TipoDocumento.dni;
+            if (tipoDocumentoid is 1)
+            {
+                tipoDocumentoEnum = TipoDocumento.LE;
+            }
+            var telefono1Clean = ClearNumber(telefono1);
             var telefono2Clean = ClearNumber(telefono2);
 
             var persona = new Persona
             {
                 NombrePersona = nombrePersona,
-                 ApellidoPersona = apellidoPersona,
-                 TipoDocumento = tipoDocumentoEnum,
-                 NumeroDocumento = numeroDocumento,
-                 FechaNacimiento = fechaNacimiento,
-                 DomicilioPersona = domicilioPersona,
-                 LocalidadID = LocalidadID,
-                 SituacionLaboral = situacionLaboralEnum,
-                 CantidadHijos = cantidadHijos,
-                 Genero = generoEnum,
-                 Telefono1 = telefono1Clean,
-                 Telefono2 = telefono2Clean,
-                 EstadoCivil = estadoCivil,
-                 TituloAcademico = tituloAcademico,
-                 TipoImagen = tipoImg,
-                 Imagen = img
+                ApellidoPersona = apellidoPersona,
+                TipoDocumento = tipoDocumentoEnum,
+                NumeroDocumento = numeroDocumento,
+                FechaNacimiento = fechaNacimiento,
+                DomicilioPersona = domicilioPersona,
+                LocalidadID = LocalidadID,
+                SituacionLaboral = situacionLaboralEnum,
+                CantidadHijos = cantidadHijos,
+                Genero = generoEnum,
+                Telefono1 = telefono1Clean,
+                Telefono2 = telefono2Clean,
+                EstadoCivil = estadoCivil,
+                TituloAcademico = tituloAcademico,
+                TipoImagen = tipoImg,
+                Imagen = img
             };
             resultado = false;
             _context.Add(persona);
@@ -161,7 +184,7 @@
             var usuarioActual = _userManager.GetUserId(HttpContext.User);
             var nuevaPersonaUsuario = new PersonaUsuario
             {
-                UsuarioID= usuarioActual,
+                UsuarioID = usuarioActual,
                 PersonaID = persona.PersonaID
             };
             _context.Add(nuevaPersonaUsuario);
@@ -172,34 +195,34 @@
 
 
         //        public JsonResult EliminarPersona(int PersonaID, int Elimina)
-         //{
-           // int resultado = 0;
+        //{
+        // int resultado = 0;
 
-            //var pais = _context.Paises.Find(PaisID);
-            //if (pais != null)
-            //{
-              //  if (Elimina == 0)
-                //{
-                  //  pais.Eliminado = false;
-                    //_context.SaveChanges();
-                //}
-                //else
-                //{
-                    //NO PUEDE ELIMINAR EMPRESA SI TIENE RUBROS ACTIVOS
-                  //  var cantidadProvincias = (from o in _context.Provincias where o.PaisID == PaisID && o.Eliminado == false select o).Count();
-                    //if (cantidadProvincias == 0)
-                    //{
-                      //  pais.Eliminado = true;
-                        //_context.SaveChanges();
-                    //}
-                    //else
-                    //{
-                      //  resultado = 1;
-                    //}
-                //}                              
-           // }
+        //var pais = _context.Paises.Find(PaisID);
+        //if (pais != null)
+        //{
+        //  if (Elimina == 0)
+        //{
+        //  pais.Eliminado = false;
+        //_context.SaveChanges();
+        //}
+        //else
+        //{
+        //NO PUEDE ELIMINAR EMPRESA SI TIENE RUBROS ACTIVOS
+        //  var cantidadProvincias = (from o in _context.Provincias where o.PaisID == PaisID && o.Eliminado == false select o).Count();
+        //if (cantidadProvincias == 0)
+        //{
+        //  pais.Eliminado = true;
+        //_context.SaveChanges();
+        //}
+        //else
+        //{
+        //  resultado = 1;
+        //}
+        //}                              
+        // }
 
-            //return Json(resultado);
+        //return Json(resultado);
     }
 
 }

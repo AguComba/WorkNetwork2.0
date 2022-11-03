@@ -33,7 +33,7 @@
                         <td class='texto'>${personas.estadoCivil}</td>
                         <td class='texto'>${personas.tituloAcademico}</td>
                         <td class = 'text-center'>
-                           ${botones}
+                            ${botones}
                         </td>
                     </tr>`
                 )

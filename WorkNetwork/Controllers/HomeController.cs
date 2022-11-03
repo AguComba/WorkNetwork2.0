@@ -39,13 +39,14 @@
                 var personaActual = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
                 var persona = _context.Persona.Where(u => u.PersonaID == personaActual.PersonaID).FirstOrDefault();
                 personaMostrar.NombrePersona = persona.NombrePersona;
-                personaMostrar.ImagenPersona = persona.Imagen;
-                personaMostrar.TipoImagen = persona.TipoImagen;
-                personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                if(persona.Imagen != null){
+                    personaMostrar.ImagenPersona = persona.Imagen;
+                    personaMostrar.TipoImagen = persona.TipoImagen;
+                    personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                }
             }
             
 
-            //var empresaActual = _context.EmpresaUsuarios.Where(u => u.EmpresaID == usuarioActual).FirstOrDefault();
             ViewData["persona"] = personaMostrar;
             return View();
         }

@@ -33,6 +33,10 @@ function GestionarVacante(vacanteID){
     location.href = "../../Vacantes/GestionDeVacante/"+vacanteID;
 }
 
+function verPerfilPersona(personaID){
+    location.href = "../../Personas/PerfilUser/"+personaID;
+}
+
 const BuscarVacante = idVacante=>{
     $('#vacanteID').val(idVacante);
     let data = {vacanteID: idVacante};

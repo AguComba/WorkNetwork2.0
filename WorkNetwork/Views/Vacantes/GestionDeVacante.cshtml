@@ -132,13 +132,13 @@ img.left {
 }
 .btn-card2:hover {
   background-position-y: -50px;
- }
- 
- .btn-card2:active {
-  transform: scale(0.99);
- }
+}
 
- .asddd{
+.btn-card2:active {
+  transform: scale(0.99);
+}
+
+.asddd{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,17 +146,17 @@ img.left {
   padding-left: 120px;
   padding-right: 120px;
   margin-top: -60px;
- }
+}
 
- .h111{
+.h111{
   padding-top: 15px;
   font-size: 1.3rem;
   color: black;
   font-size: 40px;
   margin-bottom: 10px;
- }
+}
 
- .hhh{
+.hhh{
   
     position: absolute;
     left: 30px;
@@ -164,7 +164,7 @@ img.left {
     font-size: 1.2rem;
     color: rgb(0 0 0 / 50%);
   
- }
+}
 
 </style>
 
@@ -177,11 +177,11 @@ img.left {
           </div>
           <div class="right">
             <h1 class="h11">
-               @Model.Nombre
+              @Model.Nombre
             </h1>
             <div class="separator"></div>
             <p class="p2">
-               @Model.Descripcion 
+              @Model.Descripcion 
             </p>
           </div>
           <h5 class="h55">Punctuation:</h5>
@@ -203,11 +203,11 @@ img.left {
     <tbody>
       @foreach (var persona in ViewBag.PersonasMostrar)
       {
-       <tr>
+      <tr>
           <td>@persona.NombrePersona @persona.ApellidoPersona</td>
           <td>@persona.Telefono1</td>
-          <td class="text-center"><button class="btn btn-sm btn-dark">Ver perfil</button> <button>Ver CV</button></td>
-       </tr> 
+          <td class="text-center"><button class="btn btn-sm btn-dark" onclick="verPerfilPersona(@persona.PersonaID)" >Ver perfil</button> <button>Ver CV</button></td>
+      </tr> 
       }
     </tbody>
 </table>
