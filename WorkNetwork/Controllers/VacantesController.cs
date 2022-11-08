@@ -39,6 +39,9 @@
             var vacante = _context.Vacante.Where(v=>v.VacanteID == id).FirstOrDefault();
             var rubroNombre = _context.Rubro.Where(r=>r.RubroID == vacante.RubroID).Select(n => n.NombreRubro).Single();
             var localidadNombre = _context.Localidad.Where(l => l.LocalidadID == vacante.LocalidadID).Select(l => l.NombreLocalidad).Single();
+            var vacanteEmpresa = _context.VacanteEmpresas.Where(v=> v.VacanteID == id).FirstOrDefault();
+            var imgEmpresa = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.Imagen).Single();
+            var tipoImg = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.TipoImagen).Single();
             var vacanteMostrar = new VacanteMostrar
             {
                 VacanteID = vacante.VacanteID,
@@ -49,8 +52,11 @@
                 RubroNombre = rubroNombre,
                 FechaDeFinalizacion = vacante.FechaDeFinalizacion,
                 Idiomas = vacante.Idiomas,
-                Eliminado = vacante.Eliminado
+                Eliminado = vacante.Eliminado,
+                ImagenVacante = Convert.ToBase64String(imgEmpresa),
+                TipoImagen = tipoImg 
             };
+            ViewData["vacante"] = vacanteMostrar;
             var personas = new List<Persona>();
             var personasVacante = _context.PersonaVacante.Where(v => v.VacanteID == id).ToList();
             foreach (var personaVacante in personasVacante)

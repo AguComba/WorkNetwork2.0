@@ -93,6 +93,8 @@
                 Telefono2 = telefono2Clean,
                 RubroID = RubroID,
                 TipoEmpresa = tipoEmpresaEnum,
+                Imagen = img,
+                TipoImagen = tipoImg,
             };
             _context.Add(nuevaEmpresa);
             _context.SaveChanges();

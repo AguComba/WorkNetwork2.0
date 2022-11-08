@@ -45,6 +45,8 @@
         public string? Idiomas { get; set; }
         public string? Estado { get; set; }
         public bool Eliminado { get; set; }
+        public string ImagenVacante {get; set;}
+        public string? TipoImagen{ get; set; }
         public DisponibilidadHoraria DisponibilidadHoraria{ get; set; }
 
         public tipoModalidad tipoModalidad{ get; set; }
