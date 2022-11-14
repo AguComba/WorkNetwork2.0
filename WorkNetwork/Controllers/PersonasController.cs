@@ -61,9 +61,12 @@
                 personaMostrar.NumeroDocumento = persona.NumeroDocumento;
                 personaMostrar.FechaNacimiento = persona.FechaNacimiento;
                 personaMostrar.DomicilioPersona = persona.DomicilioPersona;
+                if(persona.Imagen!=null){
                 personaMostrar.ImagenPersona = persona.Imagen;
                 personaMostrar.TipoImagen = persona.TipoImagen;
                 personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                }
+
                 personaMostrar.Eliminado = persona.Eliminado;
             }
             else
@@ -78,9 +81,11 @@
                 personaMostrar.NumeroDocumento = persona.NumeroDocumento;
                 personaMostrar.FechaNacimiento = persona.FechaNacimiento;
                 personaMostrar.DomicilioPersona = persona.DomicilioPersona;
+                if(persona.Imagen !=null){
                 personaMostrar.ImagenPersona = persona.Imagen;
                 personaMostrar.TipoImagen = persona.TipoImagen;
                 personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                }
                 personaMostrar.Eliminado = persona.Eliminado;
             }
 

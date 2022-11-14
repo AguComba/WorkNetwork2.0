@@ -42,21 +42,38 @@
             var vacanteEmpresa = _context.VacanteEmpresas.Where(v=> v.VacanteID == id).FirstOrDefault();
             var imgEmpresa = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.Imagen).Single();
             var tipoImg = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.TipoImagen).Single();
-            var vacanteMostrar = new VacanteMostrar
-            {
-                VacanteID = vacante.VacanteID,
-                Nombre = vacante.Nombre,
-                Descripcion = vacante.Descripcion,
-                ExperienciaRequerida = vacante.ExperienciaRequerida,
-                LocalidadNombre = localidadNombre,
-                RubroNombre = rubroNombre,
-                FechaDeFinalizacion = vacante.FechaDeFinalizacion,
-                Idiomas = vacante.Idiomas,
-                Eliminado = vacante.Eliminado,
-                ImagenVacante = Convert.ToBase64String(imgEmpresa),
-                TipoImagen = tipoImg 
-            };
-            ViewData["vacante"] = vacanteMostrar;
+            if(imgEmpresa != null){
+                var vacanteMostrar = new VacanteMostrar
+                {
+                    VacanteID = vacante.VacanteID,
+                    Nombre = vacante.Nombre,
+                    Descripcion = vacante.Descripcion,
+                    ExperienciaRequerida = vacante.ExperienciaRequerida,
+                    LocalidadNombre = localidadNombre,
+                    RubroNombre = rubroNombre,
+                    FechaDeFinalizacion = vacante.FechaDeFinalizacion,
+                    Idiomas = vacante.Idiomas,
+                    Eliminado = vacante.Eliminado,
+                    ImagenVacante = Convert.ToBase64String(imgEmpresa),
+                    TipoImagen = tipoImg 
+                };
+                ViewData["vacante"] = vacanteMostrar;
+            }else{
+                var vacanteMostrar = new VacanteMostrar
+                {
+                    VacanteID = vacante.VacanteID,
+                    Nombre = vacante.Nombre,
+                    Descripcion = vacante.Descripcion,
+                    ExperienciaRequerida = vacante.ExperienciaRequerida,
+                    LocalidadNombre = localidadNombre,
+                    RubroNombre = rubroNombre,
+                    FechaDeFinalizacion = vacante.FechaDeFinalizacion,
+                    Idiomas = vacante.Idiomas,
+                    Eliminado = vacante.Eliminado,
+                };
+                ViewData["vacante"] = vacanteMostrar;
+            }
+
             var personas = new List<Persona>();
             var personasVacante = _context.PersonaVacante.Where(v => v.VacanteID == id).ToList();
             foreach (var personaVacante in personasVacante)
