@@ -1,26 +1,14 @@
-﻿function loginEmpresa(){	
+﻿function login(){	
 	event.preventDefault();
-	let correoEmpresa =	$('#correoEmpresa').val();
-	let passEmpresa = $('#passwordEmpresa').val();
+	let correo =	$('#loginCorreo').val();
+	let pass = $('#loginPass').val();
 	let url = '../../GestionDeUsuarios/Ingresar';
-	let data = { email: correoEmpresa, password:passEmpresa };
+	let data = { email: correo, password:pass};
 	$.post(url, data).done(resultado => {
 		resultado ? window.location.href='/' : alert('usuario o contraseña incorrecta')
 	}).fail(e => console.log(e))
 }
 
-//function register() {
-//	event.preventDefault();
-//	let rol = $('#Rol').val();
-//	let correo = $('#Email').val();
-//	let pass = $('#Password').val();
-//	let passConfirm = $('#ConfirmPassword').val();
-//	let url = '../../GestionDeUsuarios/Registrar';
-//	let data = { email: correo, password: pass, Rol: rol }
-//	pass === passConfirm
-//		? $.post(url, data).done(resultado => resultado ? window.location.href = '/' : alert('usuario o contraseña incorrecta')).fail(e => console.log(e))
-//		: alert('las contraseñas no coinciden');
-//}
 function registerPerson(){
 	event.preventDefault();
 	let rol = $('#rol').val()

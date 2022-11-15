@@ -672,6 +672,7 @@ section {
 .email-form textarea:focus
 {
     border-color: var(--color-primary);
+    box-shadow: none;
 }
 
 .email-form input,
