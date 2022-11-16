@@ -1786,20 +1786,29 @@ section {
         }
 
     .contact .php-email-form input,
-    .contact .php-email-form textarea {
+    .contact .php-email-form textarea 
+    .contact .php-email-form select
+    {
         border-radius: 0;
         box-shadow: none;
         font-size: 14px;
     }
 
         .contact .php-email-form input:focus,
-        .contact .php-email-form textarea:focus {
+        .contact .php-email-form textarea:focus 
+        .contact .php-email-form select
+        {
             border-color: var(--color-primary);
         }
 
     .contact .php-email-form input {
         height: 44px;
     }
+
+    .contact .php-email-form select{
+        height: 10px 12px;
+    }
+
 
     .contact .php-email-form textarea {
         padding: 10px 12px;
