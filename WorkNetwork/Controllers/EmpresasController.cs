@@ -14,22 +14,25 @@
         {
             // BUSCO EL USUARIO ACTUAL
             var usuarioActual = _userManager.GetUserId(HttpContext.User);
-            
+
             var rolUsuario = _context.UserRoles.Where(u => u.UserId == usuarioActual).FirstOrDefault();
             //EN BASE A ESE ID BUSCAMOS EN LA TABLA DE RELACION USUARRIO-ROL QUE REGISTRO TIENE
-            var rolNombre = _context.Roles.Where(u => u.Id == rolUsuario.RoleId).Select(r=>r.Name).FirstOrDefault();
+            var rolNombre = _context.Roles.Where(u => u.Id == rolUsuario.RoleId).Select(r => r.Name).FirstOrDefault();
             //EN BASE AL USUARIO BUSCO EN LA TABLA PARA VER SI ESTA RELACIONADO A ALGUAN PERSONA. 
-            if (rolNombre is "Empresa"){
+            if (rolNombre is "Empresa")
+            {
 
                 var personaUsuario = (from p in _context.EmpresaUsuarios where p.UsuarioID == usuarioActual select p).Count();
-                if(personaUsuario == 0){
-                     return RedirectToAction("NewEmpresa","Empresas");
+                if (personaUsuario == 0)
+                {
+                    return RedirectToAction("NewEmpresa", "Empresas");
                 }
             }
             return View();
         }
 
-        public IActionResult NewEmpresa(){
+        public IActionResult NewEmpresa()
+        {
 
             var paises = _context.Pais.ToList();
             paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
@@ -57,42 +60,40 @@
         }
 
         //Metodo para limpiar el numero telefonico
-        static string ClearNumber (string numero)=> new string((numero ?? "").Where(c=> c == '+' || char.IsNumber(c)).ToArray());
-        public JsonResult GuardarEmpresa(int empresaID, string empresaNombre, int empresaCuit,  int LocalidadID, string empresaTelefono1, string empresaTelefono2, int RubroID, int tipoEmpresa, IFormFile empresaFoto)
+        static string ClearNumber(string numero) => new string((numero ?? "").Where(c => c == '+' || char.IsNumber(c)).ToArray());
+        public JsonResult GuardarEmpresa(int IDempresa, string empresaNombre, string cuitEmpresa, string telefono1Empresa, string descripcion, string instagram, string twitter, string linkedin, int LocalidadID, string domicilio, int nro, int RubroID, IFormFile empresaFoto)
         {
             byte[] img = null;
-            string tipoImg = null; 
-            if (empresaFoto!= null){
-            if (empresaFoto.Length > 0)
+            string tipoImg = null;
+            if (empresaFoto != null)
             {
-                using (var ms = new MemoryStream())
+                if (empresaFoto.Length > 0)
                 {
-                    empresaFoto.CopyTo(ms);
-                    img = ms.ToArray();
-                    tipoImg = empresaFoto.ContentType;
+                    using (var ms = new MemoryStream())
+                    {
+                        empresaFoto.CopyTo(ms);
+                        img = ms.ToArray();
+                        tipoImg = empresaFoto.ContentType;
+                    }
                 }
-            }
             }
 
             var resultado = true;
-            var tipoEmpresaEnum = TipoEmpresa.Unipersonal;
-            if (tipoEmpresa == 1)
-            {
-                tipoEmpresaEnum = TipoEmpresa.Sociedad;
-            }
-
-            var telefono1Clean = ClearNumber(empresaTelefono1);
-            var telefono2Clean = ClearNumber(empresaTelefono2);
+            var telefono1Clean = ClearNumber(telefono1Empresa);
+            var domicilioCompleto = domicilio + " " + nro;
 
             var nuevaEmpresa = new Empresa
             {
                 RazonSocial = empresaNombre,
-                CUIT = empresaCuit,
-                LocalidadID = LocalidadID,
+                CUIT = cuitEmpresa,
                 Telefono1 = telefono1Clean,
-                Telefono2 = telefono2Clean,
+                Descripcion = descripcion,
+                Instagram = instagram,
+                Twitter = twitter,
+                Linkedin = linkedin,
+                LocalidadID = LocalidadID,
+                Domicilio = domicilioCompleto,
                 RubroID = RubroID,
-                TipoEmpresa = tipoEmpresaEnum,
                 Imagen = img,
                 TipoImagen = tipoImg,
             };
@@ -102,25 +103,25 @@
             var usuarioActual = _userManager.GetUserId(HttpContext.User);
             var nuevoEmpresaUsuario = new EmpresaUsuario
             {
-                UsuarioID= usuarioActual,
+                UsuarioID = usuarioActual,
                 EmpresaID = nuevaEmpresa.EmpresaID
             };
             _context.Add(nuevoEmpresaUsuario);
             _context.SaveChanges();
             return Json(resultado);
-            
-        }
-    
 
-          public JsonResult BuscarEmpresa(int EmpresaID)
+        }
+
+
+        public JsonResult BuscarEmpresa(int EmpresaID)
         {
             var empresa = _context.Empresa.FirstOrDefault(m => m.EmpresaID == EmpresaID);
 
             return Json(empresa);
         }
 
-         public JsonResult EliminarEmpresa(int EmpresaID, int Elimina)
-         {
+        public JsonResult EliminarEmpresa(int EmpresaID, int Elimina)
+        {
             int resultado = 0;
 
             var empresa = _context.Empresa.Find(EmpresaID);
@@ -152,11 +153,11 @@
             return Json(resultado);
 
 
-         }
-               private bool RubroExists(int id)
-               {
+        }
+        private bool RubroExists(int id)
+        {
             return _context.Rubro.Any(e => e.RubroID == id);
-               }
+        }
 
     }
 

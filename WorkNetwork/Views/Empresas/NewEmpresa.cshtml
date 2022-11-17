@@ -1,148 +1,105 @@
 @model IEnumerable<WorkNetwork.Models.Empresa>
 
 @{
-  ViewData["Title"] = "Nueva Empresa";
+    ViewData["Title"] = "Nueva Empresa";
 }
 
 
-@* <form class="form-control" id='registrarEmpresa' enctype='multipart/form-data'> *@
-@*<div class="alert alert-danger "id='alertRubro'>El campo descripcion no puede estar vacio</div> *@
-@* <input type="hidden" id='idEmpresa' name="empresaID" value=0 />
-  <input placeholder="Ingrese una empresa" type="text" name="empresaNombre" id="nombreEmpresa" class="form-control mb-3"
-  />
-  <input placeholder="CUIT" type="number" id="cuitEmpresa" name="empresaCuit" class='form-control mb-3' />
-  <div> *@
-@* <label class="control-label"><b> Paises: </b></label>
-  @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control mb-3"})
-  </div>
-  <div>
-  <label class="control-label"><b> Provincias: </b></label>
-  @Html.DropDownList("ProvinciaID", null, htmlAttributes: new {@class = "form-control mb-3"})
-  </div>
-  <div>
-  <label class="control-label"><b> Localidades: </b></label>
-  @Html.DropDownList("LocalidadID", null, htmlAttributes: new {@class = "form-control mb-3"})
-  </div> *@
-@* <input placeholder='Ingrese su numero de telefono' type='tel' id="telefono1Empresa" name="empresaTelefono1"
-  class='form-control mb-3' />
-  <input placeholder='Ingrese un numero de telefono alternativo' type='tel' id="telefono2Empresa" name="empresaTelefono2"
-  class='form-control mb-3' />
-  <div>
-  <label class="control-label"><b> Rubros: </b></label>
-  @Html.DropDownList("RubroID", null, htmlAttributes: new {@class = "form-control mb-3"})
-  </div>
-  <div>
-  <label class="control-label"><b> Tipo de empresa: </b></label>
-  <select id='tipoEmpresa' class="form-control mb-3" name="tipoEmpresa">
-  <option>Seleccione un campo</option>
-  <option value=0>Unipersonal</option>
-  <option value=1>Empresa</option>
-  </select>
-  </div>
-  <div class="input-group mb-3">
-  <input type="file" name="empresaFoto" class="form-control" id="fotoPerfilEmpresa"
-  aria-describedby="inputGroupFileAddon04"
-  aria-label="Upload">
-  </div>
 
-  <button class="btn btn-primary" onclick="guardarEmpresa()">Guardar empresa</button>
-  </form> *@
 
-<!-- ======= Breadcrumbs ======= -->
+<!-- ======= Primera parte de la pagina ======= -->
 <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
-  <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-    <h2>Ingresa tus datos</h2>
-    <ol>
-      <li><a href="#">Inicio</a></li>
-      <li>Empresa</li>
-    </ol>
-
-  </div>
-</div><!-- End Breadcrumbs -->
-
-<div class="contact">
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row gy-4 mt-1">
-
-      <div class="col-lg-6">
-        <form role="form" class="php-email-form" style="min-height:505px">
-          <h3 class="text-center">Datos de la Empresa</h3>
-          <div class="row">
-            <div class="col-lg-6 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Nombre de la Empresa" required>
-            </div>
-            <div class="col-lg-6 form-group">
-              <input type="text" class="form-control" name="cuit" id="cuit" placeholder="CUIT" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono de la Empresa" required>
-          </div>
-          <div class="form-group">
-            <textarea class="form-control" name="descripcion" rows="5" placeholder="Descripcion de la actividad de empresa" required></textarea>
-          </div>
-          <div class="my-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your message has been sent. Thank you!</div>
-          </div>
-          <div class="text-center"><button type="submit">Send Message</button></div>
-        </form>
-      </div><!-- End Contact Form -->
-
-      <div class="col-lg-6">
-        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-          <h3 class="text-center">Datos para el perfil</h3>
-
-          <div class="form-group">
-            <select class="form-select" id='rol' required aria-label='rol'>
-              <option value='' disabled selected>Seleccione pais...</option>
-              <option value="Empresa">Argentina</option>
-              <option value="Usuario">Brasil</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <select class="form-select" id='rol' required aria-label='rol'>
-              <option value='' disabled selected>Seleccione provincia...</option>
-              <option value="Empresa">Argentina</option>
-              <option value="Usuario">Brasil</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <select class="form-select" id='rol' required aria-label='rol'>
-              <option value='' disabled selected>Seleccione localidad...</option>
-              <option value="Empresa">Argentina</option>
-              <option value="Usuario">Brasil</option>
-            </select>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-10 col-md-10 col-sm-10 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Domicilio" required>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 form-group">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Nro" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Foto de perfil</label>
-            <input type="file" name="empresaFoto" placeholder="Foto de perfil" class="form-control" id="fotoPerfilEmpresa"
-          </div>
-
-          <div class="my-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your message has been sent. Thank you!</div>
-          </div>
-          <div class="text-center"><button type="submit">Send Message</button></div>
-        </form>
-      </div><!-- End Contact Form -->
+        <h2>Ingresa tus datos</h2>
+        <ol>
+            <li><a href="#">Inicio</a></li>
+            <li>Empresa</li>
+        </ol>
 
     </div>
-  </div>
+</div><!-- Fin primera parte -->
+
+<div class="contact">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <form id="registrarEmpresa" enctype="multipart/form-data">
+            <div class="row gy-4 mt-1">
+                <input type="hidden" id="IDempesa" value=0 />
+                @*DATOS PERSONALES*@
+                <div class="col-lg-6">
+                    <div class="php-email-form">
+                        <h3 class="text-center">Datos de la Empresa</h3>
+                        <div class="row">
+                            <div class="col-lg-6 form-group">
+                                <input type="text" name="empresaNombre" class="form-control" id="empresaNombre" placeholder="Nombre de la Empresa" required>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <input type="text" class="form-control" name="cuitEmpresa" id="cuitEmpresa" placeholder="CUIT" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="telefono1Empresa" id="telefono1Empresa" placeholder="Telefono de la Empresa" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="5" placeholder="Descripcion de la actividad de empresa" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="instagram" placeholder="Instagram" class="form-control" id="instagram" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="twitter" placeholder="Twitter" class="form-control" id="twitter" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="linkedin" placeholder="Linkedin" class="form-control" id="linkedin" />
+                        </div>
+
+                    </div>
+                </div><!-- Fin primer card-->
+                @*DATOS PARA EL PERFIL*@
+                <div class="col-lg-6">
+                    <div class="php-email-form">
+                        <h3 class="text-center">Datos para el perfil</h3>
+
+                        <div class="form-group">
+                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select"})
+                        </div>
+
+                        <div class="form-group">
+                            @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select"})
+                        </div>
+
+                        <div class="form-group">
+                            @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select"})
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-group">
+                                <input type="text" name="domicilio" class="form-control" id="domicilio" placeholder="Domicilio" required>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-group">
+                                <input type="number" class="form-control" name="nro" id="nro" placeholder="Nro" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownList("RubroID", null, htmlAttributes:new{@class = "form-select"})
+                        </div>
+                        <div class="form-group">
+                            <label>Foto de perfil</label>
+                            <input type="file" name="empresaFoto" placeholder="Foto de perfil" class="form-control" id="fotoPerfilEmpresa" />
+                        </div>
+
+
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center"><button onclick="guardarEmpresa()" type="submit">Send Message</button></div>
+                    </div>
+                </div><!-- Fin segunda card-->
+            </div>
+        </form>
+    </div>
 </div>
 @section Scripts {
 <script src="~/js/Empresas.js"></script>
