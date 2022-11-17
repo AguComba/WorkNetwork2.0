@@ -66,7 +66,7 @@
     <div class="row gy-4 mt-1">
 
       <div class="col-lg-6">
-        <form role="form" class="php-email-form">
+        <form role="form" class="php-email-form" style="min-height:505px">
           <h3 class="text-center">Datos de la Empresa</h3>
           <div class="row">
             <div class="col-lg-6 form-group">
@@ -94,28 +94,44 @@
       <div class="col-lg-6">
         <form action="forms/contact.php" method="post" role="form" class="php-email-form">
           <h3 class="text-center">Datos para el perfil</h3>
-          <div class="row">
-            <div class="col-lg-6 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-            </div>
-            <div class="col-lg-6 form-group">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-            </div>
-          </div>
+
           <div class="form-group">
-                                <select class="php-email-form form-control" id='rol' required aria-label='rol'>
-                                    <option value='' disabled selected>Seleccione una opcion...</option>
-                                    <option value="Empresa">Soy una empresa</option>
-                                    <option value="Usuario">Soy una persona</option>
-                                </select>
+            <select class="form-select" id='rol' required aria-label='rol'>
+              <option value='' disabled selected>Seleccione pais...</option>
+              <option value="Empresa">Argentina</option>
+              <option value="Usuario">Brasil</option>
+            </select>
           </div>
 
           <div class="form-group">
-            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+            <select class="form-select" id='rol' required aria-label='rol'>
+              <option value='' disabled selected>Seleccione provincia...</option>
+              <option value="Empresa">Argentina</option>
+              <option value="Usuario">Brasil</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <select class="form-select" id='rol' required aria-label='rol'>
+              <option value='' disabled selected>Seleccione localidad...</option>
+              <option value="Empresa">Argentina</option>
+              <option value="Usuario">Brasil</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-10 form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Domicilio" required>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 form-group">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Nro" required>
+            </div>
           </div>
           <div class="form-group">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            <label>Foto de perfil</label>
+            <input type="file" name="empresaFoto" placeholder="Foto de perfil" class="form-control" id="fotoPerfilEmpresa"
           </div>
+
           <div class="my-3">
             <div class="loading">Loading</div>
             <div class="error-message"></div>
