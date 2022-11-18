@@ -3,13 +3,25 @@
 @{
     ViewData["Title"] = "Pais";
 }
+<!-- ======= Primera parte de la pagina ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-<h1>Pais</h1>
+        <h2>Paises</h2>
+        <ol>
+            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
+            <li>Paises</li>
+        </ol>
 
-<button type="button" class='btn btn-primary mb-3' onclick='AbrirModal(modalCrearPais)'>Crear Pais</button>
+    </div>
+</div><!-- Fin primera parte -->
+
+<section>
+<div class="container">
+<button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearPais)'>Crear Pais</button>
 
 <table class="table">
-    <thead>
+    <thead class="table-dark">
         <tr>
             <th>
                 País
@@ -20,6 +32,9 @@
     <tbody id='tbody-paises'>
     </tbody>
 </table>
+</div>
+</section>
+
 
 <!-- Modal -->
 <div class="modal fade" id="modalCrearPais" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -27,18 +42,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="titulo-modal-pais"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" onclick="VaciarFormulario()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div>
+                <div class="contact">
+                    <div class="php-email-form">
                     <div class="alert alert-danger "id='alertPais'></div> 
                     <input type="hidden" id='idPais' />
                     <input placeholder="Ingrese un pais" type="text" id="nombrePais" class="form-control" />
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-info" id='bottonEdit' onclick='GuardarPais()'>Crear</button>
-                <button type="button" class="btn btn-outline-danger" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-login" id='bottonEdit' onclick='GuardarPais()'>Crear</button>
             </div>
         </div>
     </div>

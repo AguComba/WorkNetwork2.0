@@ -32,6 +32,7 @@ const CompletarTablaPaises = async () => {
 const AbrirModal = () => {
     $('#idPais').val(0);
     $('#titulo-modal-pais').text('Nuevo Pais');
+    $('#bottonEdit').text('Crear');
     $('#alertPais').addClass('visually-hidden');
     $('#modalCrearPais').modal('show');
 }
@@ -48,6 +49,7 @@ const GuardarPais = () => {
     let alertPais = $('#alertPais')
     let url = '../../Paises/CrearPais';
     let data = { NombrePais: nombrePais, PaisID: idPais };
+    $('#bottonEdit').text('Crear');
 
     if (nombrePais != '' && nombrePais != null) {
         $.post(url, data).done((resultado) =>{

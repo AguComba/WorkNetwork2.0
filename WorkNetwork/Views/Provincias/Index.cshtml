@@ -3,56 +3,78 @@
 @{
     ViewData["Title"] = "Provincia";
 }
+<!-- ======= Primera parte de la pagina ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-<h1>Provincias</h1>
+        <h2>Provincias</h2>
+        <ol>
+            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
+            <li>Provincias</li>
+        </ol>
 
-<button type="button" class='btn btn-primary mb-3' onclick='AbrirModal(modalCrearProvincia)'>Crear Provincia</button>
+    </div>
+</div><!-- Fin primera parte -->
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreProvincia)
-            </th>
-            <th>País</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id='tbody-provincias'>
-    </tbody>
-</table>
+<section>
+    <div class="container">
+        <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearProvincia)'>Crear
+            Provincia</button>
+
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NombreProvincia)
+                    </th>
+                    <th>País</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id='tbody-provincias'>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
 
 <!-- Modal -->
-<div class="modal fade" id="modalCrearProvincia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="modalCrearProvincia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <h5 class="modal-title" id="titulo-modal-provincia">Crear provincia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="VaciarFormulario()"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div>
-                    <div class="alert alert-danger "id='alertProvincia'></div> 
-                    <input type="hidden" id='idProvincia' />
-                    <input placeholder="Ingrese la Provincia" type="text" id="nombreProvincia" class="form-control" />
-                    <div>
-                        <label class="control-label"><b> País: </b></label>
-                        @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control"})
+                <div class="contact">
+                    <div class="php-email-form">
+                        <div class="alert alert-danger " id='alertProvincia'></div>
+                        <input type="hidden" id='idProvincia' />
+                        <input placeholder="Ingrese la Provincia" type="text" id="nombreProvincia"
+                            class="form-control" />
+                        <div>
+                            <label class="control-label"><b> País: </b></label>
+                            @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control"})
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-outline-info" onclick='GuardarProvincia()'>Crear</button>
+                <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()'
+                    data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-login" onclick='GuardarProvincia()'>Crear</button>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script src='~/js/Provincias.js'></script>
-    <script>
-        window.onload = CompletarTablaProvincias();
-    </script>
+<script src='~/js/Provincias.js'></script>
+<script>
+    window.onload = CompletarTablaProvincias();
+</script>
 }
-

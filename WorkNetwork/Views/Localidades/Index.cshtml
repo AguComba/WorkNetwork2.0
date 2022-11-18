@@ -22,7 +22,7 @@
         <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearLocalidad)'>Crear Localidad</button>
 
         <table class='table'>
-            <thead>
+            <thead class="table-dark">
                 <tr>
                     <th>
                         Localidad
@@ -45,8 +45,8 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <h5 class="modal-title" id="titulo-modal-">Crear localidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="contact">
@@ -67,8 +67,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-outline-info" onclick='GuardarLocalidad()'>Crear</button>
+                <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-login" onclick='GuardarLocalidad()'>Crear</button>
             </div>
         </div>
     </div>
