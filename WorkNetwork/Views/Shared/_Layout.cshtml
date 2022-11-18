@@ -7,8 +7,8 @@
 
     @*<link rel="stylesheet" href="~/css/ingreso.css  />*@
     @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WorkNetwork.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/PerfilUser.css"> *@
+        <link rel="stylesheet" href="~/WorkNetwork.styles.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/PerfilUser.css"> *@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -32,265 +32,254 @@
 <body>
 
     @* <div class="app-container"> *@
-        @*COMIENZO DEL NAVBAR*@
-        @* <div class="app-header">
-            <div class="app-header-left">
-                <span class="app-icon"></span>
-                <p class="app-name">Networking</p>
-                <div class="search-wrapper">
-                    <input class="search-input" type="text" placeholder="Buscar" />
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        class="feather feather-search"
-                        viewBox="0 0 24 24">
-                        <defs></defs>
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="M21 21l-4.35-4.35"></path>
-                    </svg>
-                </div>
-            </div>
-            <div class="app-header-right">
- *@
-                @* @if(User.IsInRole("Empresa"))
-                {
-                    <button class="add-btn" title="Add New Project">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-plus">
-                            <line x1="12" y1="5" x2="12" y2="19" />
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                        </svg>
-                    </button>
-                }
-                <button class="notification-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="feather feather-bell">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                    </svg>
-                </button>
-                
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Cerrar Sesión</button>
-                </form>
-                @if(personaInfo?.NombrePersona is not null)
-                {
-                    <a class="profile-btn" asp-area="" asp-controller="Personas" asp-action="PerfilUser">
-                        <img src="data:@personaInfo.TipoImagen;base64,@personaInfo.Imagen" />
-                        <span>@personaInfo.NombrePersona</span>
-                    </a>       
-                }
-            </div>
-            <button class="messages-btn">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-message-circle">
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                </svg>
-            </button>
+    @*COMIENZO DEL NAVBAR*@
+    @* <div class="app-header">
+        <div class="app-header-left">
+        <span class="app-icon"></span>
+        <p class="app-name">Networking</p>
+        <div class="search-wrapper">
+        <input class="search-input" type="text" placeholder="Buscar" />
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        class="feather feather-search"
+        viewBox="0 0 24 24">
+        <defs></defs>
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="M21 21l-4.35-4.35"></path>
+        </svg>
+        </div>
+        </div>
+        <div class="app-header-right">
+    *@
+    @* @if(User.IsInRole("Empresa"))
+        {
+        <button class="add-btn" title="Add New Project">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-plus">
+        <line x1="12" y1="5" x2="12" y2="19" />
+        <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        </button>
+        }
+        <button class="notification-btn">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-bell">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        </button>
+
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+        <button type="submit" class="nav-link btn btn-link text-dark">Cerrar Sesión</button>
+        </form>
+        @if(personaInfo?.NombrePersona is not null)
+        {
+        <a class="profile-btn" asp-area="" asp-controller="Personas" asp-action="PerfilUser">
+        <img src="data:@personaInfo.TipoImagen;base64,@personaInfo.Imagen" />
+        <span>@personaInfo.NombrePersona</span>
+        </a>
+        }
+        </div>
+        <button class="messages-btn">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-message-circle">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+        </svg>
+        </button>
         </div> *@
-        @*FIN NAVBAR*@
-        @* <div class="app-content"> *@
-            @*COMIENZO DEL SIDEBAR*@
-            @* <div class="app-sidebar">
-            @if (user.isinrole("usuario"))
-            {
-                <a class="app-sidebar-link active" asp-area="" asp-controller="home" asp-action="index">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewbox="0 0 24 24"
-                        fill="none"
-                        stroke="currentcolor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="feather feather-home">
-                        <path d="m3 9l9-7 9 7v11a2 2 0 0 1-2 2h5a2 2 0 0 1-2-2z" />
-                        <polyline points="9 22 9 12 15 12 15 22" />
-                    </svg>
-                </a>
+    @*FIN NAVBAR*@
+    @* <div class="app-content"> *@
+    @*COMIENZO DEL SIDEBAR*@
+    @* <div class="app-sidebar">
+        @if (user.isinrole("usuario"))
+        {
+        <a class="app-sidebar-link active" asp-area="" asp-controller="home" asp-action="index">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewbox="0 0 24 24"
+        fill="none"
+        stroke="currentcolor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-home">
+        <path d="m3 9l9-7 9 7v11a2 2 0 0 1-2 2h5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        </a>
 
-                <a class="app-sidebar-link" asp-area="" asp-controller="localidades" asp-action="index">
-                    localidades
-                </a>
-                
-            }
+        <a class="app-sidebar-link" asp-area="" asp-controller="localidades" asp-action="index">
+        localidades
+        </a>
 
-                @if (user.isinrole("empresa"))
-                {
-                    
-                    <a class="app-sidebar-link active" asp-area="" asp-controller="home" asp-action="index">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewbox="0 0 24 24"
-                            fill="none"
-                            stroke="currentcolor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-home">
-                            <path d="m3 9l9-7 9 7v11a2 2 0 0 1-2 2h5a2 2 0 0 1-2-2z" />
-                            <polyline points="9 22 9 12 15 12 15 22" />
-                        </svg>
-                    </a>
+        }
 
-                    <a class="app-sidebar-link" asp-area="" asp-controller="localidades" asp-action="index">
-                        localidades
-                    </a>
-                    <a class="app-sidebar-link" asp-area="" asp-controller="vacantes" asp-action="index">vacantes</a>                   
-                }
+        @if (user.isinrole("empresa"))
+        {
 
-                @if (user.isinrole("superusuario"))
-                {
-                    <a class="app-sidebar-link active" asp-area="" asp-controller="home" asp-action="index">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewbox="0 0 24 24"
-                            fill="none"
-                            stroke="currentcolor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-home">
-                            <path d="m3 9l9-7 9 7v11a2 2 0 0 1-2 2h5a2 2 0 0 1-2-2z" />
-                            <polyline points="9 22 9 12 15 12 15 22" />
-                        </svg>
-                    </a>
+        <a class="app-sidebar-link active" asp-area="" asp-controller="home" asp-action="index">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewbox="0 0 24 24"
+        fill="none"
+        stroke="currentcolor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-home">
+        <path d="m3 9l9-7 9 7v11a2 2 0 0 1-2 2h5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        </a>
 
-                    <a class="app-sidebar-link" asp-area="" asp-controller="paises" asp-action="index">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            fill="none"
-                            stroke="currentcolor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            class="feather feather-pie-chart"
-                            viewbox="0 0 24 24">
-                            <defs />
-                            <path d="m21.21 15.89a10 10 0 118 2.83m22 12a10 10 0 0012 2v10z" />
-                        </svg>
-                    </a>
-                    <a class="app-sidebar-link" asp-area="" asp-controller="provincias" asp-action="index">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewbox="0 0 24 24"
-                            fill="none"
-                            stroke="currentcolor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-calendar">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                            <line x1="16" y1="2" x2="16" y2="6" />
-                            <line x1="8" y1="2" x2="8" y2="6" />
-                            <line x1="3" y1="10" x2="21" y2="10" />
-                        </svg>
-                    </a>
+        <a class="app-sidebar-link" asp-area="" asp-controller="localidades" asp-action="index">
+        localidades
+        </a>
+        <a class="app-sidebar-link" asp-area="" asp-controller="vacantes" asp-action="index">vacantes</a>
+        }
 
-                    <a class="app-sidebar-link" asp-area="" asp-controller="localidades" asp-action="index">
-                        @*localidades*@
-                        @* <svg xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            fill="none"
-                            stroke="currentcolor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            class="feather feather-settings"
-                            viewbox="0 0 24 24">
-                            <defs />
-                            <circle cx="12" cy="12" r="3" />
-                            <path d="m19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51v21a2 2 0 01-2 2 2 2 0 01-2-2v-.09a1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1h3a2 2 0 01-2-2 2 2 0 012-2h.09a1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33h9a1.65 1.65 0 001-1.51v3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v9a1.65 1.65 0 001.51 1h21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
-                        </svg>
-                    </a>
-                    <a class="app-sidebar-link" asp-area="" asp-controller="rubros" asp-action="index">rubros</a>                   
-                    <a class="app-sidebar-link" asp-area="" asp-controller="empresas" asp-action="index">empresas</a>
-                    <a class="app-sidebar-link" asp-area="" asp-controller="personas" asp-action="index">personas</a>
-                }
-            </div>  *@
-            @*FIN SIDEBAR*@
+        @if (user.isinrole("superusuario"))
+        {
+        <a class="app-sidebar-link active" asp-area="" asp-controller="home" asp-action="index">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewbox="0 0 24 24"
+        fill="none"
+        stroke="currentcolor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-home">
+        <path d="m3 9l9-7 9 7v11a2 2 0 0 1-2 2h5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        </a>
 
-              <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <a class="app-sidebar-link" asp-area="" asp-controller="paises" asp-action="index">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentcolor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        class="feather feather-pie-chart"
+        viewbox="0 0 24 24">
+        <defs />
+        <path d="m21.21 15.89a10 10 0 118 2.83m22 12a10 10 0 0012 2v10z" />
+        </svg>
+        </a>
+        <a class="app-sidebar-link" asp-area="" asp-controller="provincias" asp-action="index">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewbox="0 0 24 24"
+        fill="none"
+        stroke="currentcolor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-calendar">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        </a>
 
-            <a href="" class="logo d-flex align-items-center">
+        <a class="app-sidebar-link" asp-area="" asp-controller="localidades" asp-action="index">
+        @*localidades*@
+    @* <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentcolor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        class="feather feather-settings"
+        viewbox="0 0 24 24">
+        <defs />
+        <circle cx="12" cy="12" r="3" />
+        <path d="m19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51v21a2 2 0 01-2 2 2 2 0 01-2-2v-.09a1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1h3a2 2 0 01-2-2 2 2 0 012-2h.09a1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33h9a1.65 1.65 0 001-1.51v3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v9a1.65 1.65 0 001.51 1h21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+        </svg>
+        </a>
+        <a class="app-sidebar-link" asp-area="" asp-controller="rubros" asp-action="index">rubros</a>
+        <a class="app-sidebar-link" asp-area="" asp-controller="empresas" asp-action="index">empresas</a>
+        <a class="app-sidebar-link" asp-area="" asp-controller="personas" asp-action="index">personas</a>
+        }
+        </div>  *@
+    @*FIN SIDEBAR*@
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <a asp-area="" asp-controller="home" asp-action="index" class="logo d-flex align-items-center">
                 <h1>Work<span>-</span>Network <span>2.0</span></h1>
             </a>
 
-      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+            <nav id="navbar" class="navbar">
                 <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
+
+                    <li><a asp-area="" class="active" asp-controller="home" asp-action="index">Inicio</a></li>
+                    <li><a asp-area="" class="" asp-controller="localidades" asp-action="index">Localidades</a></li>
+                    <li><a asp-area="" class="" asp-controller="vacantes" asp-action="index">Vacantes</a></li>
+                    <li><a asp-area="" class="" asp-controller="empresas" asp-action="PerfilEmpresa">Perfil</a></li>
+                    <li>
+                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                            <button type="submit" class="nav-link btn btn-link text-white">CERRAR SESIÓN</button>
+                        </form>
+                    </li>
+
+
                 </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html" class="active">Contact</a></li>
-        </ul>
-      </nav><!-- .navbar -->
+            </nav><!-- .navbar -->
 
+        </div>
+    </header><!-- End Header -->
+
+    <div class="projects-section" id='perfilUser'>
+        <main role="main">
+            @RenderBody()
+        </main>
     </div>
-  </header><!-- End Header -->
-
-            <div class="projects-section" id='perfilUser'>
-                <main role="main">
-                    @RenderBody()
-                </main>
-            </div>
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

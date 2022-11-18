@@ -2,62 +2,69 @@
     ViewData["Title"] = "Inicio";
 }
 
+<!-- ======= Primera parte de la pagina ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-5.png');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
+        <h2>Inicio</h2>
 
-<div class="projects-section">
-    <div class="projects-section-header">
-        <p>Ofertas</p>
-        <p class="time">Junio, 23</p>
     </div>
-    <div class="projects-section-line">
-        <div class="projects-status">
-            <div class="item-status">
-                <span class="status-number">45</span>
-                <span class="status-type">En Progreso</span>
-            </div>
-            <div class="item-status">
-                <span class="status-number">24</span>
-                <span class="status-type">Finalizadas</span>
-            </div>
-            <div class="item-status">
-                <span class="status-number" id="vacantesTotal"></span>
-                <span class="status-type">Vacantes Totales</span>
-            </div>
+</div><!-- Fin primera parte -->
+<!-- ======= Blog Section ======= -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4 posts-list">
+
+            <div class="col-xl-4 col-md-6">
+                <div class="post-item position-relative h-100">
+
+                    <div class="post-img position-relative overflow-hidden">
+                        <img src="assets/img/blog/blog-1.jpg" class="img-fluid" alt="">
+                        <span class="post-date">December 12</span>
+                    </div>
+
+                    <div class="post-content d-flex flex-column">
+
+                        <h3 class="post-title">Dolorum optio tempore voluptas dignissimos cumque fuga qui quibusdam quia</h3>
+
+                        <div class="meta d-flex align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person"></i> <span class="ps-2">John Doe</span>
+                            </div>
+                            <span class="px-3 text-black-50">/</span>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-folder2"></i> <span class="ps-2">Politics</span>
+                            </div>
+                        </div>
+
+                        <p>
+                            Similique neque nam consequuntur ad non maxime aliquam quas. Quibusdam animi praesentium. Aliquam et laboriosam eius aut nostrum quidem aliquid dicta.
+                        </p>
+
+                        <hr>
+
+                        <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+
+                    </div>
+
+                </div>
+            </div><!-- End post list item -->
         </div>
-    </div>
 
-    @*CARDS DE VACANTES*@
-    <div class="project-boxes jsGridView" id="cardVacantes">
-    </div>
-</div>
+        <div class="blog-pagination">
+            <ul class="justify-content-center">
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+            </ul>
+        </div><!-- End blog pagination -->
 
-@* MODAL PARA POSTULARSE *@
-<div class="modal fade" id="modalPostularVacante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Postularse a vacante</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h1 id="tituloDeVacante"></h1>
-        <div class="alert alert-danger visually-hidden" id='alertPersonaVacante'></div>
-        <input type="hidden" id='vacanteID' />
-        <label for="descripccionVacante">¿Porque se quiere postular a esta vacante?</label>
-        <input placeholder="Ingrese una descripcion" type="text" id="descripcionVacante" class="form-control" />
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-info" onclick='pustularVacante()'>Postularse</button>
-        <button type="button" class="btn btn-outline-danger" onclick='' data-bs-dismiss="modal">Cerrar</button>
-      </div>
     </div>
-  </div>
-</div>
-
+</section><!-- End Blog Section -->
 @section Scripts{
 <script src="~/js/Vacantes.js"></script>
 <script>
     window.onload = MostrarVacantes();
 </script>
-}
+        }

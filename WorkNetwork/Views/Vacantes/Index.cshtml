@@ -3,30 +3,46 @@
 @{
     ViewData["Title"] = "Vacantes";
 }
-<h1>Vacantes</h1>
 
-<button type="button" class='btn btn-primary mb-3' onclick='AbrirModal(modalCrearVacante)'>Crear Vacante</button>
+<!-- ======= Primera parte de la pagina ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-<table class='table'>
-    <thead>
-        <tr>
-            <th>
-                Vacante
-            </th>
-            <th>
-               Idioma 
-            </th>
-            <th>
-               Experiencia  
-            </th>
-            <th class="text-center">
-              Botones 
-            </th>
-        </tr>
-    </thead>
-    <tbody id='tbody-vacante'></tbody>
-</table>
+        <h2>Vacantes</h2>
+        <ol>
+            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
+            <li>Vacantes</li>
+        </ol>
 
+    </div>
+</div><!-- Fin primera parte -->
+
+<section>
+    <div class="container">
+
+        <button type="button" class='btn btn-primary mb-3' onclick='AbrirModal(modalCrearVacante)'>Crear Vacante</button>
+
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>
+                        Vacante
+                    </th>
+                    <th>
+                        Idioma
+                    </th>
+                    <th>
+                        Experiencia
+                    </th>
+                    <th class="text-center">
+                        Botones
+                    </th>
+                </tr>
+            </thead>
+            <tbody id='tbody-vacante'></tbody>
+        </table>
+    </div>
+</section>
 <!-- modal -->
 <div class="modal fade" id="modalCrearVacante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-lg modal-dialog modal-dialog-scrollable">

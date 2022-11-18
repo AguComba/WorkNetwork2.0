@@ -31,6 +31,10 @@
             return View();
         }
 
+        public IActionResult PerfilEmpresa() { 
+            return View();
+        }
+
         public IActionResult NewEmpresa()
         {
 
