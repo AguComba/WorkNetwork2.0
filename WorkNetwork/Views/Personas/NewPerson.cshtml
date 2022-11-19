@@ -4,94 +4,114 @@
     ViewData["Title"] = "Personas";
 }
 
-<h1>Registrar persona</h1>
+<!-- ======= Primera parte de la pagina ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
+        <h2>Ingresa tus datos</h2>
+        <ol>
+            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
+            <li>Persona</li>
+        </ol>
 
-<form class="form-control" id='frmFormulario' enctype='multipart/form-data'>
-    @*<div class="alert alert-danger "id='alertRubro'>El campo descripcion no puede estar vacio</div> *@
-    <input type="hidden" id='IdPersona' value='0' name='idPersona' />
-    <b>Nombre:</b>
-    <input placeholder="Ingrese su nombre" name='nombrePersona' type="text" id="NombrePersona" class="form-control" />
-    <b>Apellido:</b>
-    <input placeholder="Ingrese su apellido " type="text" name='apellidoPersona' id="ApellidoPersona"
-        class="form-control" />
-
-    <div>
-        <b> Tipo de Documento: </b>
-        <select id="tipoDoc" class="form-control" name="tipoDocumentoid">
-            <option> Tipo de documento</option>
-            <option value=0>DNI</option>
-            <option value=1>L.E.</option>
-        </select>
-        <b> Número de Documento: </b>
-        <input class="form-control" placeholder="Ingrese aqui su número de documento" type="tel" id="nroDNI"
-            name='numeroDocumento' maxlength="8" />
     </div>
+</div><!-- Fin primera parte -->
 
-    <b>Genero:</b>
-    <select id="genre" class="form-control" name="Generoid">
-        <option value=0>Masculino</option>
-        <option value=1>Femenino</option>
-        <option value=2>Otro</option>
-    </select>
+@*//HACER VALIDACIONES JS*@
+<div class="contact">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <form id="frmFormulario" enctype="multipart/form-data">
+            <div class="row gy-4 mt-1">
+                <input type="hidden" id="IdPersona" value=0 />
+                @*DATOS PERSONALES*@
+                <div class="col-lg-6">
+                    <div class="php-email-form">
+                        <h3 class="text-center">Datos de la Persona</h3>
+                        <div class="row">
+                            <div class="col-lg-6 form-group">
+                                <input type="text" name="nombrePersona" class="form-control" id="nombrePersona" placeholder="Nombre de la Persona" required>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <input type="text" class="form-control" name="apellidoPersona" id="apellidoPersona" placeholder="Apellido de la Persona" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" name="numeroDocumento" id="numeroDocumento" placeholder="Numero de documento" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de nacimiento</label>
+                            <input class="form-control" type="date" placeholder="Fecha de Nacimiento" id="fecNac" name='fechaNacimiento' />
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select"})
+                        </div>
 
-    <b> Fecha de Nacimiento: </b>
-    <input class="form-control" type="date" placeholder="Fecha de Nacimiento" id="fecNac" name='fechaNacimiento' />
-    <div class="row">
-        <div class='col-9 mb-3'>
-            <b>Domicilio</b>
-            <input id="Domicilio" type="text" class="form-control col-auto" placeholder="Calle"
-                name='domicilioPersona' />
-        </div>
-        <div class="col-3 mb-3">
-            <b>Numero</b>
-            <input id='numeroDomicilio' name="numeroDomicilio" type="tel" class="form-control col-sm-2"
-                placeholder="Número" maxlength="4" />
-        </div>
+                        <div class="form-group">
+                            @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select"})
+                        </div>
+
+                        <div class="form-group">
+                            @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select"})
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-group">
+                                <input type="text" name="domicilio" class="form-control" id="domicilio" placeholder="Domicilio" required>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-group">
+                                <input type="number" class="form-control" name="nro" id="nro" placeholder="Nro" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="telefono1Persona" id="telefono1Persona" placeholder="Telefono de la Persona" required>
+                        </div>
+                    </div>
+                </div><!-- Fin primer card-->
+                @*DATOS PARA EL PERFIL*@
+                <div class="col-lg-6">
+                    <div class="php-email-form">
+                        <h3 class="text-center">Datos para el perfil</h3>
+                        <div class="form-group">
+                            <input type="text" name="instagram" placeholder="Instagram" class="form-control" id="instagram" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="twitter" placeholder="Twitter" class="form-control" id="twitter" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="linkedin" placeholder="Linkedin" class="form-control" id="linkedin" />
+                        </div>
+
+                        <div class="form-group">
+                            <select id="generoID" class="form-select" name="generoID">
+                                <option selected disabled>Seleccione un genero...</option>
+                                <option value=0>Masculino</option>
+                                <option value=1>Femenino</option>
+                                <option value=2>Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Curriculum</label>
+                            <input type="file" name="curriculPersona" placeholder="Curriculum" class="form-control" id="curriculPersona" />
+                        </div>
+                        <div class="form-group">
+                            <label>Foto de perfil</label>
+                            <input type="file" name="personaFoto" placeholder="Foto de perfil" class="form-control" id="personaFoto" />
+                        </div>
+
+
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center"><button onclick="guardarPersona()" type="submit">Send Message</button></div>
+                    </div>
+                </div><!-- Fin segunda card-->
+            </div>
+        </form>
     </div>
-
-    <b>Situación Laboral:</b>
-    <select id="" class="form-control" name="SituacionLaboralid">
-        <option value=0>Desempleado</option>
-        <option value=1>Empleado</option>
-    </select>
-
-    <div>
-        <label class="control-label"><b> Paises: </b></label>
-        @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control mb-3"})
-    </div>
-    <div>
-        <label class="control-label"><b> Provincias: </b></label>
-        @Html.DropDownList("ProvinciaID", null, htmlAttributes: new {@class = "form-control mb-3"})
-    </div>
-    <div>
-        <label class="control-label"><b> Localidades: </b></label>
-        @Html.DropDownList("LocalidadID", null, htmlAttributes: new {@class = "form-control mb-3"})
-    </div>
-
-    <div>
-        <b>Telefono:</b>
-        <input type="tel" placeholder="Ingrese un numero de telefono" id="telefono1" asp-for="Telefono1" class="form-control" />
-        <b>Otro:</b> 
-        <input class="form-control" type="tel" placeholder="Otro (Opcional)" id="tel2" name="telefono2" />
-    </div>
-
-    <b>Estado Civil:</b>
-    <select id="estCivil" class="form-control mb-3" name='estadoCivil'>
-        <option value="0">Soltero/a</option>
-        <option value="1">Casado/a</option>
-        <option value="2">Divorciado/a</option>
-        <option value="3">Viudo/a</option>
-    </select>
-    <input type="number" name="cantidadHijos" class="form-control mb-3" id="cantidadHijos"
-        placeholder="Cantidad de Hijos" />
-    <input placeholder="Titulo Academico" name="tituloAcademico" class="form-control mb-3" type="text"
-        id="tituloAcadem" />
-    <input type="file" id="adjunto" name='adjunto' class="form-control" />
-    <button onclick="guardarPersona()">Guardar</button>
-</form>
-
+</div>
 
 @section Scripts {
-<script src="~/js/Personas.js"></script>
+    <script src="~/js/Personas.js"></script>
 }

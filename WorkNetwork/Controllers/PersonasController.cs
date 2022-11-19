@@ -57,7 +57,6 @@
                 personaMostrar.PersonaID = persona.PersonaID;
                 personaMostrar.NombrePersona = persona.NombrePersona;
                 personaMostrar.ApellidoPersona = persona.ApellidoPersona;
-                personaMostrar.TipoDocumento = persona.TipoDocumento;
                 personaMostrar.NumeroDocumento = persona.NumeroDocumento;
                 personaMostrar.FechaNacimiento = persona.FechaNacimiento;
                 personaMostrar.DomicilioPersona = persona.DomicilioPersona;
@@ -77,7 +76,6 @@
                 personaMostrar.PersonaID = persona.PersonaID;
                 personaMostrar.NombrePersona = persona.NombrePersona;
                 personaMostrar.ApellidoPersona = persona.ApellidoPersona;
-                personaMostrar.TipoDocumento = persona.TipoDocumento;
                 personaMostrar.NumeroDocumento = persona.NumeroDocumento;
                 personaMostrar.FechaNacimiento = persona.FechaNacimiento;
                 personaMostrar.DomicilioPersona = persona.DomicilioPersona;
@@ -119,66 +117,67 @@
         //--------------------PARAMETROS DEL GUARDAR PERSONA ---------------------------
         //Metodo para limpiar el numero telefonico
         static string ClearNumber(string numero) => new string((numero ?? "").Where(c => c == '+' || char.IsNumber(c)).ToArray());
-        public JsonResult GuardarPersona(int idPersona, string nombrePersona, string apellidoPersona, int tipoDocumentoid, int numeroDocumento, int Generoid, DateTime fechaNacimiento, string domicilioPersona, int numeroDomicilio, int SituacionLaboralid, int LocalidadID, string telefono1, string telefono2, string estadoCivil, int cantidadHijos, string tituloAcademico, IFormFile adjunto)
+        public JsonResult GuardarPersona(int IdPersona, string nombrePersona, string apellidoPersona, int numeroDocumento, DateTime fechaNacimiento, int LocalidadID, string domicilio, int nro, string telefono1Persona, string instagram, string twitter, string linkedin, int generoID, IFormFile curriculPersona, IFormFile personaFoto)
         {
+            byte[] cv = null;
+            string tipoCV= null;
             byte[] img = null;
             string tipoImg = null;
-            string domicilioCompleto = domicilioPersona + numeroDomicilio;
-            if (adjunto != null)
+            string domicilioCompleto = domicilio+ " "+ nro;
+            if (personaFoto != null)
             {
-                if (adjunto.Length > 0)
+                if (personaFoto.Length > 0)
                 {
                     using (var ms = new MemoryStream())
                     {
-                        adjunto.CopyTo(ms);
+                        personaFoto.CopyTo(ms);
                         img = ms.ToArray();
-                        tipoImg = adjunto.ContentType;
+                        tipoImg = personaFoto.ContentType;
+                    }
+                }
+            }
+            if (curriculPersona != null)
+            {
+                if (curriculPersona.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        curriculPersona.CopyTo(ms);
+                        cv = ms.ToArray();
+                        tipoCV = curriculPersona.ContentType;
                     }
                 }
             }
             bool resultado = true;
 
-            var situacionLaboralEnum = SituacionLaboral.Desempleado;
-            if (SituacionLaboralid is 1)
-            {
-                situacionLaboralEnum = SituacionLaboral.Empleado;
-            }
-
             var generoEnum = Genero.Masculino;
 
-            if (Generoid is 1)
+            if (generoID is 1)
             {
                 generoEnum = Genero.Femenino;
             }
-            if (Generoid is 2)
+            if (generoID is 2)
             {
                 generoEnum = Genero.Otro;
             }
 
-            var tipoDocumentoEnum = TipoDocumento.dni;
-            if (tipoDocumentoid is 1)
-            {
-                tipoDocumentoEnum = TipoDocumento.LE;
-            }
-            var telefono1Clean = ClearNumber(telefono1);
-            var telefono2Clean = ClearNumber(telefono2);
+            var telefono1Clean = ClearNumber(telefono1Persona);
 
             var persona = new Persona
             {
                 NombrePersona = nombrePersona,
                 ApellidoPersona = apellidoPersona,
-                TipoDocumento = tipoDocumentoEnum,
                 NumeroDocumento = numeroDocumento,
                 FechaNacimiento = fechaNacimiento,
-                DomicilioPersona = domicilioPersona,
                 LocalidadID = LocalidadID,
-                SituacionLaboral = situacionLaboralEnum,
-                CantidadHijos = cantidadHijos,
-                Genero = generoEnum,
+                DomicilioPersona = domicilioCompleto,
                 Telefono1 = telefono1Clean,
-                Telefono2 = telefono2Clean,
-                EstadoCivil = estadoCivil,
-                TituloAcademico = tituloAcademico,
+                Instagram = instagram,
+                Twitter = twitter,
+                Linkedin = linkedin,
+                Genero = generoEnum,
+                Curriculum = cv,
+                TipoCV = tipoCV,
                 TipoImagen = tipoImg,
                 Imagen = img
             };
@@ -198,36 +197,6 @@
             return Json(resultado);
         }
 
-
-        //        public JsonResult EliminarPersona(int PersonaID, int Elimina)
-        //{
-        // int resultado = 0;
-
-        //var pais = _context.Paises.Find(PaisID);
-        //if (pais != null)
-        //{
-        //  if (Elimina == 0)
-        //{
-        //  pais.Eliminado = false;
-        //_context.SaveChanges();
-        //}
-        //else
-        //{
-        //NO PUEDE ELIMINAR EMPRESA SI TIENE RUBROS ACTIVOS
-        //  var cantidadProvincias = (from o in _context.Provincias where o.PaisID == PaisID && o.Eliminado == false select o).Count();
-        //if (cantidadProvincias == 0)
-        //{
-        //  pais.Eliminado = true;
-        //_context.SaveChanges();
-        //}
-        //else
-        //{
-        //  resultado = 1;
-        //}
-        //}                              
-        // }
-
-        //return Json(resultado);
     }
 
 }
