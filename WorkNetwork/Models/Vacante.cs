@@ -11,6 +11,7 @@
         public int RubroID { get; set; }
         public int LocalidadID { get; set; }
         public DateTime FechaDeFinalizacion { get; set; }
+        public DateTime FechaCreacion { get; set; }
         public string? Idiomas { get; set; }
         public byte[]? Imagen { get; set; }
         public string? TipoImagen{ get; set; }
@@ -37,11 +38,13 @@
         public string? Nombre { get; set; }
         public string? Descripcion { get; set; }
         public string? ExperienciaRequerida { get; set; }
+        public string EmpresaNombre { get; set; }
         public int RubroID { get; set; }
         public string RubroNombre {get; set;}
         public int LocalidadID { get; set; }
         public string LocalidadNombre {get; set;}
         public DateTime FechaDeFinalizacion { get; set; }
+        public DateTime FechaCreacion { get; set; }
         public string? Idiomas { get; set; }
         public string? Estado { get; set; }
         public bool Eliminado { get; set; }

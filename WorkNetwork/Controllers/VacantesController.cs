@@ -36,13 +36,14 @@
 
         public IActionResult GestionDeVacante(int id)
         {
-            var vacante = _context.Vacante.Where(v=>v.VacanteID == id).FirstOrDefault();
-            var rubroNombre = _context.Rubro.Where(r=>r.RubroID == vacante.RubroID).Select(n => n.NombreRubro).Single();
+            var vacante = _context.Vacante.Where(v => v.VacanteID == id).FirstOrDefault();
+            var rubroNombre = _context.Rubro.Where(r => r.RubroID == vacante.RubroID).Select(n => n.NombreRubro).Single();
             var localidadNombre = _context.Localidad.Where(l => l.LocalidadID == vacante.LocalidadID).Select(l => l.NombreLocalidad).Single();
-            var vacanteEmpresa = _context.VacanteEmpresas.Where(v=> v.VacanteID == id).FirstOrDefault();
+            var vacanteEmpresa = _context.VacanteEmpresas.Where(v => v.VacanteID == id).FirstOrDefault();
             var imgEmpresa = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.Imagen).Single();
             var tipoImg = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.TipoImagen).Single();
-            if(imgEmpresa != null){
+            if (imgEmpresa != null)
+            {
                 var vacanteMostrar = new VacanteMostrar
                 {
                     VacanteID = vacante.VacanteID,
@@ -55,10 +56,12 @@
                     Idiomas = vacante.Idiomas,
                     Eliminado = vacante.Eliminado,
                     ImagenVacante = Convert.ToBase64String(imgEmpresa),
-                    TipoImagen = tipoImg 
+                    TipoImagen = tipoImg
                 };
                 ViewData["vacante"] = vacanteMostrar;
-            }else{
+            }
+            else
+            {
                 var vacanteMostrar = new VacanteMostrar
                 {
                     VacanteID = vacante.VacanteID,
@@ -85,7 +88,7 @@
             return View(vacante);
         }
 
-        
+
 
         [Authorize(Roles = "Empresa")]
         public JsonResult TablaVacasntes()
@@ -102,7 +105,8 @@
             foreach (var vacante in vacantes)
             {
                 var existeRelacion = vacantesEmpresa.Where(v => v.VacanteID == vacante.VacanteID).Count();
-                if(existeRelacion != 0){
+                if (existeRelacion != 0)
+                {
                     listaVacantes.Add(vacante);
                 }
             }
@@ -116,7 +120,7 @@
 
             var rolUsuario = _context.UserRoles.Where(u => u.UserId == usuarioActual).FirstOrDefault();
             var rolNombre = _context.Roles.Where(u => u.Id == rolUsuario.RoleId).Select(r => r.Name).FirstOrDefault();
-            var listaVacantes = new List<Vacante>();
+            var listaVacantes = new List<VacanteMostrar>();
             if (rolNombre is "Usuario")
             {
                 var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
@@ -127,7 +131,54 @@
                     var existePostulacion = vacantesPostuladas.Where(v => v.VacanteID == vacante.VacanteID).Count();
                     if (existePostulacion == 0)
                     {
-                        listaVacantes.Add(vacante);
+                        var empresaID = _context.VacanteEmpresas.Where(v => v.VacanteID == vacante.VacanteID).Select(e => e.EmpresaID).Single();
+                        var empresaNombre = _context.Empresa.Where(e => e.EmpresaID == empresaID).Select(e => e.RazonSocial).Single();
+                        var rubroNombre = _context.Rubro.Where(r => r.RubroID == vacante.RubroID).Select(n => n.NombreRubro).Single();
+                        var localidadNombre = _context.Localidad.Where(l => l.LocalidadID == vacante.LocalidadID).Select(l => l.NombreLocalidad).Single();
+                        var imgEmpresa = _context.Empresa.Where(e => e.EmpresaID == empresaID).Select(i => i.Imagen).Single();
+                        var tipoImg = _context.Empresa.Where(e => e.EmpresaID == empresaID).Select(i => i.TipoImagen).Single();
+                        if (imgEmpresa == null)
+                        {
+                            var vacanteMostrar = new VacanteMostrar
+                            {
+                                VacanteID = vacante.VacanteID,
+                                Nombre = vacante.Nombre,
+                                Descripcion = vacante.Descripcion,
+                                ExperienciaRequerida = vacante.ExperienciaRequerida,
+                                LocalidadNombre = localidadNombre,
+                                RubroNombre = rubroNombre,
+                                FechaDeFinalizacion = vacante.FechaDeFinalizacion,
+                                FechaCreacion = vacante.FechaCreacion,
+                                Idiomas = vacante.Idiomas,
+                                Eliminado = vacante.Eliminado,
+                                DisponibilidadHoraria = vacante.DisponibilidadHoraria,
+                                tipoModalidad = vacante.tipoModalidad,
+                                EmpresaNombre = empresaNombre
+                            };
+                            listaVacantes.Add(vacanteMostrar);
+                        }
+                        else
+                        {
+                            var vacanteMostrar = new VacanteMostrar
+                            {
+                                VacanteID = vacante.VacanteID,
+                                Nombre = vacante.Nombre,
+                                Descripcion = vacante.Descripcion,
+                                ExperienciaRequerida = vacante.ExperienciaRequerida,
+                                LocalidadNombre = localidadNombre,
+                                RubroNombre = rubroNombre,
+                                FechaDeFinalizacion = vacante.FechaDeFinalizacion,
+                                FechaCreacion = vacante.FechaCreacion,
+                                Idiomas = vacante.Idiomas,
+                                Eliminado = vacante.Eliminado,
+                                DisponibilidadHoraria = vacante.DisponibilidadHoraria,
+                                tipoModalidad = vacante.tipoModalidad,
+                                ImagenVacante = Convert.ToBase64String(imgEmpresa),
+                                TipoImagen = tipoImg,
+                                EmpresaNombre = empresaNombre
+                            };
+                            listaVacantes.Add(vacanteMostrar);
+                        }
                     }
                 }
             }
@@ -161,6 +212,7 @@
                     ExperienciaRequerida = experienciaRequerida,
                     LocalidadID = LocalidadID,
                     FechaDeFinalizacion = fechaFinalizacion,
+                    FechaCreacion = DateTime.Now.Date,
                     Idiomas = idiomaVacante,
                     RubroID = RubroID,
                     Estado = Estado,
@@ -189,10 +241,10 @@
             else
             {
                 var usuarioActual = _userManager.GetUserId(HttpContext.User);
-                var empresaUsuario = _context.EmpresaUsuarios.Where(u => u.UsuarioID == usuarioActual).Select(e=>e.UsuarioID);
+                var empresaUsuario = _context.EmpresaUsuarios.Where(u => u.UsuarioID == usuarioActual).Select(e => e.UsuarioID);
                 //si el usuario es igual que el usuario actual lo permito editar
 
-                if(_context.Vacante.Any(e => e.Nombre == tituloVacante && e.VacanteID != vacanteID))
+                if (_context.Vacante.Any(e => e.Nombre == tituloVacante && e.VacanteID != vacanteID))
                 {
                     resultado = false;
                 }

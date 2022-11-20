@@ -29,25 +29,14 @@
                 
             }
 
-            var personaMostrar = new PersonaMostrar();
             if (rolNombre is "Usuario"){
 
                 var personaUsuarioCount = (from p in _context.PersonaUsuarios where p.UsuarioID == usuarioActual select p).Count();
                 if(personaUsuarioCount == 0){
                     return RedirectToAction("NewPerson","Personas");
                 }
-                var personaActual = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
-                var persona = _context.Persona.Where(u => u.PersonaID == personaActual.PersonaID).FirstOrDefault();
-                personaMostrar.NombrePersona = persona.NombrePersona;
-                if(persona.Imagen != null){
-                    personaMostrar.ImagenPersona = persona.Imagen;
-                    personaMostrar.TipoImagen = persona.TipoImagen;
-                    personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
-                }
             }
-            
 
-            ViewData["persona"] = personaMostrar;
             return View();
         }
         public IActionResult Privacy()

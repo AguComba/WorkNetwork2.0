@@ -29,29 +29,29 @@ const CompletarTablaVacantes = () => {
         })
     }).fail(e => console.error('Error al cargar tabla localidades ', e));
 }
-function GestionarVacante(vacanteID){
-    location.href = "../../Vacantes/GestionDeVacante/"+vacanteID;
+function GestionarVacante(vacanteID) {
+    location.href = "../../Vacantes/GestionDeVacante/" + vacanteID;
 }
 
-function verPerfilPersona(personaID){
-    location.href = "../../Personas/PerfilUser/"+personaID;
+function verPerfilPersona(personaID) {
+    location.href = "../../Personas/PerfilUser/" + personaID;
 }
 
-const BuscarVacante = idVacante=>{
+const BuscarVacante = idVacante => {
     $('#vacanteID').val(idVacante);
-    let data = {vacanteID: idVacante};
+    let data = { vacanteID: idVacante };
     let url = '../../Vacantes/BuscarVacante'
-    $.post(url,data).done(vacante=>{
+    $.post(url, data).done(vacante => {
         $("#modalPostularVacante").modal("show");
         $('#tituloDeVacante').text(vacante.nombre);
     })
 }
 
-const EditarVacantes = vacanteID =>{
+const EditarVacantes = vacanteID => {
     $('#idVacante').val(vacanteID);
     const url = '../../Vacantes/BuscarVacante';
-    const data = {vacanteID:vacanteID}
-    $.post(url,data).done(vacante =>{
+    const data = { vacanteID: vacanteID }
+    $.post(url, data).done(vacante => {
         console.log(vacante)
         $('#modalCrearVacante').modal('show');
         $('#titulo-modal-vacante').text('Editar Vacante')
@@ -61,63 +61,56 @@ const EditarVacantes = vacanteID =>{
         //ver como recuperar los valores de pais y provincia
         $('#LocalidadID').val();
         $('#RubroID').val(vacante.rubroID);
-        $('#fechaFinalizacionVacante') .val(vacante.fechaDeFinalizacion)
+        $('#fechaFinalizacionVacante').val(vacante.fechaDeFinalizacion)
         $('#idiomaVacante').val(vacante.idiomas)
         $('#disponibilidadHoraria').val(vacante.disponibilidadHoraria)
         $('#modalidadVacante').val(vacante.tipoModalidad)
     })
-} 
+}
 
 const MostrarVacantes = () => {
     const url = '../../Vacantes/MostrarVantes';
     $.get(url).done(vacantes => {
         $('#cardVacantes').empty();
-        let color = '#e9e7fd'
-        $('#vacantesTotal').text(vacantes.length)
-        console.log()
+        console.log(vacantes)
         $.each(vacantes, function (index, vacante) {
-            let operecion = index % 2
             $('#cardVacantes').append(
                 `
-                <div class="project-box-wrapper">
-                <div class="project-box" style="background-color:${operecion==0?'#fee4cb':color} ">
-                    <div class="project-box-header">
-                        <span>${vacante.fechaDeFinalizacion}</span>
-                    </div>
-                    <div class="project-box-content-header">
-                        <p class="box-content-header">${vacante.nombre}</p>
-                        <p class="box-content-subheader">${vacante.descripcion}</p>
+                <div class="col-xl-4 col-md-6">
+                <div class="post-item position-relative h-100">
+
+                    <div class="post-img position-relative overflow-hidden">
+                        <img src="data:${vacante.tipoImagen};base64,${vacante.imagenVacante}" class="img-fluid" alt="imagen de la vacante">
+                        <span class="post-date">${vacante.fechaCreacion}</span>
                     </div>
 
-                    <div class="project-box-footer">
-                        <div class="participants">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"
-                                 alt="participant" />
-                            <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                                 alt="participant" />
-                            <button class="add-participant" style="color: #ff942e">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     width="12"
-                                     height="12"
-                                     viewBox="0 0 24 24"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     stroke-width="3"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round"
-                                     class="feather feather-plus">
-                                <path d="M12 5v14M5 12h14" />
-                                </svg>
-                            </button>
+                    <div class="post-content d-flex flex-column">
+
+                        <h3 class="post-title">${vacante.nombre}</h3>
+
+                        <div class="meta d-flex align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person"></i> <span class="ps-2">${vacante.empresaNombre}</span>
+                            </div>
+                            <span class="px-3 text-black-50">/</span>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-folder2"></i> <span class="ps-2">${vacante.rubroNombre}</span>
+                            </div>
                         </div>
-                        <div class="days-left" style="color: #ff942e">
-                            <button class="add-participant" onclick="BuscarVacante(${vacante.vacanteID})" style="color: #ff942e">Postularse</button> 
-                        </div>
+
+                        <p>
+                            ${vacante.descripcion}
+                        </p>
+
+                        <hr>
+
+                        <a href="" onclick = "${vacante.vacanteID}" class="readmore stretched-link"><span>Ver mas</span><i class="bi bi-arrow-right"></i></a>
+
                     </div>
+
                 </div>
             </div>
-
-`
+                `
             )
         })
     })
@@ -125,20 +118,20 @@ const MostrarVacantes = () => {
 
 
 
-const pustularVacante = ()=>{
+const pustularVacante = () => {
     const url = '../../PersonaVacante/postularVacante';
     const descripcion = $('#descripcionVacante').val();
     const vacanteID = $('#vacanteID').val();
-    const params = {vacanteID: vacanteID, descripcionVacante: descripcion};
+    const params = { vacanteID: vacanteID, descripcionVacante: descripcion };
     $.ajax({
-        type:"POST",
+        type: "POST",
         url: url,
         data: params,
-        success: vacante =>{
+        success: vacante => {
             $('#modalPostularVacante').modal('hide');
             MostrarVacantes();
         },
-        error: e=> console.log("F")
+        error: e => console.log("F")
     })
 }
 
