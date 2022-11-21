@@ -1,4 +1,5 @@
 ﻿@{
+    var infoEmpresa = ViewData["empresa"] as EmpresaMostrar;
     ViewData["Title"] = "Perfil";
 }
 
@@ -22,14 +23,13 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                        <h2>Kevin Anderson</h2>
-                        <h3>Web Designer</h3>
+                        <img src="data:@infoEmpresa.TipoImagen;base64,@infoEmpresa.Imagen" alt="Profile" class="rounded-circle">
+                        <h2>@infoEmpresa.RazonSocial</h2>
+                        <h3>@infoEmpresa.CUIT</h3>
                         <div class="social-links mt-2">
-                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            <a target="_blank" href="@infoEmpresa.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a target="_blank" href="@infoEmpresa.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a target="_blank" href="@infoEmpresa.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
                         </div>
                     </div>
                 </div>
@@ -42,66 +42,64 @@
                         <ul class="nav nav-tabs nav-tabs-bordered">
 
                             <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">General</button>
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar perfil</button>
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Configuracion</button>
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Cambiar constraseña</button>
                             </li>
 
                         </ul>
                         <div class="tab-content pt-2">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                <h5 class="card-title">About</h5>
-                                <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+                                <h5 class="card-title mt-3">Sobre nosotros</h5>
+                                <p class="small fst-italic">@infoEmpresa.Descripcion</p>
 
-                                <h5 class="card-title">Profile Details</h5>
+                                <h5 class="card-title">Detalles del perfil</h5>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                                    <div class="col-lg-3 col-md-4 label ">Razon Social</div>
+                                    <div class="col-lg-9 col-md-8">@infoEmpresa.RazonSocial</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Company</div>
-                                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                                    <div class="col-lg-3 col-md-4 label">Rubro</div>
+                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Rubro</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Job</div>
-                                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                                    <div class="col-lg-3 col-md-4 label">Localidad</div>
+                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Localidad</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Country</div>
-                                    <div class="col-lg-9 col-md-8">USA</div>
+                                    <div class="col-lg-3 col-md-4 label">Domicilio</div>
+                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Domicilio</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Address</div>
-                                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                                    <div class="col-lg-3 col-md-4 label">Telefono</div>
+                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Telefono1</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                    <div class="col-lg-3 col-md-4 label">Correo electronico</div>
+                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Correo</div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Email</div>
-                                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
-                                </div>
-
                             </div>
+
+                            <div class="tab-pane fade show profile-edit" id="profile-edit"> <h3 class="text-center mt-3">Esta funcion esta en desarrollo</h3> </div>
+                            <div class="tab-pane fade show profile-setting" id="profile-setting"> <h3>Esta funcion esta en desarrollo</h3> </div>
+                            <div class="tab-pane fade show profile-edit" id="profile-edit"> <h1>Esta funcion esta en desarrollo</h1> </div>
                         </div>
                     </div>
                 </div>

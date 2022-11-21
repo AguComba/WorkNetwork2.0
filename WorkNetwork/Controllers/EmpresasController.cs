@@ -31,7 +31,33 @@
             return View();
         }
 
-        public IActionResult PerfilEmpresa() { 
+        public IActionResult PerfilEmpresa() {
+            var empresaMostrar = new EmpresaMostrar();
+            var usuarioAcutal = _userManager.GetUserId(HttpContext.User);
+            var empresaUsuario = _context.EmpresaUsuarios.Where(u => u.UsuarioID == usuarioAcutal).FirstOrDefault();
+            var empresa = _context.Empresa.Where(e => e.EmpresaID == empresaUsuario.EmpresaID).FirstOrDefault();
+            var correo = _context.Users.Where(c => c.Id == empresaUsuario.UsuarioID).Select(c => c.Email).Single();
+            var localidadNombre = _context.Localidad.Where(l => l.LocalidadID == empresa.LocalidadID).Select(l => l.NombreLocalidad).Single();
+            var rubroNombre = _context.Rubro.Where(r=> r.RubroID == empresa.RubroID).Select(r=>r.NombreRubro).Single();
+            empresaMostrar.EmpresaID = empresa.EmpresaID;
+            empresaMostrar.RazonSocial = empresa.RazonSocial;
+            empresaMostrar.CUIT = empresa.CUIT;
+            empresaMostrar.Localidad = localidadNombre;
+            empresaMostrar.Telefono1 = empresa.Telefono1;
+            empresaMostrar.Descripcion = empresa.Descripcion;
+            empresaMostrar.Instagram = empresa.Instagram;
+            empresaMostrar.Twitter = empresa.Twitter;
+            empresaMostrar.Linkedin = empresa.Linkedin;
+            empresaMostrar.Domicilio = empresa.Domicilio;
+            empresaMostrar.Rubro = rubroNombre;
+            empresaMostrar.Correo = correo;
+            if(empresa.Imagen != null)
+            {
+                empresaMostrar.ImagenEmpresa = empresa.Imagen;
+                empresaMostrar.TipoImagen = empresa.TipoImagen;
+                empresaMostrar.Imagen = Convert.ToBase64String(empresa.Imagen);
+            }
+            ViewData["empresa"] = empresaMostrar;
             return View();
         }
 
