@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Vacantes";
+    var vacanteMostrar = ViewData["vacante"] as VacanteMostrar;
+}
+
+<!-- ======= Primera parte de la pagina ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>Vacantes</h2>
+        <ol>
+            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
+            <li>Detalle de Vacante</li>
+        </ol>
+
+    </div>
+</div><!-- Fin primera parte -->
+
+<section class="blog" id="blog">
+    <div class="container" data-aos="fade-up" data-aos-dalay="100">
+        <article class="blog-details">
+
+            <div class="post-img">
+                <img src="data:@vacanteMostrar.TipoImagen;base64,@vacanteMostrar.ImagenVacante" alt="" class="img-fluid">
+            </div>
+
+            <h2 class="title" style="text-transform:uppercase">@vacanteMostrar.Nombre</h2>
+
+            <div class="meta-top">
+                <ul>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion</time></a></li>
+                </ul>
+            </div><!-- End meta top -->
+
+            <div class="content">
+
+                <p>
+                    @vacanteMostrar.Descripcion
+                </p>
+                <p>Para esta vacante tendras que saber hablar muy bien en @vacanteMostrar.Idiomas</p>
+
+                <h3>Se requieren @vacanteMostrar.ExperienciaRequerida años de experiencia</h3>
+                <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion</span></h3>
+
+
+            </div><!-- End post content -->
+
+            <div class="meta-bottom">
+                <i class="bi bi-folder"></i>
+                <ul class="cats">
+                    <li><a style="cursor:pointer">@vacanteMostrar.RubroNombre</a></li>
+                </ul>
+
+                <i class="bi bi-tags"></i>
+                <ul class="tags">
+                    <li><a style="text-transform:uppercase; cursor:pointer" >@vacanteMostrar.DisponibilidadHoraria</a></li>
+                    <li><a style="text-transform:uppercase; cursor:pointer" >@vacanteMostrar.tipoModalidad</a></li>
+                </ul>
+            </div><!-- End meta bottom -->
+
+        </article><!-- End blog post -->
+        @*<div class="post-author d-flex align-items-center">
+            <img src="assets/img/blog/blog-author.jpg"
+            class="rounded-circle flex-shrink-0"
+            alt="" />
+            <div>
+            <h4>Jane Smith</h4>
+            <div class="social-links">
+            <a href="https://twitters.com/#">
+            <i class="bi bi-twitter"></i>
+            </a>
+            <a href="https://facebook.com/#">
+            <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://instagram.com/#">
+            <i class="biu bi-instagram"></i>
+            </a>
+            </div>
+            <p>
+            Itaque quidem optio quia voluptatibus dolorem dolor. Modi
+            eum sed possimus accusantium. Quas repellat voluptatem
+            officia numquam sint aspernatur voluptas. Esse et
+            accusantium ut unde voluptas.
+            </p>
+            </div>
+            </div>*@
+
+        <div class="comments">
+            <div class="reply-form">
+                <h4>Postularme</h4>
+                <p>
+                    Ingresa una brebe descripcion de porque te gustaria postular a este puesto...
+                </p>
+                    <div class="row">
+                        <input type="hidden" id="vacanteID" value="@vacanteMostrar.VacanteID"/>
+                        <div class="col form-group">
+                            <textarea name="comment"
+                                      class="form-control"
+                                      placeholder="Tu descripcion"
+                                      id="descripcionVacante"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" onclick="pustularVacante()"  class="btn btn-primary">
+                        Post Comment
+                    </button>
+            </div>
+        </div>
+        <!-- End blog comments -->
+
+
+    </div>
+</section>
+
+@section Scripts{
+<script src="~/js/Vacantes.js"></script>
+}

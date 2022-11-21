@@ -29,6 +29,11 @@ const CompletarTablaVacantes = () => {
         })
     }).fail(e => console.error('Error al cargar tabla localidades ', e));
 }
+
+function VacanteDetalle(vacanteID) {
+    location.href = "../../Vacantes/VacanteDetalle/" + vacanteID;
+}
+
 function GestionarVacante(vacanteID) {
     location.href = "../../Vacantes/GestionDeVacante/" + vacanteID;
 }
@@ -104,7 +109,7 @@ const MostrarVacantes = () => {
 
                         <hr>
 
-                        <a href="" onclick = "${vacante.vacanteID}" class="readmore stretched-link"><span>Ver mas</span><i class="bi bi-arrow-right"></i></a>
+                        <a href="#" onclick ="VacanteDetalle(${vacante.vacanteID})" class="readmore stretched-link"><span>Ver mas</span><i class="bi bi-arrow-right"></i></a>
 
                     </div>
 
@@ -119,6 +124,7 @@ const MostrarVacantes = () => {
 
 
 const pustularVacante = () => {
+    console.log("llego al js")
     const url = '../../PersonaVacante/postularVacante';
     const descripcion = $('#descripcionVacante').val();
     const vacanteID = $('#vacanteID').val();
@@ -128,8 +134,7 @@ const pustularVacante = () => {
         url: url,
         data: params,
         success: vacante => {
-            $('#modalPostularVacante').modal('hide');
-            MostrarVacantes();
+            location.href = "/";
         },
         error: e => console.log("F")
     })

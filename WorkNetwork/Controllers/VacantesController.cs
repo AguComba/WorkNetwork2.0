@@ -33,6 +33,60 @@
 
             return View();
         }
+        public IActionResult VacanteDetalle(int id)
+        {
+            var vacante = _context.Vacante.Where(v => v.VacanteID == id).FirstOrDefault();
+            var rubroNombre = _context.Rubro.Where(r => r.RubroID == vacante.RubroID).Select(n => n.NombreRubro).Single();
+            var localidadNombre = _context.Localidad.Where(l => l.LocalidadID == vacante.LocalidadID).Select(l => l.NombreLocalidad).Single();
+            var vacanteEmpresa = _context.VacanteEmpresas.Where(v => v.VacanteID == id).FirstOrDefault();
+            var imgEmpresa = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.Imagen).Single();
+            var tipoImg = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.TipoImagen).Single();
+            var empresaNombre = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(r => r.RazonSocial).Single();
+            if (imgEmpresa != null)
+            {
+                var vacanteMostrar = new VacanteMostrar
+                {
+                    VacanteID = vacante.VacanteID,
+                    Nombre = vacante.Nombre,
+                    Descripcion = vacante.Descripcion,
+                    ExperienciaRequerida = vacante.ExperienciaRequerida,
+                    LocalidadNombre = localidadNombre,
+                    RubroNombre = rubroNombre,
+                    FechaDeFinalizacion = vacante.FechaDeFinalizacion,
+                    Idiomas = vacante.Idiomas,
+                    Eliminado = vacante.Eliminado,
+                    ImagenVacante = Convert.ToBase64String(imgEmpresa),
+                    TipoImagen = tipoImg,
+                    EmpresaNombre = empresaNombre,
+                    FechaCreacion = vacante.FechaCreacion,
+                    DisponibilidadHoraria = vacante.DisponibilidadHoraria,
+                    tipoModalidad = vacante.tipoModalidad
+                };
+                ViewData["vacante"] = vacanteMostrar;
+            }
+            else
+            {
+                var vacanteMostrar = new VacanteMostrar
+                {
+                    VacanteID = vacante.VacanteID,
+                    Nombre = vacante.Nombre,
+                    Descripcion = vacante.Descripcion,
+                    ExperienciaRequerida = vacante.ExperienciaRequerida,
+                    LocalidadNombre = localidadNombre,
+                    RubroNombre = rubroNombre,
+                    FechaDeFinalizacion = vacante.FechaDeFinalizacion,
+                    Idiomas = vacante.Idiomas,
+                    Eliminado = vacante.Eliminado,
+                    EmpresaNombre = empresaNombre,
+                    FechaCreacion = vacante.FechaCreacion,
+                    DisponibilidadHoraria = vacante.DisponibilidadHoraria,
+                    tipoModalidad = vacante.tipoModalidad
+                };
+                ViewData["vacante"] = vacanteMostrar;
+            }
+
+            return View();
+        }
 
         public IActionResult GestionDeVacante(int id)
         {
