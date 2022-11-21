@@ -53,17 +53,31 @@
                 var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
                 //SEGUN EL ID DE LA PERSONA OBTENGO TODA LA COLUMNA
                 var persona = _context.Persona.Where(u => u.PersonaID == personaUsuario.PersonaID).FirstOrDefault();
-                var localidadNombre = _context.Localidad.Where(u => u.LocalidadID == persona.LocalidadID).Select(l => l.NombreLocalidad);
+                var correo = _context.Users.Where(u => u.Id == personaUsuario.UsuarioID).Select(c => c.Email).Single();
+                var localidadNombre = _context.Localidad.Where(u => u.LocalidadID == persona.LocalidadID).Select(l => l.NombreLocalidad).Single();
                 personaMostrar.PersonaID = persona.PersonaID;
                 personaMostrar.NombrePersona = persona.NombrePersona;
                 personaMostrar.ApellidoPersona = persona.ApellidoPersona;
+                personaMostrar.Telefono1 = persona.Telefono1;
                 personaMostrar.NumeroDocumento = persona.NumeroDocumento;
                 personaMostrar.FechaNacimiento = persona.FechaNacimiento;
                 personaMostrar.DomicilioPersona = persona.DomicilioPersona;
-                if(persona.Imagen!=null){
-                personaMostrar.ImagenPersona = persona.Imagen;
-                personaMostrar.TipoImagen = persona.TipoImagen;
-                personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                personaMostrar.Instagram = persona.Instagram;
+                personaMostrar.Linkedin = persona.Linkedin;
+                personaMostrar.Twitter = persona.Twitter;
+                personaMostrar.LocalidadNombre = localidadNombre;
+                personaMostrar.Correo = correo;
+                if (persona.Imagen != null)
+                {
+                    personaMostrar.ImagenPersona = persona.Imagen;
+                    personaMostrar.TipoImagen = persona.TipoImagen;
+                    personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                }
+                if (persona.Curriculum != null)
+                {
+                    personaMostrar.Curriculum = persona.Curriculum;
+                    personaMostrar.TipoCV = persona.TipoCV;
+                    personaMostrar.CurriculumString = Convert.ToBase64String(persona.Curriculum);
                 }
 
                 personaMostrar.Eliminado = persona.Eliminado;
@@ -79,10 +93,11 @@
                 personaMostrar.NumeroDocumento = persona.NumeroDocumento;
                 personaMostrar.FechaNacimiento = persona.FechaNacimiento;
                 personaMostrar.DomicilioPersona = persona.DomicilioPersona;
-                if(persona.Imagen !=null){
-                personaMostrar.ImagenPersona = persona.Imagen;
-                personaMostrar.TipoImagen = persona.TipoImagen;
-                personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
+                if (persona.Imagen != null)
+                {
+                    personaMostrar.ImagenPersona = persona.Imagen;
+                    personaMostrar.TipoImagen = persona.TipoImagen;
+                    personaMostrar.Imagen = Convert.ToBase64String(persona.Imagen);
                 }
                 personaMostrar.Eliminado = persona.Eliminado;
             }
@@ -120,10 +135,10 @@
         public JsonResult GuardarPersona(int IdPersona, string nombrePersona, string apellidoPersona, int numeroDocumento, DateTime fechaNacimiento, int LocalidadID, string domicilio, int nro, string telefono1Persona, string instagram, string twitter, string linkedin, int generoID, IFormFile curriculPersona, IFormFile personaFoto)
         {
             byte[] cv = null;
-            string tipoCV= null;
+            string tipoCV = null;
             byte[] img = null;
             string tipoImg = null;
-            string domicilioCompleto = domicilio+ " "+ nro;
+            string domicilioCompleto = domicilio + " " + nro;
             if (personaFoto != null)
             {
                 if (personaFoto.Length > 0)

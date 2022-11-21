@@ -7,9 +7,9 @@
         public string NombrePersona { get; set; }
         public string ApellidoPersona { get; set; }
         public int NumeroDocumento { get; set; }
-        public string Instagram { get; set; }
-        public string Linkedin { get; set; }
-        public string Twitter { get; set; }
+        public string? Instagram { get; set; }
+        public string? Linkedin { get; set; }
+        public string? Twitter { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string? DomicilioPersona { get; set; }
         public int LocalidadID { get; set; }
@@ -41,7 +41,8 @@
         public DateTime FechaNacimiento { get; set; }
         public string? DomicilioPersona { get; set; }
         public int LocalidadID { get; set; }
-        public virtual Localidad Localidad { get; set; }
+        public string LocalidadNombre { get; set; }
+        public string Correo { get; set; }
         public Genero Genero { get; set; }
         public string Telefono1 { get; set; }
         public string? EstadoCivil { get; set; }
