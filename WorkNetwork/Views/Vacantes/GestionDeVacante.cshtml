@@ -1,218 +1,97 @@
-@model WorkNetwork.Models.Vacante
 @{
-    var vacante = ViewData["vacante"] as VacanteMostrar;
-}
-<style>
-
-span.s1 {
-  position: absolute;
-  top: 0;
-  font-size: 15rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: #3C4447;
+    ViewData["Title"] = "Gestion de vacante";
+    var vacanteMostrar = ViewData["vacante"] as VacanteMostrar;
 }
 
-span.s2 {
-  font-weight: 800;
-  position: absolute;
-  /* bottom: 0; */
-  right: 0;
-  font-size: 15rem;
-  text-transform: uppercase;
-  color: #3C4447;
-  bottom: -250px;
-}
+<!-- ======= Primera parte de la pagina ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-/*My hum... body.. yeah..*/
-/* body {
-  background-color: #353B3F;
-  font-family: "Roboto", sans-serif;
-} */
+        <h2>Gestion de vacante</h2>
+        <ol>
+            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
+            <li><a asp-area="" asp-controller="vacantes" asp-action="index">Vacantes</a></li>
+            <li>Detalle de Vacante</li>
+        </ol>
 
-/* The card */
-.card2 {
-  position: relative;
-  height: 450px; 
-  width: 1000px;
-  margin: 72px auto;
-  background-color: #FFF;
-  -webkit-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
-}
+    </div>
+</div><!-- Fin primera parte -->
 
-/* Image on the left side */
-.thumbnail {
-  float: left;
-  position: relative;
-  left: 30px;
-  top: -30px;
-  height: 320px;
-  width: 530px;
-  -webkit-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
-  overflow: hidden;
-}
+<section class="blog" id="blog">
+    <div class="container" data-aos="fade-up" data-aos-dalay="100">
+        <article class="blog-details">
 
-/*object-fit: cover;*/
-/*object-position: center;*/
-img.left {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  height: auto;
-  width: 100%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
+            <div class="post-img">
+                <img src="data:@vacanteMostrar.TipoImagen;base64,@vacanteMostrar.ImagenVacante" alt="" class="img-fluid">
+            </div>
 
-/* Right side of the card */
-.right {
-  margin-left: 590px;
-  margin-right: 20px;
-}
+            <h2 class="title" style="text-transform:uppercase">@vacanteMostrar.Nombre</h2>
 
-.h11 {
-  padding-top: 15px;
-  font-size: 1.3rem;
-  color: #4B4B4B;
-}
+            <div class="meta-top">
+                <ul>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion</time></a></li>
+                </ul>
+            </div><!-- End meta top -->
 
-.separator {
-  margin-top: 10px;
-  border: 1px solid #C3C3C3;
+            <div class="content">
 
-}
+                <p>
+                    @vacanteMostrar.Descripcion
+                </p>
+                <p>Para esta vacante tendras que saber hablar muy bien en @vacanteMostrar.Idiomas</p>
 
-.p2 {
-  text-align: justify;
-  padding-top: 10px;
-  font-size: 0.95rem;
-  line-height: 150%;
-  color: #4B4B4B;
-  padding-bottom: 20px;
-}
-
-/* DATE of release*/
-.h55 {
-  position: absolute;
-  left: 30px;
-  bottom: 100px;
-  font-size: 2rem;
-  color: rgb(0 0 0 / 50%);
-}
-
-.h66 {
-  position: absolute;
-  left: 30px;
-  bottom: 60px;
-  font-size: 2rem;
-  color: rgb(0 0 0 / 50%);
-}
-
-.btn-card2{
-  
-  position: fixed;
-  color: #fff;
-  font-weight: 500;
-  font-size: 14px;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  text-align: center;
-  border: none;
-  clip-path: polygon(7% 0, 93% 0, 100% 50%, 93% 100%, 7% 100%, 0 50%);
-  background-color: #000000;
-  background-image: radial-gradient(200% 70% at center 20%, rgba(48,44,45,1) -30%, rgba(50,46,47,1) 49%, rgba(22,18,19,1) 50%, rgba(22,18,19,1) 150%);
-  background-repeat: no-repeat;
-  transition: background-position-y ease-in-out 250ms;
-  cursor: pointer;
-  top: 10px;
-  left: 65px
-}
-.btn-card2:hover {
-  background-position-y: -50px;
-}
-
-.btn-card2:active {
-  transform: scale(0.99);
-}
-
-.asddd{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-left: 120px;
-  padding-right: 120px;
-  margin-top: -60px;
-}
-
-.h111{
-  padding-top: 15px;
-  font-size: 1.3rem;
-  color: black;
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-
-.hhh{
-  
-    position: absolute;
-    left: 30px;
-    bottom: 30px;
-    font-size: 1.2rem;
-    color: rgb(0 0 0 / 50%);
-  
-}
-
-</style>
-
-<div class="container">
-<h1 class="mb-3 text-center">Gestion de vacantes</h1>
-<div id="vacanteGestion">
-        <div class="card2">
-          <div class="thumbnail">
-            <img class="left" src="data:@vacante.TipoImagen;base64,@vacante.ImagenVacante" alt="@vacante.Nombre" />
-          </div>
-          <div class="right">
-            <h1 class="h11">
-              @vacante.Nombre
-            </h1>
-            <div class="separator"></div>
-            <p class="p2">
-              @vacante.Descripcion 
-            </p>
-          </div>
-          <h6 class="h66">Postulaciones: <b></b></h6>
-        </div>
-</div>
+                <h3>Se requieren @vacanteMostrar.ExperienciaRequerida años de experiencia</h3>
+                <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion</span></h3>
 
 
-<h3>Lista de postulantes:</h3>
-<table class="table">
-    <thead class="table-dark">
-        <tr>
-            <th>Nombre y Apellido</th>
-            <th>Telefono</th>
-            <th>Botones</th>
-        </tr>
-    </thead>
-    <tbody>
-      @foreach (var persona in ViewBag.PersonasMostrar)
-      {
-      <tr>
-          <td>@persona.NombrePersona @persona.ApellidoPersona</td>
-          <td>@persona.Telefono1</td>
-          <td class="text-center"><button class="btn btn-sm btn-dark" onclick="verPerfilPersona(@persona.PersonaID)" >Ver perfil</button> <button>Ver CV</button></td>
-      </tr> 
-      }
-    </tbody>
-</table>
-</div>
+            </div><!-- End post content -->
+
+            <div class="meta-bottom">
+                <i class="bi bi-folder"></i>
+                <ul class="cats">
+                    <li><a style="cursor:pointer">@vacanteMostrar.RubroNombre</a></li>
+                </ul>
+
+                <i class="bi bi-tags"></i>
+                <ul class="tags">
+                    <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.DisponibilidadHoraria</a></li>
+                    <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.tipoModalidad</a></li>
+                </ul>
+            </div><!-- End meta bottom -->
+
+        </article><!-- End blog post -->
+        <h4 class="comments-count mt-5">Postulantes: </h4>
+        @foreach (var persona in ViewBag.PersonasMostrar)
+        {
+            <div class="post-author d-flex align-items-center">
+                <img src="data:@persona.TipoImagen;base64,@persona.Imagen"
+                 class="rounded-circle flex-shrink-0"
+                 alt="" />
+                <div>
+                    <h4 class="text-center"><a href="#" onclick="verPerfilPersona(@persona.PersonaID)">@persona.NombrePersona @persona.ApellidoPersona</a></h4>
+                    <div class="social-links">
+                        <a target="_blank" href="@persona.Twitter">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a target="_blank" href="@persona.Linkedin">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a target="_blank" href="@persona.Instagram">
+                            <i class="biu bi-instagram"></i>
+                        </a>
+                    </div>
+                    <p>
+                        
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+
 
 @section Scripts{
 <script src="~/js/Vacantes.js"></script>

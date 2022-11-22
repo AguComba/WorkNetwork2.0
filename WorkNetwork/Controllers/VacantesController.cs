@@ -96,6 +96,7 @@
             var vacanteEmpresa = _context.VacanteEmpresas.Where(v => v.VacanteID == id).FirstOrDefault();
             var imgEmpresa = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.Imagen).Single();
             var tipoImg = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.TipoImagen).Single();
+            var empresaNombre = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(r => r.RazonSocial).Single();
             if (imgEmpresa != null)
             {
                 var vacanteMostrar = new VacanteMostrar
@@ -110,7 +111,11 @@
                     Idiomas = vacante.Idiomas,
                     Eliminado = vacante.Eliminado,
                     ImagenVacante = Convert.ToBase64String(imgEmpresa),
-                    TipoImagen = tipoImg
+                    TipoImagen = tipoImg,
+                    EmpresaNombre = empresaNombre,
+                    FechaCreacion = vacante.FechaCreacion,
+                    DisponibilidadHoraria = vacante.DisponibilidadHoraria,
+                    tipoModalidad = vacante.tipoModalidad
                 };
                 ViewData["vacante"] = vacanteMostrar;
             }
@@ -127,6 +132,10 @@
                     FechaDeFinalizacion = vacante.FechaDeFinalizacion,
                     Idiomas = vacante.Idiomas,
                     Eliminado = vacante.Eliminado,
+                    EmpresaNombre = empresaNombre,
+                    FechaCreacion = vacante.FechaCreacion,
+                    DisponibilidadHoraria = vacante.DisponibilidadHoraria,
+                    tipoModalidad = vacante.tipoModalidad
                 };
                 ViewData["vacante"] = vacanteMostrar;
             }
@@ -139,7 +148,7 @@
                 personas.Add(persona);
             }
             ViewBag.PersonasMostrar = personas.ToList();
-            return View(vacante);
+            return View();
         }
 
 
