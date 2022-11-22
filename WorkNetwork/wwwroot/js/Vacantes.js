@@ -195,6 +195,11 @@ const AbrirModal = () => {
     $('#modalCrearVacante').modal('show');
 }
 
+const AbrirModalCV = (id) => {
+
+    $(`#cv-${id}`).modal('show')
+}
+
 const VaciarFormulario = () => {
     $('#idVacante').val(0);
     $('#idEmpresa').val(0);

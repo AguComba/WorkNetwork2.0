@@ -52,6 +52,7 @@
         public byte[] Curriculum { get; set; }
         public string TipoCV { get; set; }
         public string CurriculumString { get; set; }
+        public string ComentarioVacante { get; set; }
         public bool Eliminado { get; set; }
     }
 }

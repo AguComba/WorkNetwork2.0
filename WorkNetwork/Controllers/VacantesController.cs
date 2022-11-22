@@ -33,6 +33,22 @@
 
             return View();
         }
+        public IActionResult VerPDF(int id)
+        {
+            var persona = _context.Persona.Where(p => p.PersonaID == id).FirstOrDefault();
+            if (persona.Curriculum != null)
+            {
+                var personaMostrar = new PersonaMostrar
+                {
+                    Curriculum = persona.Curriculum,
+                    TipoCV = persona.TipoCV,
+                    CurriculumString = Convert.ToBase64String(persona.Curriculum)
+                };
+                ViewData["persona"] = personaMostrar;
+            }
+
+            return View();
+        }
         public IActionResult VacanteDetalle(int id)
         {
             var vacante = _context.Vacante.Where(v => v.VacanteID == id).FirstOrDefault();
@@ -140,12 +156,43 @@
                 ViewData["vacante"] = vacanteMostrar;
             }
 
-            var personas = new List<Persona>();
+            var personas = new List<PersonaMostrar>();
             var personasVacante = _context.PersonaVacante.Where(v => v.VacanteID == id).ToList();
             foreach (var personaVacante in personasVacante)
             {
                 var persona = _context.Persona.Where(p => p.PersonaID == personaVacante.PersonaID).Single();
-                personas.Add(persona);
+                var comentarioVacante = _context.PersonaVacante.Where(v => v.PersonaID == persona.PersonaID && v.VacanteID == id).Select(c => c.DescripcionDePersona).Single();
+                if (persona.Imagen != null)
+                {
+                    var personaMostrar = new PersonaMostrar
+                    {
+                        PersonaID = persona.PersonaID,
+                        NombrePersona = persona.NombrePersona,
+                        ApellidoPersona = persona.ApellidoPersona,
+                        Instagram = persona.Instagram,
+                        Linkedin = persona.Linkedin,
+                        Twitter = persona.Twitter,
+                        ImagenPersona = persona.Imagen,
+                        TipoImagen = persona.TipoImagen,
+                        Imagen = Convert.ToBase64String(persona.Imagen),
+                        ComentarioVacante = comentarioVacante,
+                    };
+                    personas.Add(personaMostrar);
+                }
+                else
+                {
+                    var personaMostrar = new PersonaMostrar
+                    {
+                        PersonaID = persona.PersonaID,
+                        NombrePersona = persona.NombrePersona,
+                        ApellidoPersona = persona.ApellidoPersona,
+                        Instagram = persona.Instagram,
+                        Linkedin = persona.Linkedin,
+                        Twitter = persona.Twitter,
+                        ComentarioVacante = comentarioVacante,
+                    };
+                    personas.Add(personaMostrar);
+                }
             }
             ViewBag.PersonasMostrar = personas.ToList();
             return View();

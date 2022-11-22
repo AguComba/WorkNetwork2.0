@@ -69,7 +69,7 @@
                  class="rounded-circle flex-shrink-0"
                  alt="" />
                 <div>
-                    <h4 class="text-center"><a href="#" onclick="verPerfilPersona(@persona.PersonaID)">@persona.NombrePersona @persona.ApellidoPersona</a></h4>
+                    <h4 class="text-center">@persona.NombrePersona @persona.ApellidoPersona</h4>
                     <div class="social-links">
                         <a target="_blank" href="@persona.Twitter">
                             <i class="bi bi-twitter"></i>
@@ -80,10 +80,65 @@
                         <a target="_blank" href="@persona.Instagram">
                             <i class="biu bi-instagram"></i>
                         </a>
+                        <a target="_blank" href="/Vacantes/VerPDF/@persona.PersonaID">
+                            <i class="biu bi-paperclip"></i>
+                        </a>
                     </div>
                     <p>
-                        
+                        @persona.ComentarioVacante
                     </p>
+                </div>
+            </div>
+
+            <div class="modal fade" id="cv-@persona.PersonaID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-lg modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="titulo-modal-vacante">Crear Vacante</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick='VaciarFormulario()'></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="contact">
+
+                                <form class="php-email-form" id='nuevaVacante'>
+                                    @*<div class="alert alert-danger "id='alertRubro'>El campo descripcion no puede estar vacio</div> *@
+                                    <input type="hidden" id='idVacante' name='vacanteID' value=0 />
+                                    <input placeholder="Ingrese un titulo" type="text" id="tituloVacante" name='tituloVacante' class="form-control mb-3" />
+                                    <input placeholder="Ingrese una descripcion" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" />
+                                    <input placeholder="Experiencia requerida" type="number" id="expRequeridaVacante" name='experienciaRequerida' class='form-control mb-3' />
+                                    <div>
+                                        <label class="control-label"><b> Fecha de finalizacion: </b></label>
+                                        <input type="date" class="form-control mb-3" name='fechaFinalizacion' id="fechaFinalizacionVacante">
+                                    </div>
+                                    <div>
+                                        <label class="control-label"><b>Idioma requerido</b></label>
+                                        <input placeholder='Ingrese que idioma es requerido' type='text' name='idiomaVacante' id="idiomaVacante" class='form-control mb-3' />
+                                    </div>
+                                    <div>
+                                        <label class="control-label"><b> Disponibilidad horaria: </b></label>
+                                        <select id='disponibilidadHoraria' name='disponibilidadHoraria' class="form-control mb-3">
+                                            <option selected disabled>Seleccione un campo</option>
+                                            <option value=0>Fulltime</option>
+                                            <option value=1>Partime</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="control-label"><b>Modalidad: </b></label>
+                                        <select id='modalidadVacante' name='modalidadVacante' class="form-control mb-3">
+                                            <option selected disabled>Seleccione un campo</option>
+                                            <option value=0>Presencial</option>
+                                            <option value=1>Semi-presencial</option>
+                                            <option value=2>Remoto</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
+                            <button class="btn btn-login" onclick='GuardarVacante()'>Crear</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
