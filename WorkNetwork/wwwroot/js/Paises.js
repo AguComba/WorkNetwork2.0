@@ -10,7 +10,7 @@ const CompletarTablaPaises = async () => {
                 
                 let claseEliminado = '';
                 let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarPais(${pais.paisID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm' onclick = "EliminarPais(${pais.paisID},1)"><i class="bi bi-trash3"></i> Eliminar</btn>`
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm' onclick = "EliminarPais(${pais.paisID},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
 
                 if (pais.eliminado) {
                     claseEliminado = 'table-danger';
@@ -19,7 +19,7 @@ const CompletarTablaPaises = async () => {
                 }
                 $('#tbody-paises').append(`<tr class= 'tabla-hover ${claseEliminado} '>
                         <td class='texto'>${pais.nombrePais}</td>
-                        <td class = 'text-center'>
+                        <td class = 'text-end'>
                             ${botones}
                         </td>
                     </tr>`
@@ -31,8 +31,8 @@ const CompletarTablaPaises = async () => {
 
 const AbrirModal = () => {
     $('#idPais').val(0);
-    $('#titulo-modal-pais').text('Nuevo Pais');
-    $('#bottonEdit').text('Crear');
+    $('#titulo-modal-pais').text('Agregar nuevo país');
+    $('#bottonEdit').text('Agregar');
     $('#alertPais').addClass('visually-hidden');
     $('#modalCrearPais').modal('show');
 }
@@ -49,7 +49,7 @@ const GuardarPais = () => {
     let alertPais = $('#alertPais')
     let url = '../../Paises/CrearPais';
     let data = { NombrePais: nombrePais, PaisID: idPais };
-    $('#bottonEdit').text('Crear');
+    $('#bottonEdit').text('Agregar');
 
     if (nombrePais != '' && nombrePais != null) {
         $.post(url, data).done((resultado) =>{
@@ -60,7 +60,7 @@ const GuardarPais = () => {
             if (resultado == 2) {
                 alertPais.removeClass('visually-hidden').text('El pais ingresado ya existe');
             }
-        }).fail(err => console.log('error en crear Pais: ', err));
+        }).fail(err => console.log('error en agregar el Pais: ', err));
 
     } else alertPais.removeClass('visually-hidden').text('El campo nombre no puede estar vacio');
     

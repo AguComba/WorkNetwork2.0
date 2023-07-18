@@ -39,9 +39,14 @@
         public string Twitter { get; set; }
         public int NumeroDocumento { get; set; }
         public DateTime FechaNacimiento { get; set; }
+        public string FechaNacimientoString { get; set; }
         public string? DomicilioPersona { get; set; }
         public int LocalidadID { get; set; }
         public string LocalidadNombre { get; set; }
+        public int ProvinciaID { get; set; }
+        public string ProvinciaNombre { get; set; }
+        public int PaisID { get; set; }
+        public string PaisNombre { get; set; }
         public string Correo { get; set; }
         public Genero Genero { get; set; }
         public string Telefono1 { get; set; }

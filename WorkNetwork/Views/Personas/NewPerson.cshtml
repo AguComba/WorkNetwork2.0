@@ -8,14 +8,15 @@
 <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-        <h2>Ingresa tus datos</h2>
+        <h2>Ingresa sus datos</h2>
         <ol>
             <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
             <li>Persona</li>
         </ol>
 
     </div>
-</div><!-- Fin primera parte -->
+</div>
+<!-- Fin primera parte -->
 
 @*//HACER VALIDACIONES JS*@
 <div class="contact">
@@ -29,14 +30,14 @@
                         <h3 class="text-center">Datos de la Persona</h3>
                         <div class="row">
                             <div class="col-lg-6 form-group">
-                                <input type="text" name="nombrePersona" class="form-control" id="nombrePersona" placeholder="Nombre de la Persona" required>
+                                <input type="text" name="nombrePersona" class="form-control" id="nombrePersona" placeholder="Nombre" required>
                             </div>
                             <div class="col-lg-6 form-group">
-                                <input type="text" class="form-control" name="apellidoPersona" id="apellidoPersona" placeholder="Apellido de la Persona" required>
+                                <input type="text" class="form-control" name="apellidoPersona" id="apellidoPersona" placeholder="Apellido" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" name="numeroDocumento" id="numeroDocumento" placeholder="Numero de documento" required>
+                            <input type="number" class="form-control" name="numeroDocumento" id="numeroDocumento" placeholder="Número de documento" required maxlength ="8">
                         </div>
                         <div class="form-group">
                             <label>Fecha de nacimiento</label>
@@ -58,15 +59,18 @@
                             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-group">
                                 <input type="text" name="domicilio" class="form-control" id="domicilio" placeholder="Domicilio" required>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-group">
+                          @*  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-group">
                                 <input type="number" class="form-control" name="nro" id="nro" placeholder="Nro" required>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="telefono1Persona" id="telefono1Persona" placeholder="Telefono de la Persona" required>
+                            <input type="text" class="form-control" name="telefono1Persona" id="telefono1Persona" placeholder="Teléfono" required>
                         </div>
                     </div>
-                </div><!-- Fin primer card-->
+
+                </div>
+                <!-- Fin primer card-->
+                
                 @*DATOS PARA EL PERFIL*@
                 <div class="col-lg-6">
                     <div class="php-email-form">
@@ -83,7 +87,7 @@
 
                         <div class="form-group">
                             <select id="generoID" class="form-select" name="generoID">
-                                <option selected disabled>Seleccione un genero...</option>
+                                <option selected disabled>Seleccione un género...</option>
                                 <option value=0>Masculino</option>
                                 <option value=1>Femenino</option>
                                 <option value=2>Otro</option>
@@ -95,7 +99,7 @@
                         </div>
                         <div class="form-group">
                             <label>Foto de perfil</label>
-                            <input type="file" name="personaFoto" placeholder="Foto de perfil" class="form-control" id="personaFoto" />
+                            <input type="file" name="personaFoto" placeholder="Foto de perfil" class="form-control" id="personaFoto" required/>
                         </div>
 
 
@@ -106,7 +110,8 @@
                         </div>
                         <div class="text-center"><button onclick="guardarPersona()" type="submit">Registrarse</button></div>
                     </div>
-                </div><!-- Fin segunda card-->
+                </div>
+                <!-- Fin segunda card-->
             </div>
         </form>
     </div>

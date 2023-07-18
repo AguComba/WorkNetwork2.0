@@ -8,7 +8,7 @@
         $.each(provincias, await function (index, provincia) {
             let claseEliminado = '';
             let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarProvincia(${provincia.idProvincia})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarProvincia(${provincia.idProvincia},1)"><i class="bi bi-trash3"></i> Eliminar</btn>`;
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarProvincia(${provincia.idProvincia},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`;
             if (provincia.eliminado) {
                 claseEliminado = 'table-danger';
                 botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm' onclick = 'EliminarProvincia(${provincia.idProvincia},0)'><i class="bi bi-recycle"></i> Activar</btn>`;
@@ -17,7 +17,7 @@
                 `<tr class= 'tabla-hover ${claseEliminado}'>
                         <td class='texto'>${provincia.nombreProvincia}</td>
                         <td class='texto'>${provincia.paisID}</td>
-                        <td class = 'text-center'>
+                        <td class = 'text-end'>
                             ${botones}
                         </td>
                     </tr>`
@@ -33,6 +33,7 @@ const GuardarProvincia = () => {
     let idProvincia = $('#idProvincia').val();
     let nombreProvincia = $('#nombreProvincia').val().trim();
     let idPais = $('#PaisID').val();
+    //let nombrePais = ('#nombrePais').val()
     let alertProvincia= $('#alertProvincia')
     let url = '../../Provincias/CrearProvincia';
     let data = { IdProvincia: idProvincia, NombreProvincia: nombreProvincia, PaisID: idPais };

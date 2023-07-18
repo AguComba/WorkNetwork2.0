@@ -18,21 +18,20 @@
 
 <section>
     <div class="container">
-        <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearProvincia)'>Crear
-            Provincia</button>
+        <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearProvincia)'>Agregar Provincia</button>
 
         <table class="table">
             <thead class="table-dark">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.NombreProvincia)
+                        Provincia
                     </th>
+                   
                     <th>País</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody id='tbody-provincias'>
-            </tbody>
+            <tbody id='tbody-provincias'></tbody>
         </table>
     </div>
 </section>
@@ -45,7 +44,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="titulo-modal-provincia">Crear provincia</h5>
+                <h5 class="modal-title" id="titulo-modal-provincia">Agregar provincia</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="VaciarFormulario()"
                     aria-label="Close"></button>
             </div>
@@ -57,16 +56,16 @@
                         <input placeholder="Ingrese la Provincia" type="text" id="nombreProvincia"
                             class="form-control" />
                         <div>
-                            <label class="control-label"><b> País: </b></label>
+                           @* <label class="control-label"><b> País: </b></label>*@
+                           </br>
                             @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control"})
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()'
-                    data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-login" onclick='GuardarProvincia()'>Crear</button>
+                <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()'data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-login" onclick='GuardarProvincia()'>Agregar</button>
             </div>
         </div>
     </div>

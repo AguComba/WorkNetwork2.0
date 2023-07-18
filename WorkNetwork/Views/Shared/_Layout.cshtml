@@ -47,7 +47,7 @@
                         <li><a asp-area="" class="" asp-controller="empresas" asp-action="PerfilEmpresa">Perfil</a></li>
                         <li>
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-white">CERRAR SESIÓN</button>
+                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión</button>
                             </form>
                         </li>
                     }
@@ -58,7 +58,7 @@
                         <li><a asp-area="" class="" asp-controller="personas" asp-action="PerfilUser">Perfil</a></li>
                         <li>
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-white">CERRAR SESIÓN</button>
+                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión</button>
                             </form>
                         </li>
                     }
@@ -71,13 +71,16 @@
                         <li><a asp-area="" class="" asp-controller="rubros" asp-action="index">Rubros</a></li>
                         <li>
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-white">CERRAR SESIÓN</button>
+                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión</button>
                             </form>
                         </li>                       
                     }
 
                 </ul>
-            </nav><!-- .navbar -->
+            </nav>
+
+            @*Cuando se cierra sesión, debe enviarte al inicio*@
+            <!-- .navbar -->
 
         </div>
     </header><!-- End Header -->

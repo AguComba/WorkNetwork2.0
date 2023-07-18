@@ -11,7 +11,7 @@
             $.each(personas, function (index, personas) {
                 let claseEliminado = '';
                 let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarPersona(${personas.idPersona})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarPersona(${personas.idPersona},1)"><i class="bi bi-trash3"></i> Eliminar</btn>`
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarPersona(${personas.idPersona},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
 
                 if (personas.eliminado) {
                     claseEliminado = 'table-danger';
@@ -59,6 +59,24 @@ const guardarPersona = () => {
     })
 }
 
+
+
+const editarPersona = () => {
+    event.preventDefault();
+    const parametros = new FormData($('#frmFormulario')[0]);
+    const url = '../../Personas/EditarPersona';
+      $.ajax({
+        type: 'PUT',
+        url: url,
+        data: parametros,
+        contentType: false,
+        processData: false,
+        async: false,
+        success: e => window.location.href = '/',
+        error: e => console.log('error' + e)
+    })
+}
+
 $('#PaisID').change(() => BuscarProvincia());
 
 const BuscarProvincia = () => {
@@ -96,6 +114,7 @@ const BuscarLocalidad = () => {
 const AbrirModal = () => {
     $('#idPersona').val(0);
     $('#modalCrearPersona').modal('show');
+    $('#exampleModal').modal('show');
 }
 
 const VaciarFormulario = () => {
@@ -126,4 +145,31 @@ const PerfilPersona = () => {
         nombre.append(`${perfil.nombrePersona} ${perfil.apellidoPersona}`)
         $('#celularPersona').append(`${perfil.telefono1}`);
     }).fail(e => console.log(e))
+}
+
+function BuscarPersona(idPersona) {
+    $("#Titulo-Modal-Persona").text("Editar Perfil");
+    $("#PersonaID").val(idPersona);
+   
+    $.ajax({
+        type: "GET",
+        url: "../Personas/BuscarPersona",
+        data: { PersonaID: idPersona },
+        success: function (persona) {
+            $("#PersonaID").val(persona.personaID);
+            $("#PersonaNombre").val(persona.nombrePersona);
+            $("#ApellidoNombre").val(persona.apellidoPersona);
+            $("#Telefono1").val(persona.telefono1);
+            $("#LocalidadNombre").val(persona.localidad);
+            $("#paisID").val(persona.paisID);
+            $("#provinciaID").val(persona.provinciaID);
+            $("#localidadID").val(persona.localidadID);
+            $("#DomicilioPersona").val(persona.domicilioPersona);
+            $("#CorreoPersona").val(persona.correo);
+            $("#exampleModal").modal("show");
+            console.log(persona)
+        },
+        error: function (data) { }
+    });
+
 }

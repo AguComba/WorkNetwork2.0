@@ -14,7 +14,9 @@
         </ol>
 
     </div>
-</div><!-- Fin primera parte -->
+</div>
+<!-- Fin primera parte -->
+
 <section id="perfilEmpresa" class="section profile">
     <div class="container">
         <div class="row ">
@@ -25,10 +27,10 @@
 
                         <img src="data:@infoUser.TipoImagen;base64,@infoUser.Imagen" alt="" class="rounded-circle">
                         <h2>@infoUser.NombrePersona @infoUser.ApellidoPersona</h2>
-                        <h3>@infoUser.FechaNacimiento</h3>
+                        <h3>@infoUser.FechaNacimientoString</h3>
                         <div class="social-links mt-2">
                             <a target="_blank" href="@infoUser.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
-                            <a target="_blank" href="@infoUser.Instagram"  class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a target="_blank" href="@infoUser.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
                             <a target="_blank" href="@infoUser.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
                         </div>
                     </div>
@@ -45,12 +47,12 @@
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">General</button>
                             </li>
 
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar perfil</button>
+                            @*<li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar perfil</button>
                             </li>
-
+                            *@
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Configuracion</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Configuración</button>
                             </li>
 
                             <li class="nav-item">
@@ -69,7 +71,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Telefono</div>
+                                    <div class="col-lg-3 col-md-4 label">Teléfono</div>
                                     <div class="col-lg-9 col-md-8">@infoUser.Telefono1</div>
                                 </div>
 
@@ -84,14 +86,82 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Correo Electronico</div>
+                                    <div class="col-lg-3 col-md-4 label">Correo Electrónico</div>
                                     <div class="col-lg-9 col-md-8">@infoUser.Correo</div>
                                 </div>
-                            </div>
 
-                            <div class="tab-pane fade show profile-edit" id="profile-edit"> <h3 class="text-center mt-3">Esta funcion esta en desarrollo</h3> </div>
-                            <div class="tab-pane fade show profile-setting" id="profile-setting"> <h3>Esta funcion esta en desarrollo</h3> </div>
-                            <div class="tab-pane fade show profile-edit" id="profile-edit"> <h1>Esta funcion esta en desarrollo</h1> </div>
+
+                                @*Funcion editar accesible*@
+                                <p>
+                                    <button class="btn btn-secondary" onclick="BuscarPersona(@infoUser.PersonaID)">Editar Perfil</button>
+                                </p>
+
+                                <div class="modal" tabindex="-1" id="exampleModal" role="dialog" aria-labeledby="exampleModalLabel">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="Titulo-Modal-Persona"></h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="VaciarFormulario()" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body mb-12">
+                                                <form id="frmFormulario">
+                                                    <input type="hidden" name="IdPersona" id="PersonaID" value="0" />
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">Nombre</label>
+                                                        <input type="text" name="nombrePersona" id="PersonaNombre" class="form-control" pattern="[A-Za-z]+" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">Apellido</label>
+                                                        <input type="text" name="apellidoPersona" id="ApellidoNombre" class="form-control" pattern="[A-Za-z]+" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">Telefono</label>
+                                                        <input type="tel" name="telefono1Persona" id="Telefono1" class="form-control" pattern="[0-9]{15}" maxlength="15" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">Localidad</label>
+                                                        <div class="form-group">
+                                                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select", @id = "paisID"})
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select", @id = "provinciaID"})
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select", @id = "localidadID"})
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="form-label">Domicilio</label>
+                                                            <input type="text" name="domicilio" id="DomicilioPersona" class="form-control" />
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="form-label">Correo</label>
+                                                            <input type="text" name="correoPersona" id="CorreoPersona" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary" onclick="editarPersona()">Guardar</button>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" onclick="VaciarFormulario()" data-bs-dismiss="modal" aria-label="back">Atrás</button>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane show profile-setting" id="profile-settings"><h1>funcion esta en desarrollo</h1></div>
+                            @*Aqui se podrá cambiar a modo oscuro, eliminar el perfil (o desactivarlo),*@
+                            <div class="tab-pane show profile-edit" id="profile-change-password"> <h1>Esta funcion esta en desarrollo</h1> </div>
+
                         </div>
                     </div>
                 </div>
@@ -103,5 +173,8 @@
 
 
 @section Scripts{
-<script src='~/js/Personas.js'></script>
+    <script src='~/js/Personas.js'></script>
+    <script>
+        window.onload = CompletarTablaPersonas();
+    </script>
 }

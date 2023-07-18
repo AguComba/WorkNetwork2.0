@@ -1,4 +1,9 @@
-﻿namespace WorkNetwork.Controllers
+﻿//using System.Runtime.Intrinsics.Arm;
+//using WorkNetwork.Migrations;
+
+using WorkNetwork.Models;
+
+namespace WorkNetwork.Controllers
 {
     public class PersonasController : Controller
     {
@@ -61,12 +66,26 @@
                 personaMostrar.Telefono1 = persona.Telefono1;
                 personaMostrar.NumeroDocumento = persona.NumeroDocumento;
                 personaMostrar.FechaNacimiento = persona.FechaNacimiento;
+                //personaMostrar.FechaNacimientoString = persona.FechaNacimiento.ToString("dd/MM/yyyy");
                 personaMostrar.DomicilioPersona = persona.DomicilioPersona;
                 personaMostrar.Instagram = persona.Instagram;
                 personaMostrar.Linkedin = persona.Linkedin;
                 personaMostrar.Twitter = persona.Twitter;
                 personaMostrar.LocalidadNombre = localidadNombre;
                 personaMostrar.Correo = correo;
+
+                var paises = _context.Pais.ToList();
+                paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
+                ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
+
+                var provincias = _context.Provincia.ToList();
+                provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
+                ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
+
+                var localidad = _context.Localidad.ToList();
+                localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
+                ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
+
                 if (persona.Imagen != null)
                 {
                     personaMostrar.ImagenPersona = persona.Imagen;
@@ -138,7 +157,7 @@
             string tipoCV = null;
             byte[] img = null;
             string tipoImg = null;
-            string domicilioCompleto = domicilio + " " + nro;
+            //string domicilioCompleto = domicilio + " " + nro;
             if (personaFoto != null)
             {
                 if (personaFoto.Length > 0)
@@ -185,7 +204,7 @@
                 NumeroDocumento = numeroDocumento,
                 FechaNacimiento = fechaNacimiento,
                 LocalidadID = LocalidadID,
-                DomicilioPersona = domicilioCompleto,
+                DomicilioPersona = domicilio,
                 Telefono1 = telefono1Clean,
                 Instagram = instagram,
                 Twitter = twitter,
@@ -212,6 +231,77 @@
             return Json(resultado);
         }
 
-    }
+        public JsonResult EditarPersona(int IdPersona, string nombrePersona, string apellidoPersona, int LocalidadID, string domicilio, string telefono1Persona, string correoPersona)
+        {
 
+             var telefono1Clean = ClearNumber(telefono1Persona);
+            //string domicilioCompleto = domicilio + " " + nro;
+            var persona = _context.Persona.FirstOrDefault(p => p.PersonaID == IdPersona);
+            var usuarioActual = _userManager.GetUserId(HttpContext.User);
+            var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == personaUsuario.UsuarioID).Single();
+
+
+            persona.NombrePersona = nombrePersona;
+            persona.ApellidoPersona = apellidoPersona;
+            persona.LocalidadID = LocalidadID;
+            persona.DomicilioPersona = domicilio;
+            user.Email = correoPersona;
+            persona.Telefono1 = telefono1Clean;
+
+            _context.Update(persona);
+            _context.Update(user);
+            _context.SaveChanges();
+
+
+
+            return Json(true);
+        }
+
+
+        public JsonResult BuscarPersona(int PersonaID)
+        {
+            var persona = _context.Persona.Include(l => l.Localidad).FirstOrDefault(p => p.PersonaID == PersonaID);
+            var provincia = _context.Provincia.Where(p => p.ProvinciaID == persona.Localidad.ProvinciaID).FirstOrDefault();
+            var usuarioActual = _userManager.GetUserId(HttpContext.User);
+            var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+            var correo = _context.Users.Where(u => u.Id == personaUsuario.UsuarioID).Select(c => c.Email).Single();
+
+            var personaVer = new PersonaMostrar
+            {
+                PersonaID = persona.PersonaID,
+                NombrePersona = persona.NombrePersona,
+                ApellidoPersona = persona.ApellidoPersona,
+                Telefono1 = persona.Telefono1,
+                NumeroDocumento = persona.NumeroDocumento,
+                FechaNacimiento = persona.FechaNacimiento,
+                FechaNacimientoString = persona.FechaNacimiento.ToString("dd/MM/yyyy"),
+                PaisID = provincia.PaisID,
+                ProvinciaID = provincia.ProvinciaID,
+                LocalidadID = persona.LocalidadID,
+                DomicilioPersona = persona.DomicilioPersona,
+                Instagram = persona.Instagram,
+                Linkedin = persona.Linkedin,
+                Twitter = persona.Twitter,
+                Genero = persona.Genero,
+                Correo = correo,
+                //Curriculum = persona.Curriculum,
+                //TipoCV = persona.TipoCV,
+                //TipoImagen = persona.TipoImagen,
+                //Imagen = persona.Imagen = Convert.ToBase64String(persona.Imagen),
+            };
+
+            return Json(personaVer);
+        }
+
+    }
 }
+
+
+       
+    
+
+
+
+
+

@@ -43,7 +43,7 @@ a {
 }
 
     a:hover {
-        color: #ffc732;
+        color: black;
         text-decoration: none;
     }
 
@@ -573,7 +573,7 @@ section {
             width: 60px;
             height: 4px;
             background: var(--color-primary);
-            left: 0;
+            left: 60vh;
             bottom: 0;
         }
 
@@ -736,13 +736,13 @@ section {
     background: var(--color-primary);
     border: 0;
     padding: 10px 30px;
-    color: #fff;
+    color: black;
     transition: 0.4s;
     border-radius: 4px;
 }
 
     .get-started .php-email-form button[type=submit]:hover {
-        background: rgba(254, 185, 0, 0.8);
+        background: #feb90087;
     }
 
 @-webkit-keyframes animate-loading {
@@ -1996,11 +1996,11 @@ section {
         z-index: 2;
     }
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     .hero .info {
         padding: 0 50px;
     }
-}
+}*/
 
 .hero .info h2 {
     color: #fff;

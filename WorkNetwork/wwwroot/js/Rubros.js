@@ -8,7 +8,7 @@
 
             let claseEliminado = '';
             let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarRubro(${rubro.rubroID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                           <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarRubro(${rubro.rubroID},1)"><i class="bi bi-trash3"></i> Eliminar</btn>`
+                           <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarRubro(${rubro.rubroID},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
 
             if (rubro.eliminado) {
                 claseEliminado = 'table-danger';
@@ -17,7 +17,7 @@
             $('#tbody-rubros').append(
                 `<tr class= 'tabla-hover ${claseEliminado}'>
                    <td class='texto'>${rubro.nombreRubro}</td>
-                   <td class = 'text-center'>
+                   <td class = 'text-end'>
                     ${botones}
                    </td>
                 </tr>`
@@ -49,7 +49,7 @@ const GuardarRubro = () => {
 }
 
 const AbrirModal = () => {
-    $('#titulo-modal-rubro').text('Nuevo Rubro')
+    $('#titulo-modal-rubro').text('Agregar nuevo rubro')
     $('#idRubro').val(0);
     $('#modalCrearRubro').modal('show');
     $('#alertRubro').addClass('visually-hidden')

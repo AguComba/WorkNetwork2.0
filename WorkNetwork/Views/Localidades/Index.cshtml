@@ -19,7 +19,7 @@
 </div><!-- Fin primera parte -->
 <section>
     <div class="container">
-        <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearLocalidad)'>Crear Localidad</button>
+        <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearLocalidad)'>Agregar Localidad</button>
 
         <table class='table'>
             <thead class="table-dark">
@@ -31,7 +31,7 @@
                         Código Postal
                     </th>
                     <th>
-                        Opciones
+                        @*  Opciones*@
                     </th>
                 </tr>
             </thead>
@@ -45,22 +45,24 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="titulo-modal-">Crear localidad</h5>
+                <h5 class="modal-title" id="titulo-modal-">Agregar localidad</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="contact">
                     <div class="php-email-form">
-                        <div class="alert alert-danger " id='alertLocalidad'>El campo descripcion no puede estar vacio</div>
+                        <div class="alert alert-danger " id='alertLocalidad'>La descripción no puede estar vacia</div>
                         <input type="hidden" id='idLocalidad' />
                         <input placeholder="Ingrese una localidad" type="text" id="nombreLocalidad" class="form-control mb-3" />
                         <input placeholder="Código Postal" type="number" id="cpLocalidad" class='form-control' maxlength="4" />
                         <div>
-                            <label class="control-label"><b> País: </b></label>
+                            @*<label class="control-label"><b> País: </b></label>*@                           
+                            </br>
                             @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control"})
                         </div>
                         <div>
-                            <label class="control-label"><b> Provincia: </b></label>
+                            @*<label class="control-label"><b> Provincia: </b></label>*@                            
+                            </br>
                             @Html.DropDownList("ProvinciaID", null, htmlAttributes: new {@class = "form-control"})
                         </div>
                     </div>
@@ -68,15 +70,15 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-login" onclick='GuardarLocalidad()'>Crear</button>
+                <button type="button" class="btn btn-login" onclick='GuardarLocalidad()'>Agregar</button>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts{
-<script src='~/js/Localidades.js'></script>
-<script>
-    window.onload = CompletarTablaLocalidades();
-</script>
+    <script src='~/js/Localidades.js'></script>
+    <script>
+        window.onload = CompletarTablaLocalidades();
+    </script>
 }

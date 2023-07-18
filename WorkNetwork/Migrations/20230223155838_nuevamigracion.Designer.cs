@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkNetwork.Data;
 
@@ -11,9 +12,10 @@ using WorkNetwork.Data;
 namespace WorkNetwork.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230223155838_nuevamigracion")]
+    partial class nuevamigracion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,22 +53,22 @@ namespace WorkNetwork.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5855b573-cb19-43f2-99ee-1714f7392210",
-                            ConcurrencyStamp = "8cfebec1-bb38-4818-a6a9-448417df5915",
+                            Id = "8bb81ef9-6329-4fd2-bcf8-b97b1cf96a73",
+                            ConcurrencyStamp = "3f2e1dc9-406e-448f-b645-b54e9b2de121",
                             Name = "SuperUsuario",
                             NormalizedName = "SUPERUSUARIO"
                         },
                         new
                         {
-                            Id = "8527e3b8-785c-44c0-85ac-f1f4074fe8a3",
-                            ConcurrencyStamp = "b3d9a497-a740-4a53-b0d9-f350c3d411b4",
+                            Id = "1f89acac-774d-49c1-9fa7-e6b6690e7549",
+                            ConcurrencyStamp = "f44bac3d-1db4-434b-8d57-e5a41295de32",
                             Name = "Empresa",
                             NormalizedName = "EMPRESA"
                         },
                         new
                         {
-                            Id = "6bf89cf3-c00f-4398-b7c7-f58d07f47655",
-                            ConcurrencyStamp = "6028906b-2115-4618-b91f-0e43dda65d8e",
+                            Id = "0701f287-db54-4e51-b75c-6708b574ed8d",
+                            ConcurrencyStamp = "7ff3acbd-11e5-494c-bfdc-5dc6baf18514",
                             Name = "Usuario",
                             NormalizedName = "USUARIO"
                         });
@@ -234,8 +236,8 @@ namespace WorkNetwork.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "fc10b25b-e776-4fdc-b665-0a5a2128ccde",
-                            RoleId = "5855b573-cb19-43f2-99ee-1714f7392210"
+                            UserId = "7f87fcc9-c88d-475d-8e30-e77845ee7c28",
+                            RoleId = "8bb81ef9-6329-4fd2-bcf8-b97b1cf96a73"
                         });
                 });
 
@@ -638,17 +640,17 @@ namespace WorkNetwork.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fc10b25b-e776-4fdc-b665-0a5a2128ccde",
+                            Id = "7f87fcc9-c88d-475d-8e30-e77845ee7c28",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ea19548-f5f2-4b3c-87d3-4278d76ad576",
+                            ConcurrencyStamp = "e6520d4e-2b8a-4deb-a0e3-dfdab5a6b49a",
                             Email = "wkntk@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "WKNTK@GMAIL.COM",
                             NormalizedUserName = "WKNTK@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAqW43M14rKrlwYqh5AnXVDWmlakNRMUQYwD446xiap+qYIrvviL2fPINshKBLJtIQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEC26kJqpk3t7p6AT7iZpLYMz0w79kgv6ZRmzo8UWv7SXntCYbRqXcEeBl+KjYF1faQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9f538230-9e9b-43c1-99a9-c67cbf070f3f",
+                            SecurityStamp = "b551eb53-aeca-4929-a52e-62bf3f280345",
                             TwoFactorEnabled = false,
                             UserName = "wkntk@gmail.com"
                         });

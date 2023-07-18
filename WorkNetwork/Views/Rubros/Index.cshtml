@@ -18,15 +18,16 @@
 
 <section>
     <div class="container">
-        <button type="button" class="btn btn-login mb-3" onclick="AbrirModal(modalCrearRubro)">Crear Rubro</button>
+        <button type="button" class="btn btn-login mb-3" onclick="AbrirModal(modalCrearRubro)">Agregar Rubro</button>
 
         <table class="table ">
             <thead class="table-dark">
                 <tr>
                     <th>
-                        Rurbo
+                        Rubro
                     </th>
-                    <th>Opciones</th>
+                    <th></th>
+                    @*<th>Opciones</th>*@
                 </tr>
             </thead>
             <tbody id="tbody-rubros">
@@ -48,8 +49,7 @@
             <div class="modal-body">
                 <div class="contact">
                     <div class="php-email-form">
-                        <div class="alert alert-danger " id='alertRubro'>El campo descripción no puede estar vacio
-                        </div>
+                        <div class="alert alert-danger " id='alertRubro'>La descripción no puede estar vacia</div>
                         <input type="hidden" id='idRubro' />
                         <input placeholder="Ingrese un rubro" type="text" id="nombreRubro" class="form-control" />
                     </div>
@@ -58,7 +58,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()'
                     data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-login" onclick='GuardarRubro()'>Crear</button>
+                <button type="button" class="btn btn-login" onclick='GuardarRubro()'>Agregar</button>
             </div>
         </div>
     </div>

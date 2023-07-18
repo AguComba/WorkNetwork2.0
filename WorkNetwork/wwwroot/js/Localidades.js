@@ -8,7 +8,7 @@
         $.each(localidades, await function (index, localidades) {
             let claseEliminado = '';
             let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarLocalidad(${localidades.IdLocalidad})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarLocalidad(${localidades.idLocalidad},1)"><i class="bi bi-trash3"></i> Eliminar</btn>`
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarLocalidad(${localidades.idLocalidad},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
 
             if (localidades.eliminado) {
                 claseEliminado = 'table-danger';
@@ -18,7 +18,7 @@
                 `<tr class= 'tabla-hover ${claseEliminado} '>
                         <td class='texto'>${localidades.nombreLocalidad}</td>
                         <td class='texto'>${localidades.cp}</td>
-                        <td class = 'text-center'>
+                        <td class = 'text-end'>
                             ${botones}
                         </td>
                     </tr>`
