@@ -31,6 +31,11 @@
         public string CUIT { get; set; }
         public int LocalidadID { get; set; }
         public string Localidad { get; set; }
+        public int ProvinciaID { get; set; }
+        public string ProvinciaNombre { get; set; } 
+        public int PaisID { get; set; }
+        public string PaisNombre { get; set; }
+
         public string Telefono1 { get; set; }
         public string Descripcion { get; set; }
         public string? Instagram { get; set; }

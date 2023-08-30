@@ -7,16 +7,16 @@
 <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-        <h2>Provincias</h2>
-        <ol>
+       @* <ol>
             <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
             <li>Provincias</li>
-        </ol>
+        </ol>*@
 
     </div>
 </div><!-- Fin primera parte -->
 
 <section>
+<div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Provincias</h2></div>
     <div class="container">
         <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearProvincia)'>Agregar Provincia</button>
 
@@ -39,33 +39,35 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modalCrearProvincia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" style="top: 100px" id="modalCrearProvincia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-l">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="titulo-modal-provincia">Agregar provincia</h5>
+                <h5 class="modal-title" id="Titulo-Modal-Provincia">Agregar provincia</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="VaciarFormulario()"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="contact">
                     <div class="php-email-form">
-                        <div class="alert alert-danger " id='alertProvincia'></div>
-                        <input type="hidden" id='idProvincia' />
-                        <input placeholder="Ingrese la Provincia" type="text" id="nombreProvincia"
-                            class="form-control" />
                         <div>
-                           @* <label class="control-label"><b> País: </b></label>*@
-                           </br>
-                            @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control"})
+                            <label>Provincia</label>
+                            <div class="alert alert-danger " id='alertProvincia'></div>
+                            <input type="hidden" id='idProvincia' />
+                            <input placeholder="Ingrese la Provincia" type="text" id="nombreProvincia"
+                                   class="form-control" />
+                        </div>
+                        <div>
+                            <label>Pais</label>
+                            @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control", @id = "idPais"})
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()'data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-login" onclick='GuardarProvincia()'>Agregar</button>
+                <button type="button" class="btn btn-login" id="bottonEdit" onclick='GuardarProvincia()'>Agregar</button>
             </div>
         </div>
     </div>

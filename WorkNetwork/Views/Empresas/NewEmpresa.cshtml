@@ -12,46 +12,59 @@
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
         <h2>Ingresa tus datos</h2>
-        <ol>
+        @*<ol>
             <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
             <li>Empresa</li>
-        </ol>
+        </ol>*@
 
     </div>
 </div><!-- Fin primera parte -->
 
 @*//HACER VALIDACIONES JS*@
+@*//VER PLACEHOLDERS
+ //CUIT Y NUMERO DEBEN ACEPTAR SOLO NUMERO, EL RESTO SOLO TEXTO. 
+ //VER EL TEMA DE LOS LENGHT
+ //PERMITIR CREAR UNA CIUDAD SI NO EXISTE EN LA BASE DE DATOS
+ //NO PERMITIR QUE SE PUEDAN IR A OTRAS PESTAÑAS SI ESTA EL MODAL DE REGISTRO ABIERTO
+*@
 <div class="contact">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
         <form id="registrarEmpresa" enctype="multipart/form-data">
             <div class="row gy-4 mt-1">
-                <input type="hidden" id="IDempesa" value=0 />
+                <input type="hidden" id="IDempresa" value=0 />
                 @*DATOS PERSONALES*@
                 <div class="col-lg-6">
                     <div class="php-email-form">
                         <h3 class="text-center">Datos de la Empresa</h3>
                         <div class="row">
                             <div class="col-lg-6 form-group">
+                                <label>Nombre de la Empresa</label>
                                 <input type="text" name="empresaNombre" class="form-control" id="empresaNombre" placeholder="Nombre de la Empresa" required>
                             </div>
                             <div class="col-lg-6 form-group">
-                                <input type="text" class="form-control" name="cuitEmpresa" id="cuitEmpresa" placeholder="CUIT" required>
+                                <label>CUIT</label>
+                                <input type="number" class="form-control" name="cuitEmpresa" id="cuitEmpresa" placeholder="CUIT" maxlength="11" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="telefono1Empresa" id="telefono1Empresa" placeholder="Teléfono de la Empresa" required>
+                            <label>Teléfono</label>
+                            <input type="number" class="form-control" name="telefono1Empresa" id="telefono1Empresa" placeholder="Teléfono de la Empresa" max="15" required>
                         </div>
                         <div class="form-group">
+                            <label>Describa la actividad de su empresa</label>
                             <textarea class="form-control" id="descripcion" name="descripcion" rows="5" placeholder="Descripción de la actividad de empresa" required></textarea>
                         </div>
-                        <div class="form-group">
-                            <input type="text" name="instagram" placeholder="Instagram" class="form-control" id="instagram" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="twitter" placeholder="Twitter" class="form-control" id="twitter" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="linkedin" placeholder="Linkedin" class="form-control" id="linkedin" />
+                        <div>
+                            <label>Redes Sociales</label>
+                            <div class="form-group">
+                                <input type="text" name="instagram" placeholder="Instagram" class="form-control" id="instagram" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="twitter" placeholder="Twitter" class="form-control" id="twitter" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="linkedin" placeholder="Linkedin" class="form-control" id="linkedin" />
+                            </div>
                         </div>
 
                     </div>
@@ -62,19 +75,23 @@
                         <h3 class="text-center">Datos para el perfil</h3>
 
                         <div class="form-group">
+                            <label>País</label>
                             @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select"})
                         </div>
 
                         <div class="form-group">
+                            <label>Provincia</label>
                             @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select"})
                         </div>
 
                         <div class="form-group">
+                            <label>Localidad</label>
                             @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select"})
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-group">
+                            <label>Ingrese su domicilio</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-group">                                
                                 <input type="text" name="domicilio" class="form-control" id="domicilio" placeholder="Domicilio" required>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-group">
@@ -82,6 +99,7 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label>Seleccione el Rubro al que se dedica</label>
                             @Html.DropDownList("RubroID", null, htmlAttributes:new{@class = "form-select"})
                         </div>
                         <div class="form-group">

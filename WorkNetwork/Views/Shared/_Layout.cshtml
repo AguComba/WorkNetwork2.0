@@ -40,40 +40,43 @@
             <nav id="navbar" class="navbar">
                 <ul>
 
-                    @if(User.IsInRole("Empresa")){
+                    @if (User.IsInRole("Empresa"))
+                    {
                         <li><a asp-area="" class="active" asp-controller="home" asp-action="index">Inicio</a></li>
-                        <li><a asp-area="" class="" asp-controller="localidades" asp-action="index">Localidades</a></li>
+                        @*<li><a asp-area="" class="" asp-controller="localidades" asp-action="index">Localidades</a></li>*@
                         <li><a asp-area="" class="" asp-controller="vacantes" asp-action="index">Vacantes</a></li>
                         <li><a asp-area="" class="" asp-controller="empresas" asp-action="PerfilEmpresa">Perfil</a></li>
                         <li>
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión</button>
+                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión<i class="bi bi-power"></i></button>
                             </form>
                         </li>
                     }
 
-                    @if(User.IsInRole("Usuario")){
+                    @if (User.IsInRole("Usuario"))
+                    {
                         <li><a asp-area="" class="active" asp-controller="home" asp-action="index">Inicio</a></li>
-                        <li><a asp-area="" class="" asp-controller="localidades" asp-action="index">Localidades</a></li>
+                        <li><a asp-area="" class="" asp-controller="vacantes" asp-action="index">Mis Postulaciones</a></li>
                         <li><a asp-area="" class="" asp-controller="personas" asp-action="PerfilUser">Perfil</a></li>
                         <li>
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión</button>
+                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión <i class="bi bi-power"></i></button>
                             </form>
                         </li>
                     }
 
-                    @if (User.IsInRole("SuperUsuario")){
-                        <li><a asp-area="" class="active" asp-controller="home" asp-action="index">Inicio</a></li>
-                        <li><a asp-area="" class="" asp-controller="paises" asp-action="index">Paises</a></li>
+                    @if (User.IsInRole("SuperUsuario"))
+                    {
+                        @*<li><a asp-area="" class="active" asp-controller="home" asp-action="index">Inicio</a></li>*@
+                        <li><a asp-area="" class="active" asp-controller="paises" asp-action="index">Paises</a></li>
                         <li><a asp-area="" class="" asp-controller="provincias" asp-action="index">Provincias</a></li>
                         <li><a asp-area="" class="" asp-controller="localidades" asp-action="index">Localidades</a></li>
                         <li><a asp-area="" class="" asp-controller="rubros" asp-action="index">Rubros</a></li>
                         <li>
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión</button>
+                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión <i class="bi bi-power"></i></button>
                             </form>
-                        </li>                       
+                        </li>
                     }
 
                 </ul>
@@ -90,6 +93,15 @@
             @RenderBody()
         </main>
     </div>
+
+    <section>
+        @if (User.IsInRole("SuperUsuario"))
+        {
+
+        }
+
+
+    </section>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

@@ -31,32 +31,78 @@
             return View();
         }
 
-        public IActionResult PerfilEmpresa() {
+        public IActionResult PerfilEmpresa(int? id) {
+
             var empresaMostrar = new EmpresaMostrar();
-            var usuarioAcutal = _userManager.GetUserId(HttpContext.User);
-            var empresaUsuario = _context.EmpresaUsuarios.Where(u => u.UsuarioID == usuarioAcutal).FirstOrDefault();
-            var empresa = _context.Empresa.Where(e => e.EmpresaID == empresaUsuario.EmpresaID).FirstOrDefault();
-            var correo = _context.Users.Where(c => c.Id == empresaUsuario.UsuarioID).Select(c => c.Email).Single();
-            var localidadNombre = _context.Localidad.Where(l => l.LocalidadID == empresa.LocalidadID).Select(l => l.NombreLocalidad).Single();
-            var rubroNombre = _context.Rubro.Where(r=> r.RubroID == empresa.RubroID).Select(r=>r.NombreRubro).Single();
-            empresaMostrar.EmpresaID = empresa.EmpresaID;
-            empresaMostrar.RazonSocial = empresa.RazonSocial;
-            empresaMostrar.CUIT = empresa.CUIT;
-            empresaMostrar.Localidad = localidadNombre;
-            empresaMostrar.Telefono1 = empresa.Telefono1;
-            empresaMostrar.Descripcion = empresa.Descripcion;
-            empresaMostrar.Instagram = empresa.Instagram;
-            empresaMostrar.Twitter = empresa.Twitter;
-            empresaMostrar.Linkedin = empresa.Linkedin;
-            empresaMostrar.Domicilio = empresa.Domicilio;
-            empresaMostrar.Rubro = rubroNombre;
-            empresaMostrar.Correo = correo;
-            if(empresa.Imagen != null)
+
+            if (id == null)
             {
-                empresaMostrar.ImagenEmpresa = empresa.Imagen;
-                empresaMostrar.TipoImagen = empresa.TipoImagen;
-                empresaMostrar.Imagen = Convert.ToBase64String(empresa.Imagen);
+                var usuarioAcutal = _userManager.GetUserId(HttpContext.User);
+
+                var empresaUsuario = _context.EmpresaUsuarios.Where(u => u.UsuarioID == usuarioAcutal).FirstOrDefault();
+
+                var empresa = _context.Empresa.Where(e => e.EmpresaID == empresaUsuario.EmpresaID).FirstOrDefault();
+                var correo = _context.Users.Where(c => c.Id == empresaUsuario.UsuarioID).Select(c => c.Email).Single();
+                var localidadNombre = _context.Localidad.Where(l => l.LocalidadID == empresa.LocalidadID).Select(l => l.NombreLocalidad).Single();
+                var rubroNombre = _context.Rubro.Where(r => r.RubroID == empresa.RubroID).Select(r => r.NombreRubro).Single();
+                empresaMostrar.EmpresaID = empresa.EmpresaID;
+                empresaMostrar.RazonSocial = empresa.RazonSocial;
+                empresaMostrar.CUIT = empresa.CUIT;
+                empresaMostrar.Localidad = localidadNombre;
+                empresaMostrar.Telefono1 = empresa.Telefono1;
+                empresaMostrar.Descripcion = empresa.Descripcion;
+                empresaMostrar.Instagram = empresa.Instagram;
+                empresaMostrar.Twitter = empresa.Twitter;
+                empresaMostrar.Linkedin = empresa.Linkedin;
+                empresaMostrar.Domicilio = empresa.Domicilio;
+                empresaMostrar.Rubro = rubroNombre;
+                empresaMostrar.Correo = correo;
+
+                var paises = _context.Pais.ToList();
+                paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
+                ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
+
+                var provincias = _context.Provincia.ToList();
+                provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
+                ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
+
+                var localidad = _context.Localidad.ToList();
+                localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
+                ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
+
+                var rubros = _context.Rubro.ToList();
+                rubros.Add(new Rubro { RubroID = 0, NombreRubro = "[SELECCIONE UN RUBRO]" });
+                ViewBag.RubroID = new SelectList(rubros.OrderBy(x => x.NombreRubro), "RubroID", "NombreRubro");
+
+                if (empresa.Imagen != null)
+                {
+                    empresaMostrar.ImagenEmpresa = empresa.Imagen;
+                    empresaMostrar.TipoImagen = empresa.TipoImagen;
+                    empresaMostrar.Imagen = Convert.ToBase64String(empresa.Imagen);
+                }
+
+                empresaMostrar.Eliminado= empresa.Eliminado;
             }
+            else
+            {
+                var empresa = _context.Empresa.Where(u => u.EmpresaID == id).FirstOrDefault();
+                var localidad = _context.Localidad.Where(u => u.LocalidadID == empresa.LocalidadID).Select(l => l.NombreLocalidad);
+
+                empresaMostrar.EmpresaID = empresa.EmpresaID;
+                empresaMostrar.RazonSocial = empresa.RazonSocial;
+                empresaMostrar.CUIT = empresa.CUIT;
+                empresaMostrar.Domicilio = empresa.Domicilio;
+                empresaMostrar.Rubro = empresa.Rubro.NombreRubro;
+
+                if (empresa.Imagen != null)
+                {
+                    empresaMostrar.ImagenEmpresa = empresa.Imagen;
+                    empresaMostrar.TipoImagen = empresa.TipoImagen;
+                    empresaMostrar.Imagen = Convert.ToBase64String(empresa.Imagen);
+                }
+                empresaMostrar.Eliminado= empresa.Eliminado;
+            }
+
             ViewData["empresa"] = empresaMostrar;
             return View();
         }
@@ -91,7 +137,7 @@
 
         //Metodo para limpiar el numero telefonico
         static string ClearNumber(string numero) => new string((numero ?? "").Where(c => c == '+' || char.IsNumber(c)).ToArray());
-        public JsonResult GuardarEmpresa(int IDempresa, string empresaNombre, string cuitEmpresa, string telefono1Empresa, string descripcion, string instagram, string twitter, string linkedin, int LocalidadID, string domicilio, int nro, int RubroID, IFormFile empresaFoto)
+        public JsonResult GuardarEmpresa(int IDempresa, string razonSocial, string cuitEmpresa, string telefono1Empresa, string descripcion, string instagram, string twitter, string linkedin, int LocalidadID, string domicilio, int nro, int RubroID, IFormFile empresaFoto)
         {
             byte[] img = null;
             string tipoImg = null;
@@ -114,7 +160,7 @@
 
             var nuevaEmpresa = new Empresa
             {
-                RazonSocial = empresaNombre,
+                RazonSocial = razonSocial,
                 CUIT = cuitEmpresa,
                 Telefono1 = telefono1Clean,
                 Descripcion = descripcion,
@@ -142,12 +188,54 @@
 
         }
 
+        public JsonResult EditarEmpresa(int IdEmpresa, string razonSocial, string cuitEmpresa, int LocalidadID, string domicilio, string telefono1Empresa, string correoEmpresa)
+        {
+
+            var telefono1Clean = ClearNumber(telefono1Empresa);
+            //    //string domicilioCompleto = domicilio + " " + nro;
+            var empresa = _context.Empresa.FirstOrDefault(p => p.EmpresaID == IdEmpresa);
+            var usuarioActual = _userManager.GetUserId(HttpContext.User);
+            var empresaUsuario = _context.EmpresaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == empresaUsuario.UsuarioID).Single();
+
+            empresa.RazonSocial = razonSocial;
+            empresa.CUIT = cuitEmpresa;
+            empresa.LocalidadID = LocalidadID;
+            empresa.Domicilio = domicilio;
+            user.Email = correoEmpresa;
+            empresa.Telefono1 = telefono1Clean;
+
+            _context.Update(empresa);
+            _context.Update(user);
+            _context.SaveChanges();
+
+            return Json(empresa);
+        }
+
 
         public JsonResult BuscarEmpresa(int EmpresaID)
         {
-            var empresa = _context.Empresa.FirstOrDefault(m => m.EmpresaID == EmpresaID);
+            var empresa = _context.Empresa.Include(l => l.Localidad).FirstOrDefault(m => m.EmpresaID == EmpresaID);
+            var provincia = _context.Provincia.Where(p => p.ProvinciaID == empresa.Localidad.ProvinciaID).FirstOrDefault();
+            var usuarioActual = _userManager.GetUserId(HttpContext.User);
+            var empresaUsuario = _context.EmpresaUsuarios.Where(u => u.UsuarioID== usuarioActual).FirstOrDefault();
+            var correo = _context.Users.Where(u => u.Id == empresaUsuario.UsuarioID).Select(u => u.Email).Single();
 
-            return Json(empresa);
+            var empresaVer = new EmpresaMostrar
+            {
+                EmpresaID = empresa.EmpresaID,
+                RazonSocial= empresa.RazonSocial,
+                CUIT = empresa.CUIT,
+                Telefono1= empresa.Telefono1,
+                PaisID = provincia.PaisID,
+                ProvinciaID = provincia.ProvinciaID,
+                LocalidadID = empresa.LocalidadID,
+                Domicilio =empresa.Domicilio,
+                Correo= correo,
+
+            };
+
+            return Json(empresaVer);
         }
 
         public JsonResult EliminarEmpresa(int EmpresaID, int Elimina)

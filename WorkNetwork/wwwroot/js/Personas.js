@@ -1,7 +1,5 @@
 ﻿const CompletarTablaPersonas = () => {
-
     VaciarFormulario();
-
     $.ajax({
         type: "POST",
         url: '../../Personas/TablaPersonas',
@@ -58,8 +56,6 @@ const guardarPersona = () => {
         error: e=>console.log('error' + e)
     })
 }
-
-
 
 const editarPersona = () => {
     event.preventDefault();

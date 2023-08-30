@@ -53,7 +53,7 @@ const BuscarProvincia = () => {
     $('#ProvinciaID').empty();
     let paisId = $('#PaisID').val();
     let url = '../../Provincias/ComboProvincia';
-    let data = { id: paisId};
+    let data = { id: $('#PaisID').val()};
     $.post(url, data).done(provincias => {
         provincias.length === 0
             ? $('#ProvinciaID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
@@ -82,15 +82,24 @@ const BuscarLocalidad = () => {
 }
 
 $('#ProvinciaID').change(() => BuscarLocalidad());
+
 const BuscarEmpresa = (empresaID)=> {
-    $("#Titulo-Modal-").text("Editar Empresa");
+    $("#Titulo-Modal-Empresa").text("Editar Empresa");
     $("#EmpresaID").val(empresaID);
+    $("#RazonSocial").val(RazonSocial);
+    $("#Cuit").val(Cuit);
+    $("#Telefono1").val(Telefono1);
+    $("#DomicilioEmpresa").val(DomicilioEmpresa);
     let url = '../../Empresas/BuscarEmpresa';
     let data = { EmpresaID: empresaID };
     $.post(url, data)
         .done(empresa => {
-            $("#Nombre").val(rubro.descripcion);
-            $("#exampleModal").modal("show");
+            $("#RazonSocial").val(empresa.razonSocial);
+            $("#Cuit").val(empresa.cuit);
+            $("#Telefono1").val(empresa.telefono1);
+            $("#DomicilioEmpresa").val(empresa.domicilio);
+            //$("#CorreoEmpresa").val(empresa.emailEmpresa);
+            $("#modalCrearEmpresa").modal("show");
         })
     .fail(e => console.log(e));
 }

@@ -7,16 +7,17 @@
 <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-        <h2>Rubros</h2>
-        <ol>
+       @* <h2>Rubros</h2>*@
+       @* <ol>
             <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
             <li>Rubros</li>
-        </ol>
+        </ol>*@
 
     </div>
 </div><!-- Fin primera parte -->
 
 <section>
+    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Rubros</h2></div>
     <div class="container">
         <button type="button" class="btn btn-login mb-3" onclick="AbrirModal(modalCrearRubro)">Agregar Rubro</button>
 
@@ -37,9 +38,9 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="modalCrearRubro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" style="top: 100px" id="modalCrearRubro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-l">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="titulo-modal-rubro"></h5>
@@ -49,6 +50,7 @@
             <div class="modal-body">
                 <div class="contact">
                     <div class="php-email-form">
+                        <label>Rubro</label>
                         <div class="alert alert-danger " id='alertRubro'>La descripción no puede estar vacia</div>
                         <input type="hidden" id='idRubro' />
                         <input placeholder="Ingrese un rubro" type="text" id="nombreRubro" class="form-control" />
@@ -58,7 +60,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()'
                     data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-login" onclick='GuardarRubro()'>Agregar</button>
+                <button type="button" class="btn btn-login" id="bottonEdit" onclick='GuardarRubro()'>Agregar</button>
             </div>
         </div>
     </div>

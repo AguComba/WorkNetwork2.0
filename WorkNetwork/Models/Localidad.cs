@@ -16,4 +16,16 @@
 
 
     }
+
+    public class LocalidadMostrar
+    {
+        public int LocalidadID { get; set; }
+        public string? NombreLocalidad { get; set; }
+        public int CP { get; set; }
+        public int ProvinciaID { get; set; }
+        public string? NombreProvincia { get; set; }
+        public int PaisID { get; set; }
+        public string? NombrePais { get; set; }
+        public bool Eliminado { get; set; } 
+    }
 }

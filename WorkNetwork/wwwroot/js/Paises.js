@@ -68,7 +68,7 @@ const GuardarPais = () => {
 
 const BuscarPais = (paisID)=>{
     $('#titulo-modal-pais').text('Editar Pais');
-    $('#bottonEdit').text('Editar');
+    $('#bottonEdit').text('Guardar Cambios');
     $('#idPais').val(paisID);
 
     $('#alertPais').addClass('visually-hidden');

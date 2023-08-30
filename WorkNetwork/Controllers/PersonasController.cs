@@ -147,7 +147,6 @@ namespace WorkNetwork.Controllers
             return Json(personas);
         }
 
-
         //--------------------PARAMETROS DEL GUARDAR PERSONA ---------------------------
         //Metodo para limpiar el numero telefonico
         static string ClearNumber(string numero) => new string((numero ?? "").Where(c => c == '+' || char.IsNumber(c)).ToArray());
@@ -183,7 +182,6 @@ namespace WorkNetwork.Controllers
                 }
             }
             bool resultado = true;
-
             var generoEnum = Genero.Masculino;
 
             if (generoID is 1)
@@ -196,7 +194,6 @@ namespace WorkNetwork.Controllers
             }
 
             var telefono1Clean = ClearNumber(telefono1Persona);
-
             var persona = new Persona
             {
                 NombrePersona = nombrePersona,
@@ -241,7 +238,6 @@ namespace WorkNetwork.Controllers
             var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
             var user = _context.Users.Where(u => u.Id == personaUsuario.UsuarioID).Single();
 
-
             persona.NombrePersona = nombrePersona;
             persona.ApellidoPersona = apellidoPersona;
             persona.LocalidadID = LocalidadID;
@@ -253,11 +249,8 @@ namespace WorkNetwork.Controllers
             _context.Update(user);
             _context.SaveChanges();
 
-
-
             return Json(true);
         }
-
 
         public JsonResult BuscarPersona(int PersonaID)
         {

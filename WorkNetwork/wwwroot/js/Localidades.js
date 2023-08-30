@@ -7,12 +7,12 @@
         $('#tbody-localidad').empty();
         $.each(localidades, await function (index, localidades) {
             let claseEliminado = '';
-            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarLocalidad(${localidades.IdLocalidad})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarLocalidad(${localidades.idLocalidad},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
+            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarLocalidad(${localidades.localidadID})"><i class="bi bi-pencil-square"></i> Editar</btn>
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
 
             if (localidades.eliminado) {
                 claseEliminado = 'table-danger';
-                botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarLocalidad(${localidades.idLocalidad},0)"><i class="bi bi-recycle"></i> Activar</btn>`
+                botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},0)"><i class="bi bi-recycle"></i> Activar</btn>`
             }
             $("#tbody-localidad").append(
                 `<tr class= 'tabla-hover ${claseEliminado} '>
@@ -31,11 +31,12 @@ const GuardarLocalidad = () => {
     let idLocalidad = $('#idLocalidad').val();
     let nombreLocalidad = $('#nombreLocalidad').val().trim();
     let cpLocalidad = $('#cpLocalidad').val();
-    let idProvincia = $('#ProvinciaID').val();
-    let idPais = $('#PaisID').val();
+    let idProvincia = $('#idProvincia').val();
+    let idPais = $('#idPais').val();
     let alertLocalidad = $('#alertLocalidad')
     let url = '../../Localidades/GuardarLocalidad';
     let data = { IdLocalidad: idLocalidad, NombreLocalidad: nombreLocalidad, ProvinciaID: idProvincia, CP: parseInt(cpLocalidad) };
+    $('#bottonEdit').text('Agregar');
     if (nombreLocalidad != '' && nombreLocalidad != null) {
 
         if(cpLocalidad != null && cpLocalidad != undefined && cpLocalidad !=0){
@@ -59,41 +60,96 @@ const GuardarLocalidad = () => {
     
 }
 
+
+$('#idPais').change(() => BuscarProvincia())
+
 const BuscarProvincia = () => {
-    $('#ProvinciaID').empty();
+    $('#idProvincia').empty();
     let url = '../../Provincias/ComboProvincia';
-    let data = { id: $('#PaisID').val() };
+    let data = { id: $('#idPais').val() };
     $.post(url, data).done(provincias => {
         provincias.length === 0
-            ? $('#ProvinciaID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
+            ? $('#idProvincia').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
             : $.each(provincias, (i, provincia) => {
-                $('#ProvinciaID').append(`<option value=${provincia.value}>${provincia.text}</option>`)
+                $('#idProvincia').append(`<option value=${provincia.value}>${provincia.text}</option>`)
             });
     }).fail(e => console.log('error en combo provincias ' + e))
     return false
 }
 
-$('#PaisID').change(() => BuscarProvincia())
 
-const BuscarLocalidad = () => {
-    $('#LocalidadID').empty();
-    let url = '../../Localidades/ComboLocalidades';
-    let data = { id: $('#ProvinciaID').val() };
-    $.post(url, data).done(localidades => {
-        localidades.length === 0
-            ? $('#LocalidadID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
-            : $.each(localidades, (i, localidad) => {
-                $('#LocalidadID').append(`<option value=${localidad.value}>${localidad.text}</option>`)
-            });
-    }).fail(e => console.log('error en combo provincias ' + e))
-    return false
+//function BuscarLocalidad(localidadID) {
+//    $("#Titulo-Modal-Localidad").text("Editar Localidad");
+//    //$("#LocalidadID").val(localidadID);
+//    $('#bottonEdit').text('Guardar Cambios');
+//    $("#idLocalidad").val(localidadID);
+//    $.ajax({
+//        type: "POST",
+//        url: '../../Localidades/BuscarLocalidad',
+//        data: { LocalidadID: localidadID },
+//        success: function (localidad) {
+//            $("#NombreLocalidad").val(localidad.NombreLocalidad);
+//            $("#PaisID").val(localidad.PaisID);
+//            BuscarLocalidad();
+
+
+//            $("#exampleModal").modal("show");
+//        },
+//        error: function (data) {
+//        }
+//    });
+//}
+
+$('#idProvincia').change(() => BuscarLocalidad())
+
+const BuscarLocalidad = (localidadID) => {
+    $("#Titulo-Modal-Localidad").text("Editar Localidad");
+    $('#bottonEdit').text('Guardar Cambios');
+    $("#idLocalidad").val(localidadID);
+    //$("#cpLocalidad").val(cpLocalidad);
+    $("#idProvincia").val(idProvincia);
+    //$('#paisID').val(paisID);
+    $('#alertLocalidad').addClass('visually-hidden');
+    let url = '../../Localidades/BuscarLocalidad';
+    let data = { LocalidadID: localidadID, };
+
+    $.post(url, data).done(localidad => {
+        $("#nombreLocalidad").val(localidad.nombreLocalidad);
+        $("#idPais").val(localidad.paisID);
+        $("#ProvinciaID").val(localidad.provinciaID);
+        $("#cpLocalidad").val(localidad.cp);
+        $("#modalCrearLocalidad").modal("show");
+    }).fail(e => console.log(e));
 }
+
+//const BuscarLocalidad = (localidadID) => {
+//    //$('#LocalidadID').empty();
+//    $("#Titulo-Modal-Localidad").text("Editar Localidad");
+//    $('#bottonEdit').text('Guardar Cambios');
+//    $("#idLocalidad").val(localidadID);
+//    //$("#codigoPostal").val(cpLocalidad);
+//    //$('#idProvincia').val(provinciaID);
+//    $('#alertLocalidad').addClass('visually-hidden');
+//    let url = '../../Localidades/ComboLocalidades';
+//    let data = { id: $('#ProvinciaID').val() };
+//    $.post(url, data).done(localidades => {
+//        localidades.length === 0
+//            ? $('#LocalidadID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
+//            : $.each(localidades, (i, localidad) => {
+//                $('#LocalidadID').append(`<option value=${localidad.value}>${localidad.text}</option>`)
+//            });
+
+//    }).fail(e => console.log('error en combo provincias ' + e))
+//    return false
+//}
 
 const AbrirModal = () => {
     $('#idLocalidad').val(0);
+    $('#Titulo-Modal-Localidad').text('Agregar nueva localidad');
+    $('#bottonEdit').text('Agregar');
     $('#modalCrearLocalidad').modal('show');
-    $("#ProvinciaID").val(0);
-    $('#PaisID').val(0);
+    $("#idProvincia").val(0);
+    $('#idPais').val(0);
     $('#alertLocalidad').addClass('visually-hidden');
     $('#cpLocalidad').val(undefined);
 }
@@ -102,8 +158,8 @@ const VaciarFormulario = () => {
     $('#idLocalidad').val(0);
     $('#nombreLocalidad').val('');
     $('#cpLocalidad').val(undefined);
-    $("#ProvinciaID").val(0);
-    $('#PaisID').val(0);
+    $("#idProvincia").val(0);
+    $('#idPais').val(0);
 }
 
 const EliminarLocalidad = (localidadID, elimina) => {

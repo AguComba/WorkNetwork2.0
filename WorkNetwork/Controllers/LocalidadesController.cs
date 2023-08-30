@@ -1,4 +1,6 @@
-﻿namespace WorkNetwork.Controllers
+﻿using WorkNetwork.Models;
+
+namespace WorkNetwork.Controllers
 {
     [Authorize]
     public class LocalidadesController : Controller
@@ -35,10 +37,30 @@
             EmpresaUsuario empresaUsuarioActual = new EmpresaUsuario();
             // BuscarEmpresaActual(usuarioActual, empresaUsuarioActual);
 
-            var localidades = _context.Localidad.ToList();
-            return Json(localidades);
+            var localidades = _context.Localidad.Include(p => p.Provincia.Pais).ToList();
+
+            List<LocalidadMostrar> localidadesMostrar = new List<LocalidadMostrar>();
+            foreach(var localidad in localidades)
+            {
+                var localidadMostrar = new LocalidadMostrar
+                {
+                    LocalidadID = localidad.LocalidadID,
+                    NombreLocalidad = localidad.NombreLocalidad,
+                    CP = localidad.CP,
+                    ProvinciaID = localidad.ProvinciaID,
+                    PaisID = localidad.Provincia.PaisID,
+                    NombreProvincia = localidad.Provincia.NombreProvincia,
+                    NombrePais = localidad.Provincia.Pais.NombrePais,
+                    Eliminado = localidad.Eliminado
+
+                };
+                localidadesMostrar.Add(localidadMostrar);
+            }
+
+            return Json(localidadesMostrar);
 
         }
+
         public JsonResult ComboLocalidades(int id)
         {
             var localidades = (from p in _context.Localidad where p.ProvinciaID == id select p).ToList();
@@ -93,10 +115,23 @@
 
         public JsonResult BuscarLocalidad(int LocalidadID)
         {
-            var localidad = _context.Localidad.FirstOrDefault(m => m.LocalidadID == LocalidadID);
+            var localidad = _context.Localidad.Include(p =>p.Provincia.Pais).FirstOrDefault(m => m.LocalidadID == LocalidadID);
+           
+            var localidadVer = new LocalidadMostrar
+            {
+                LocalidadID = localidad.LocalidadID,
+                NombreLocalidad = localidad.NombreLocalidad,
+                CP = localidad.CP,
+                NombreProvincia = localidad.Provincia.NombreProvincia,
+                NombrePais = localidad.Provincia.Pais.NombrePais,
+                PaisID = localidad.Provincia.PaisID,
+                ProvinciaID = localidad.Provincia.ProvinciaID,
+            };
 
-            return Json(localidad);
+            return Json(localidadVer);
+            //return Json(localidad);
         }
+
 
         public JsonResult EliminarLocalidad(int LocalidadID, int Elimina)
         {
@@ -112,7 +147,7 @@
                 }
                 else
                 {
-                    //NO PUEDE ELIMINAR EMPRESA SI TIENE RUBROS ACTIVOS
+                    //NO SE PUEDE ELIMINAR LOCALIDAD SI TIENE USUARIOS CON DICHA LOCALIDAD
                     // var cantidadRubros = (from o in _context.Rubros where o.EmpresaID == EmpresaID && o.Eliminado == false select o).Count();
                     //if (cantidadRubros == 0)
                     //{

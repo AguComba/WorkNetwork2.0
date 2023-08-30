@@ -8,11 +8,11 @@
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
         <h2>Gestion de vacante</h2>
-        <ol>
+        @*<ol>
             <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
             <li><a asp-area="" asp-controller="vacantes" asp-action="index">Vacantes</a></li>
             <li>Detalle de Vacante</li>
-        </ol>
+        </ol>*@
 
     </div>
 </div><!-- Fin primera parte -->
@@ -83,6 +83,9 @@
                         <a target="_blank" href="/Vacantes/VerPDF/@persona.PersonaID">
                             <i class="biu bi-paperclip"></i>
                         </a>
+                        <a target="_blank" href="/Personas/PerfilUser/@persona.PersonaID">
+                            <i class="bi bi-person"></i>
+                        </a>
                     </div>
                     <p>
                         @persona.ComentarioVacante
@@ -114,18 +117,16 @@
                                         <label class="control-label"><b>Idioma requerido</b></label>
                                         <input placeholder='Ingrese que idioma es requerido' type='text' name='idiomaVacante' id="idiomaVacante" class='form-control mb-3' />
                                     </div>
-                                    <div>
-                                        <label class="control-label"><b> Disponibilidad horaria: </b></label>
+                                    <div>                                      
                                         <select id='disponibilidadHoraria' name='disponibilidadHoraria' class="form-control mb-3">
-                                            <option selected disabled>Seleccione un campo</option>
+                                            <option selected disabled>Disponibilidad Horaria:</option>
                                             <option value=0>Fulltime</option>
                                             <option value=1>Partime</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label class="control-label"><b>Modalidad: </b></label>
                                         <select id='modalidadVacante' name='modalidadVacante' class="form-control mb-3">
-                                            <option selected disabled>Seleccione un campo</option>
+                                            <option selected disabled>Modalidad</option>
                                             <option value=0>Presencial</option>
                                             <option value=1>Semi-presencial</option>
                                             <option value=2>Remoto</option>
@@ -149,5 +150,5 @@
 
 
 @section Scripts{
-<script src="~/js/Vacantes.js"></script>
+    <script src="~/js/Vacantes.js"></script>
 }

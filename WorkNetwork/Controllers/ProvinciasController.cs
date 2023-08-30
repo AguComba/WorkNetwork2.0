@@ -32,9 +32,25 @@
 
         public JsonResult TablaProvincias()
         {
-            var provincias = _context.Provincia.ToList();
-            return Json(provincias);
+            var provincias = _context.Provincia.Include(p => p.Pais).ToList();
+
+            List<ProvinciaMostrar> listadoProvincias = new List<ProvinciaMostrar>();
+            foreach (var provincia in provincias)
+            {
+                var provinciasVer = new ProvinciaMostrar
+                {
+                    ProvinciaID= provincia.ProvinciaID,
+                    NombreProvincia = provincia.NombreProvincia,
+                    PaisID= provincia.PaisID,
+                    NombrePais = provincia.Pais.NombrePais,
+                    Eliminado = provincia.Eliminado,
+                };
+                listadoProvincias.Add(provinciasVer);
+            }
+
+            return Json(listadoProvincias);
         }
+
         public JsonResult CrearProvincia(int IdProvincia, string NombreProvincia, int PaisID)
         {
             int resultado = 0;

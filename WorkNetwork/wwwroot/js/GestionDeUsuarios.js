@@ -73,6 +73,9 @@ function login() {
     $.post(url, data).done(resultado => {
         if (resultado) {
             window.location.href = '/'
+            //una vez logueado el usuario, dirigirlo a Paises si es superusuario
+            //a perfil si es empresa o usuario preguntar si se envia a su perfil
+            //o al listado de vacantes
         } else {
             $("#loginLoader").addClass('visually-hidden');
             $('#loginError').removeClass('visually-hidden');

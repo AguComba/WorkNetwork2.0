@@ -8,10 +8,10 @@
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
         <h2>Perfil</h2>
-        <ol>
+       @* <ol>
             <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
             <li>Perfil</li>
-        </ol>
+        </ol>*@
 
     </div>
 </div><!-- Fin primera parte -->
@@ -27,9 +27,20 @@
                         <h2>@infoEmpresa.RazonSocial</h2>
                         <h3>@infoEmpresa.CUIT</h3>
                         <div class="social-links mt-2">
-                            <a target="_blank" href="@infoEmpresa.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
-                            <a target="_blank" href="@infoEmpresa.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
-                            <a target="_blank" href="@infoEmpresa.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            @if (!string.IsNullOrEmpty(infoEmpresa.Twitter))
+                            {
+                                <a target="_blank" href="@infoEmpresa.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
+                            }
+
+                            @if (!string.IsNullOrEmpty(infoEmpresa.Instagram))
+                            {
+                                <a target="_blank" href="@infoEmpresa.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>                               
+                            }
+
+                            @if (!string.IsNullOrEmpty(infoEmpresa.Linkedin))
+                            {
+                                <a target="_blank" href="@infoEmpresa.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>    
+                            }
                         </div>
                     </div>
                 </div>
@@ -44,18 +55,18 @@
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">General</button>
                             </li>
-@*
+                            @*
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar perfil</button>
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar perfil</button>
                             </li>*@
 
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Configuración</button>
+                            @*  <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Configuración</button>
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Cambiar contraseña</button>
-                            </li>
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Cambiar contraseña</button>
+                            </li>*@
 
                         </ul>
                         <div class="tab-content pt-2">
@@ -98,18 +109,80 @@
 
                                 @*Modificar los edits de los perfiles para que sean funcionales*@
                                 <p>
-                                    <button class="btn btn-secondary" onclick="AbrirModal()">Editar</button>
+                                    <button class="btn btn-secondary" onclick="BuscarEmpresa(@infoEmpresa.EmpresaID)">Editar Empresa</button>
                                 </p>
+                                <div class="modal" tabindex="-1" id="modalCrearEmpresa" role="dialog" aria-labeledby="exampleModalLabel">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="Titulo-Modal-Empresa"></h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="VaciarFormulario()" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body mb-12">
+                                                <form id="frmFormulario">
+                                                    <input type="hidden" name="IdEmpresa" id="EmpresaID" value="0" />
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">Nombre</label>
+                                                        <input type="text" name="razonSocial" id="RazonSocial" class="form-control mb-3" required />
+                                                    </div>
+
+                                                    @*<label for="recipient-name" class="form-label">Rubro</label>
+                                                      <div class="form-group">
+                                                    @Html.DropDownList("RubroID", null, htmlAttributes:new{@class = "form-select mb-3"})
+                                                    </div>*@
 
 
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">CUIT</label>
+                                                        <input type="text" name="cuit" id="Cuit" class="form-control mb-3" required />
+                                                    </div>
+
+
+                                                    
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">Telefono</label>
+                                                        <input type="tel" name="telefono1Empresa" id="Telefono1" class="form-control mb-3" maxlength="15" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">Localidad</label>
+                                                        <div class="form-group">
+                                                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select mb-3", @id = "paisID"})
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select", @id = "provinciaID"})
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select", @id = "localidadID"})
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="form-label">Domicilio</label>
+                                                            <input type="text" name="domicilio" id="DomicilioEmpresa" class="form-control" />
+
+                                                        </div>
+                                                        @*<div class="form-group">
+                                                            <label for="recipient-name" class="form-label">Correo</label>
+                                                            <input type="text" name="correoEmpresa" id="CorreoEmpresa" class="form-control" />
+                                                        </div>*@
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" onclick="VaciarFormulario()" data-bs-dismiss="modal" aria-label="back">Atrás</button>
+                                                <button type="submit" class="btn btn-primary" onclick="guardarEmpresa()">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*Editar finalizado, resta probar*@
                             </div>
-                            
-                           
-
-                            <div class="tab-pane fade show profile-edit" id="profile-edit"> <h3 class="text-center mt-3">Esta funcion esta en desarrollo</h3> </div>
-                            <div class="tab-pane fade show profile-setting" id="profile-setting"> <h3>Esta funcion esta en desarrollo</h3> </div>
-@*                            <div class="tab-pane fade show profile-edit" id="profile-edit"> <h1>Esta funcion esta en desarrollo</h1> </div>
-*@                        </div>
+                            @*  <div class="tab-pane fade show profile-edit" id="profile-edit"> <h3 class="text-center mt-3">Esta funcion esta en desarrollo</h3> </div>
+                            <div class="tab-pane fade show profile-setting" id="profile-setting"> <h3>Esta funcion esta en desarrollo</h3> </div>*@
+                            @*  <div class="tab-pane fade show profile-edit" id="profile-edit"> <h1>Esta funcion esta en desarrollo</h1> </div>*@
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,3 +190,9 @@
     </div>
 </section>
 
+@section Scripts{
+    <script src='~/js/Empresas.js'></script>
+    <script>
+        window.onload = CompletarTablaEmpresas();
+    </script>
+}

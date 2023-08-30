@@ -15,11 +15,12 @@ const CompletarTablaVacantes = () => {
                 claseEliminado = 'table-danger';
                 botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarVacante(${vacante.vacanteID},0)"><i class="bi bi-recycle"></i> Activar</btn>`
             }
+            //const idiomasTexto = vacante.idiomas ? vacante.idiomas : '-';
             $("#tbody-vacante").append(
                 `<tr class= 'tabla-hover${claseEliminado}'>
                         <td class='texto'>${vacante.nombre}</td>
-                        <td class='texto'>${vacante.idiomas}</td>
-                        <td class='texto'>${vacante.experienciaRequerida}</td>
+                        <td class='texto'>${vacante.idiomas}</td> 
+                        <td class='texto'>${vacante.experienciaRequerida} años</td>
                         <td class = 'text-center'>
                         ${botones}
                         </td>
@@ -117,8 +118,9 @@ const MostrarVacantes = () => {
             </div>
                 `
             )
-        })
-    })
+        });
+    });
+
 }
 
 

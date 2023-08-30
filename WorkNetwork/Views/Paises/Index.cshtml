@@ -7,16 +7,17 @@
 <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-        <h2>Paises</h2>
-        <ol>
+        @*<h2>Paises</h2>*@
+       @* <ol>
             <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
             <li>Paises</li>
-        </ol>
+        </ol>*@
 
     </div>
 </div><!-- Fin primera parte -->
 
 <section>
+    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Paises</h2></div>
 <div class="container">
 <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearPais)'>Agregar País</button>
 <table class="table">
@@ -37,8 +38,8 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modalCrearPais" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" style="top: 100px" id="modalCrearPais" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-l">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="titulo-modal-pais"></h5>

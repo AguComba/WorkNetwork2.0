@@ -52,6 +52,7 @@ const AbrirModal = () => {
     $('#titulo-modal-rubro').text('Agregar nuevo rubro')
     $('#idRubro').val(0);
     $('#modalCrearRubro').modal('show');
+    $('#bottonEdit').text('Agregar');
     $('#alertRubro').addClass('visually-hidden')
 }
 const VaciarFormulario = () => {
@@ -64,6 +65,7 @@ const VaciarFormulario = () => {
 const BuscarRubro = (rubroID) => {
     $("#titulo-modal-rubro").text("Editar Rubro");
     $("#idRubro").val(rubroID);
+    $('#bottonEdit').text('Guardar Cambios');
     let url = '../../Rubros/BuscarRubro';
     let data = { RubroID: rubroID };
 
