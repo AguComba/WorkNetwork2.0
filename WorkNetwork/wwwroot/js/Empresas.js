@@ -34,17 +34,17 @@
 
 const guardarEmpresa = () => {
     event.preventDefault();
-    const url = '../../Empresas/GuardarEmpresa'
-    const formulario = $('#registrarEmpresa')[0];
-    const params = new FormData(formulario)
+    const url = '../../Empresas/EditarEmpresa'
+    //const formulario = $('#registrarEmpresa')[0];
+    const params = new FormData($('#frmFormulario')[0]);
     $.ajax({
-        type:'POST',
+        type:'PUT',
         url: url,
         data: params,
         contentType: false,
         processData: false,
         async: false,
-        success: e => window.location.href = '/',
+        success: e => window.location.href = '/empresas/PerfilEmpresa',
         error: e=>console.log('error'+e)
     })
 }
@@ -98,6 +98,9 @@ const BuscarEmpresa = (empresaID)=> {
             $("#Cuit").val(empresa.cuit);
             $("#Telefono1").val(empresa.telefono1);
             $("#DomicilioEmpresa").val(empresa.domicilio);
+            $("#paisID").val(empresa.paisID);
+            $("#provinciaID").val(empresa.provinciaID);
+            $("#localidadID").val(empresa.localidadID);
             //$("#CorreoEmpresa").val(empresa.emailEmpresa);
             $("#modalCrearEmpresa").modal("show");
         })

@@ -7,7 +7,7 @@
 <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-        <h2>Vacantes</h2>
+        @*<h2>Vacantes</h2>*@
        @* <ol>
             <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
             <li>Detalle de Vacante</li>
@@ -17,6 +17,7 @@
 </div><!-- Fin primera parte -->
 
 <section class="blog" id="blog">
+    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Vacantes</h2></div>
     <div class="container" data-aos="fade-up" data-aos-dalay="100">
         <article class="blog-details">
 
@@ -67,19 +68,17 @@
                 <p>
                     Ingresa una breve descripción de porqué te gustaría postularte a este puesto...
                 </p>
-                    <div class="row">
-                        <input type="hidden" id="vacanteID" value="@vacanteMostrar.VacanteID"/>
-                        <div class="col form-group">
-                            <textarea name="comment"
-                                      class="form-control"
-                                      placeholder="Su descripción"
-                                      id="descripcionVacante"
-                            ></textarea>
-                        </div>
+                <div class="row">
+                    <input type="hidden" id="vacanteID" value="@vacanteMostrar.VacanteID" />
+                    <div class="col form-group">
+                        <textarea name="comment" class="form-control" placeholder="Su descripción" id="descripcionVacante">
+                        </textarea>
+                        <p id="Error-descripcionVacante"></p>
                     </div>
-                    <button type="submit" onclick="pustularVacante()"  class="btn btn-primary">
-                       Postularse 
-                    </button>
+                </div>
+                <button type="submit" onclick="pustularVacante()" class="btn btn-primary">
+                    Postularse
+                </button>
             </div>
         </div>
         <!-- End blog comments -->

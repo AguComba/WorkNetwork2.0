@@ -384,8 +384,26 @@
         public JsonResult BuscarVacante(int VacanteID)
         {
             var vacante = _context.Vacante.FirstOrDefault(m => m.VacanteID == VacanteID);
+            var localidad = _context.Localidad.Where(p => p.LocalidadID == vacante.LocalidadID).FirstOrDefault();
+            var provincia = _context.Provincia.Where(p => p.ProvinciaID == localidad.ProvinciaID).FirstOrDefault();
 
-            return Json(vacante);
+            var vacanteVer = new VacanteMostrar
+            {
+                VacanteID = vacante.VacanteID,
+                Nombre = vacante.Nombre,
+                Descripcion = vacante.Descripcion,
+                ExperienciaRequerida = vacante.ExperienciaRequerida,
+                RubroID = vacante.RubroID,
+                FechaDeFinalizacion = vacante.FechaDeFinalizacion,
+                LocalidadID = vacante.LocalidadID,
+                ProvinciaID = localidad.ProvinciaID,
+                PaisID = provincia.PaisID,
+                Idiomas = vacante.Idiomas,
+                DisponibilidadHoraria = vacante.DisponibilidadHoraria,
+                tipoModalidad = vacante.tipoModalidad,
+            };
+
+            return Json(vacanteVer);
         }
 
         public JsonResult EliminarVacante(int VacanteID, int Elimina)
@@ -411,7 +429,7 @@
                     //}
                     //else
                     //{
-                    //   resultado = 1;
+                      resultado = 1;
                     //}
                 }
             }

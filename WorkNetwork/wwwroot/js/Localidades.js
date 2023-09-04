@@ -78,37 +78,14 @@ const BuscarProvincia = () => {
 }
 
 
-//function BuscarLocalidad(localidadID) {
-//    $("#Titulo-Modal-Localidad").text("Editar Localidad");
-//    //$("#LocalidadID").val(localidadID);
-//    $('#bottonEdit').text('Guardar Cambios');
-//    $("#idLocalidad").val(localidadID);
-//    $.ajax({
-//        type: "POST",
-//        url: '../../Localidades/BuscarLocalidad',
-//        data: { LocalidadID: localidadID },
-//        success: function (localidad) {
-//            $("#NombreLocalidad").val(localidad.NombreLocalidad);
-//            $("#PaisID").val(localidad.PaisID);
-//            BuscarLocalidad();
-
-
-//            $("#exampleModal").modal("show");
-//        },
-//        error: function (data) {
-//        }
-//    });
-//}
-
 $('#idProvincia').change(() => BuscarLocalidad())
 
 const BuscarLocalidad = (localidadID) => {
     $("#Titulo-Modal-Localidad").text("Editar Localidad");
     $('#bottonEdit').text('Guardar Cambios');
     $("#idLocalidad").val(localidadID);
-    //$("#cpLocalidad").val(cpLocalidad);
+
     $("#idProvincia").val(idProvincia);
-    //$('#paisID').val(paisID);
     $('#alertLocalidad').addClass('visually-hidden');
     let url = '../../Localidades/BuscarLocalidad';
     let data = { LocalidadID: localidadID, };
@@ -122,26 +99,6 @@ const BuscarLocalidad = (localidadID) => {
     }).fail(e => console.log(e));
 }
 
-//const BuscarLocalidad = (localidadID) => {
-//    //$('#LocalidadID').empty();
-//    $("#Titulo-Modal-Localidad").text("Editar Localidad");
-//    $('#bottonEdit').text('Guardar Cambios');
-//    $("#idLocalidad").val(localidadID);
-//    //$("#codigoPostal").val(cpLocalidad);
-//    //$('#idProvincia').val(provinciaID);
-//    $('#alertLocalidad').addClass('visually-hidden');
-//    let url = '../../Localidades/ComboLocalidades';
-//    let data = { id: $('#ProvinciaID').val() };
-//    $.post(url, data).done(localidades => {
-//        localidades.length === 0
-//            ? $('#LocalidadID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
-//            : $.each(localidades, (i, localidad) => {
-//                $('#LocalidadID').append(`<option value=${localidad.value}>${localidad.text}</option>`)
-//            });
-
-//    }).fail(e => console.log('error en combo provincias ' + e))
-//    return false
-//}
 
 const AbrirModal = () => {
     $('#idLocalidad').val(0);

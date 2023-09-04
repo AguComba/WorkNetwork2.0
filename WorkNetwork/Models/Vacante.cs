@@ -43,6 +43,10 @@
         public string RubroNombre {get; set;}
         public int LocalidadID { get; set; }
         public string LocalidadNombre {get; set;}
+        public int ProvinciaID { get; set; }
+        public string ProvinciaNombre { get; set; }
+        public int PaisID { get; set; }
+        public string PaisNombre { get; set; }
         public DateTime FechaDeFinalizacion { get; set; }
         public DateTime FechaCreacion { get; set; }
         public string? Idiomas { get; set; }
