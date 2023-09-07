@@ -6,17 +6,9 @@
 
 
 <!-- ======= Primera parte de la pagina ======= -->
-<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
-    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');"></div>
+<!-- Fin primera parte -->
 
-        
-       @* <ol>
-            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
-            <li>Localidades</li>
-        </ol>*@
-
-    </div>
-</div><!-- Fin primera parte -->
 <section>
     <div class="container position-relative d-flex flex-column align-items-center mt-2"><h2>Localidades</h2></div>
     <div class="container">
@@ -31,9 +23,7 @@
                     <th>
                         Código Postal
                     </th>
-                    <th>
-                        @*  Opciones*@
-                    </th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id='tbody-localidad'></tbody>
@@ -41,13 +31,14 @@
 
     </div>
 </section>
+
 <!--Modal-->
-<div class="modal fade" style="top: 100px" id="modalCrearLocalidad" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-l">
+<div class="modal fade modal-top" id="modalCrearLocalidad" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="Titulo-Modal-Localidad">Agregar localidad</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick='VaciarFormulario()' aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="contact">
@@ -55,25 +46,27 @@
                         <div class="alert alert-danger " id='alertLocalidad'>La descripción no puede estar vacia</div>
                         <div>
                             <label>Ingresar Localidad</label>
-                        <input type="hidden" id='idLocalidad' />
-                        <input placeholder="Ingrese una localidad" type="text" id="nombreLocalidad" class="form-control mb-3" />
+                            <input type="hidden" id='localidadID' value="0" />
+                            <input placeholder="Ingrese una localidad" type="text" id="NombreLocalidad" class="form-control mb-2" />
                             <label>Ingrese el Código Postal</label>
-                            <input placeholder="Código Postal" type="number" id="cpLocalidad" class='form-control mb-3' maxlength="4" />
+                            <input placeholder="Código Postal" type="number" id="CPLocalidad" class='form-control mb-2' maxlength="4" />
                         </div>
+
                         <div>
-                           <label>País:</label>
-                            @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control mb-3", @id = "idPais"})
+                            <label>País:</label>
+                            @Html.DropDownList("PaisID", null, htmlAttributes: new {@class = "form-control mb-2", @id = "idPais"})
                         </div>
+
                         <div>
                             <label>Provincia:</label>
-                            @Html.DropDownList("ProvinciaID", null, htmlAttributes: new {@class = "form-control mb-3", @id = "idProvincia"})
+                            @Html.DropDownList("ProvinciaID", null, htmlAttributes: new {@class = "form-control mb-2", @id = "idProvincia"})
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-login" id="bottonEdit" onclick='GuardarLocalidad()'>Agregar</button>
+                <button type="button" class="btn btn-secondary btn-custom" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-login btn-custom" id="bottonEdit" onclick='GuardarLocalidad()'>Agregar</button>
             </div>
         </div>
     </div>

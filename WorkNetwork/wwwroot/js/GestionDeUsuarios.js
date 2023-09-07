@@ -71,7 +71,7 @@ function login() {
     $('#loginBtn').addClass('visually-hidden');
     $('#loginLoader').removeClass('visually-hidden');
     $.post(url, data).done(resultado => {
-        if (resultado) {
+        if (resultado) {            
             window.location.href = '/'
             //una vez logueado el usuario, dirigirlo a Paises si es superusuario
             //a perfil si es empresa o usuario preguntar si se envia a su perfil

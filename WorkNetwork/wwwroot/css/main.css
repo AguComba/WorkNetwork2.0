@@ -2790,3 +2790,12 @@ section {
         .footer .footer-legal .credits a {
             color: var(--color-primary);
         }
+
+
+.btn-custom{
+    padding: 10px 16px;
+}
+
+.modal-top {
+    top: 90px;
+}

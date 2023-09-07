@@ -14,23 +14,25 @@ namespace WorkNetwork.Controllers
             _userManager = userManager;
 
         }
+
         public IActionResult Index()
         {
             //Empresa actual
-            var paises = _context.Pais.ToList();
+            var paises = _context.Pais.Where(x => x.Eliminado == false).ToList();
             paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
             ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
 
             List<Provincia> provincias = new List<Provincia>();
             provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
             ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
-            return View(_context.Localidad.ToList());
+            return View(_context.Localidad.ToList());           
+            //var selectprovincias = new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]", };
+            //provincias.Add(selectprovincias);
+            //ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
+            //var provincias = _context.Provincia.ToList();
+            //return View(_context.Localidad.ToList());           
         }
-        // public void BuscarEmpresaActual(string usuarioActual, EmpresaUsuario empresaUsuarioActual)
-        // {
-
-        //     empresaUsuarioActual = _context.EmpresaUsuarios.Where(p => p.UsuarioID == usuarioActual).SingleOrDefault();
-        // }
+       
         public JsonResult TablaLocalidades()
         {
             var usuarioActual = _userManager.GetUserId(HttpContext.User);
@@ -66,6 +68,7 @@ namespace WorkNetwork.Controllers
             var localidades = (from p in _context.Localidad where p.ProvinciaID == id select p).ToList();
             return Json(new SelectList(localidades, "LocalidadID", "NombreLocalidad"));
         }
+
         public JsonResult GuardarLocalidad(int IdLocalidad, string NombreLocalidad, int CP, int ProvinciaID)
         {
             int resultado = 0;
@@ -115,8 +118,8 @@ namespace WorkNetwork.Controllers
 
         public JsonResult BuscarLocalidad(int LocalidadID)
         {
-            var localidad = _context.Localidad.Include(p =>p.Provincia.Pais).FirstOrDefault(m => m.LocalidadID == LocalidadID);
-           
+            var localidad = _context.Localidad.Include(p => p.Provincia.Pais).FirstOrDefault(m => m.LocalidadID == LocalidadID);
+            
             var localidadVer = new LocalidadMostrar
             {
                 LocalidadID = localidad.LocalidadID,

@@ -37,35 +37,72 @@ const guardarEmpresa = () => {
     const url = '../../Empresas/EditarEmpresa'
     //const formulario = $('#registrarEmpresa')[0];
     const params = new FormData($('#frmFormulario')[0]);
-    $.ajax({
-        type:'PUT',
-        url: url,
-        data: params,
-        contentType: false,
-        processData: false,
-        async: false,
-        success: e => window.location.href = '/empresas/PerfilEmpresa',
-        error: e=>console.log('error'+e)
-    })
+    let alertEmpresa = $("#alertEmpresa");
+    let foto = $("#fotoPerfilEmpresa").val();
+    let razon = $("#RazonSocial").val().trim();
+    let rubroID = $("#RubroID").val().trim();
+    let cuit = $("#Cuit").val().trim();
+    let tel = $("#Telefono1").val().trim();
+    let paisid = $("#paisID").val().trim();
+    let provinciaid = $("#provinciaID").val().trim();
+    let localidadid = $("#localidadID").val().trim();
+    let domicilio = $("#DomicilioEmpresa").val().trim();
+    if (razon != "" && razon != null) {
+        if (rubroID != 0) {
+            if (cuit != "" && cuit != null) {
+                if (tel != "" && tel != null) {
+                    if (paisid != 0) {
+                        if (provinciaid != 0) {
+                            if (localidadid != 0) {
+                                if (domicilio != "" && domicilio != null) {
+                                    if (foto != null) {
+                                        $.ajax({
+                                            type: 'PUT',
+                                            url: url,
+                                            data: params,
+                                            contentType: false,
+                                            processData: false,
+                                            async: false,
+                                            success: e => window.location.href = '/empresas/PerfilEmpresa',
+                                            error: e => console.log('error' + e)
+                                        });
+
+                                    } else alertEmpresa.removeClass('visually-hidden').text('La foto de perfil es obligatoria');
+
+                                } else alertEmpresa.removeClass('visually-hidden').text('El domicilio es obligatorio');
+
+                            } else alertEmpresa.removeClass('visually-hidden').text('Debe seleccionar una localidad');
+
+                        } else alertEmpresa.removeClass('visually-hidden').text('Debe seleccionar una provincia');
+
+                    } else alertEmpresa.removeClass('visually-hidden').text('Debe seleccionar un país');
+
+                } else alertEmpresa.removeClass('visually-hidden').text('El Telefono es obligatorio');
+
+            } else alertEmpresa.removeClass('visually-hidden').text('Debe escribir un CUIT');
+
+        } else alertEmpresa.removeClass('visually-hidden').text('Debe seleccionar un rubro');
+
+    } else alertEmpresa.removeClass('visually-hidden').text('La Razon Social no puede estar vacía');
 }
 
 const BuscarProvincia = () => {
     $('#ProvinciaID').empty();
     let paisId = $('#PaisID').val();
     let url = '../../Provincias/ComboProvincia';
-    let data = { id: $('#PaisID').val()};
+    let data = { id: $('#PaisID').val() };
     $.post(url, data).done(provincias => {
         provincias.length === 0
             ? $('#ProvinciaID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
             : $.each(provincias, (i, provincia) => {
                 $('#ProvinciaID').append(`<option value=${provincia.value}>${provincia.text}</option>`)
             });
-            BuscarLocalidad()
+        BuscarLocalidad()
     }).fail(e => console.log('error en combo provincias ' + e));
     return false
 }
 
-$('#PaisID').change(()=>BuscarProvincia());
+$('#PaisID').change(() => BuscarProvincia());
 
 const BuscarLocalidad = () => {
     $('#LocalidadID').empty();
@@ -83,7 +120,7 @@ const BuscarLocalidad = () => {
 
 $('#ProvinciaID').change(() => BuscarLocalidad());
 
-const BuscarEmpresa = (empresaID)=> {
+const BuscarEmpresa = (empresaID) => {
     $("#Titulo-Modal-Empresa").text("Editar Empresa");
     $("#EmpresaID").val(empresaID);
     $("#RazonSocial").val(RazonSocial);
@@ -104,13 +141,14 @@ const BuscarEmpresa = (empresaID)=> {
             //$("#CorreoEmpresa").val(empresa.emailEmpresa);
             $("#modalCrearEmpresa").modal("show");
         })
-    .fail(e => console.log(e));
+        .fail(e => console.log(e));
 }
 
 const AbrirModal = () => {
     $('#modalCrearEmpresa').modal('show');
     $('#ProvinciaID').val(0);
     $('#LocalidadID').val(0);
+    $("#alertEmpresa").addClass('visually-hidden');
 }
 
 const VaciarFormulario = () => {

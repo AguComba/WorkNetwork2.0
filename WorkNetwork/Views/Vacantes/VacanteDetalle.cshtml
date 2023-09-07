@@ -4,17 +4,8 @@
 }
 
 <!-- ======= Primera parte de la pagina ======= -->
-<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
-    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-
-        @*<h2>Vacantes</h2>*@
-       @* <ol>
-            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
-            <li>Detalle de Vacante</li>
-        </ol>*@
-
-    </div>
-</div><!-- Fin primera parte -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');"></div>
+<!-- Fin primera parte -->
 
 <section class="blog" id="blog">
     <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Vacantes</h2></div>
@@ -32,7 +23,8 @@
                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion</time></a></li>
                 </ul>
-            </div><!-- End meta top -->
+            </div>
+            <!-- End meta top -->
 
             <div class="content">
 
@@ -45,7 +37,8 @@
                 <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion</span></h3>
 
 
-            </div><!-- End post content -->
+            </div>
+            <!-- End post content -->
 
             <div class="meta-bottom">
                 <i class="bi bi-folder"></i>
@@ -58,9 +51,11 @@
                     <li><a style="text-transform:uppercase; cursor:pointer" >@vacanteMostrar.DisponibilidadHoraria</a></li>
                     <li><a style="text-transform:uppercase; cursor:pointer" >@vacanteMostrar.tipoModalidad</a></li>
                 </ul>
-            </div><!-- End meta bottom -->
+            </div>
+            <!-- End meta bottom -->
 
-        </article><!-- End blog post -->
+        </article>
+        <!-- End blog post -->
 
         <div class="comments">
             <div class="reply-form">
@@ -70,10 +65,10 @@
                 </p>
                 <div class="row">
                     <input type="hidden" id="vacanteID" value="@vacanteMostrar.VacanteID" />
+                    <div class="alert alert-danger" id="Error-descripcionVacante"></div>
                     <div class="col form-group">
                         <textarea name="comment" class="form-control" placeholder="Su descripción" id="descripcionVacante">
-                        </textarea>
-                        <p id="Error-descripcionVacante"></p>
+                        </textarea>                        
                     </div>
                 </div>
                 <button type="submit" onclick="pustularVacante()" class="btn btn-primary">

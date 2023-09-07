@@ -4,16 +4,8 @@
     ViewData["Title"] = "Provincia";
 }
 <!-- ======= Primera parte de la pagina ======= -->
-<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
-    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-
-       @* <ol>
-            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
-            <li>Provincias</li>
-        </ol>*@
-
-    </div>
-</div><!-- Fin primera parte -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');"></div>
+<!-- Fin primera parte -->
 
 <section>
 <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Provincias</h2></div>
@@ -39,9 +31,9 @@
 
 
 <!-- Modal -->
-<div class="modal fade" style="top: 100px" id="modalCrearProvincia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade modal-top" id="modalCrearProvincia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-l">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="Titulo-Modal-Provincia">Agregar provincia</h5>
@@ -66,8 +58,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()'data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-login" id="bottonEdit" onclick='GuardarProvincia()'>Agregar</button>
+                <button type="button" class="btn btn-secondary btn-custom" onclick='VaciarFormulario()'data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-login btn-custom" id="bottonEdit" onclick='GuardarProvincia()'>Agregar</button>
             </div>
         </div>
     </div>

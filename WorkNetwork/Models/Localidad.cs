@@ -9,7 +9,7 @@
         public int ProvinciaID { get; set; }
         public bool Eliminado { get; set; }
 
-        public virtual Provincia? Provincia { get; set; }
+        public virtual Provincia Provincia { get; set; }
         public virtual ICollection<Persona>? Personas { get; set; }
         public virtual ICollection<Empresa>? Empresas { get; set; }
         //public virtual ICollection<Vacante>? Vacantes { get; set; }

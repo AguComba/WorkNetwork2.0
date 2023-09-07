@@ -61,16 +61,49 @@ const editarPersona = () => {
     event.preventDefault();
     const parametros = new FormData($('#frmFormulario')[0]);
     const url = '../../Personas/EditarPersona';
-      $.ajax({
-        type: 'PUT',
-        url: url,
-        data: parametros,
-        contentType: false,
-        processData: false,
-        async: false,
-        success: e => window.location.href = '/',
-        error: e => console.log('error' + e)
-    })
+    let alertPersona = $("#alertPersona");
+    let nombre = $("#PersonaNombre").val().trim();
+    let apellido = $("#ApellidoNombre").val().trim();
+    let tel = $("#Telefono1").val().trim();
+    let paisid = $("#paisID").val().trim();
+    let provinciaid = $("#provinciaID").val().trim();
+    let localidadid = $("#localidadID").val().trim();
+    let domicilio = $("#DomicilioPersona").val().trim();
+    let correo = $("#CorreoPersona").val().trim();
+    if (nombre != "" && nombre != null) {
+        if (apellido != null && apellido != "") {
+            if (tel != "" && tel != null) {
+                if (paisid != 0) {
+                    if (provinciaid != 0) {
+                        if (localidadid != 0) {
+                            if (domicilio != "" && domicilio != null) {
+                                if (correo != "" && correo != null) {
+                                    $.ajax({
+                                        type: 'PUT',
+                                        url: url,
+                                        data: parametros,
+                                        contentType: false,
+                                        processData: false,
+                                        async: false,
+                                        success: e => window.location.href = '/personas/PerfilUser',
+                                        error: e => console.log('error' + e)
+                                    });
+
+                                } else alertPersona.removeClass('visually-hidden').text('Debe ingresar un correo');
+
+                            } else alertPersona.removeClass('visually-hidden').text('El domicilio es obligatorio');
+
+                        } else alertPersona.removeClass('visually-hidden').text('Debe seleccionar una localidad');
+
+                    } else alertPersona.removeClass('visually-hidden').text('Debe seleccionar una provincia');
+
+                } else alertPersona.removeClass('visually-hidden').text('Debe seleccionar un país');
+            
+            } else alertPersona.removeClass('visually-hidden').text('El telefono es requerido');
+
+        } else alertPersona.removeClass('visually-hidden').text('El apellido es requerido');
+
+    } else alertPersona.removeClass('visually-hidden').text('El nombre es requerido');
 }
 
 $('#PaisID').change(() => BuscarProvincia());
@@ -111,6 +144,7 @@ const AbrirModal = () => {
     $('#idPersona').val(0);
     $('#modalCrearPersona').modal('show');
     $('#exampleModal').modal('show');
+    $("#alertPersona").addClass('visually-hidden');
 }
 
 const VaciarFormulario = () => {

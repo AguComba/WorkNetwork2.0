@@ -4,18 +4,8 @@
 }
 
 <!-- ======= Primera parte de la pagina ======= -->
-<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
-    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-
-        @*<h2>Gestion de vacante</h2>*@
-        @*<ol>
-            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
-            <li><a asp-area="" asp-controller="vacantes" asp-action="index">Vacantes</a></li>
-            <li>Detalle de Vacante</li>
-        </ol>*@
-
-    </div>
-</div><!-- Fin primera parte -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');"></div>
+<!-- Fin primera parte -->
 
 <section class="blog" id="blog">
         <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Gestión de la Vacante</h2></div>
@@ -33,7 +23,8 @@
                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion</time></a></li>
                 </ul>
-            </div><!-- End meta top -->
+            </div>
+            <!-- End meta top -->
 
             <div class="content">
 
@@ -44,9 +35,8 @@
 
                 <h3>Se requieren @vacanteMostrar.ExperienciaRequerida años de experiencia</h3>
                 <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion</span></h3>
-
-
-            </div><!-- End post content -->
+            </div>
+            <!-- End post content -->
 
             <div class="meta-bottom">
                 <i class="bi bi-folder"></i>
@@ -59,9 +49,11 @@
                     <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.DisponibilidadHoraria</a></li>
                     <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.tipoModalidad</a></li>
                 </ul>
-            </div><!-- End meta bottom -->
+            </div>
+            <!-- End meta bottom -->
+        </article>
+        <!-- End blog post -->
 
-        </article><!-- End blog post -->
         <h4 class="comments-count mt-5">Postulantes: </h4>
         @foreach (var persona in ViewBag.PersonasMostrar)
         {
@@ -105,7 +97,7 @@
                             <div class="contact">
 
                                 <form class="php-email-form" id='nuevaVacante'>
-                                    @*<div class="alert alert-danger "id='alertRubro'>El campo descripcion no puede estar vacio</div> *@
+                                    @*<div class="alert alert-danger "id='alertVacante'>El campo descripcion no puede estar vacio</div> *@
                                     <input type="hidden" id='idVacante' name='vacanteID' value=0 />
                                     <input placeholder="Ingrese un título" type="text" id="tituloVacante" name='tituloVacante' class="form-control mb-3" />
                                     <input placeholder="Ingrese una descripción" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" />

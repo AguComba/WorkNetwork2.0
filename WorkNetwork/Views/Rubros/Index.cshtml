@@ -4,17 +4,8 @@
     ViewData["Title"] = "Rubro";
 }
 <!-- ======= Primera parte de la pagina ======= -->
-<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');">
-    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-
-       @* <h2>Rubros</h2>*@
-       @* <ol>
-            <li><a asp-area="" asp-controller="home" asp-action="index">Inicio</a></li>
-            <li>Rubros</li>
-        </ol>*@
-
-    </div>
-</div><!-- Fin primera parte -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');"></div>
+<!-- Fin primera parte -->
 
 <section>
     <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Rubros</h2></div>
@@ -27,8 +18,7 @@
                     <th>
                         Rubro
                     </th>
-                    <th></th>
-                    @*<th>Opciones</th>*@
+                    <th></th>                    
                 </tr>
             </thead>
             <tbody id="tbody-rubros">
@@ -38,9 +28,9 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" style="top: 100px" id="modalCrearRubro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade modal-top" id="modalCrearRubro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-l">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="titulo-modal-rubro"></h5>
@@ -58,9 +48,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()'
-                    data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-login" id="bottonEdit" onclick='GuardarRubro()'>Agregar</button>
+                <button type="button" class="btn btn-secondary btn-custom" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-login btn-custom" id="bottonEdit" onclick='GuardarRubro()'>Agregar</button>
             </div>
         </div>
     </div>

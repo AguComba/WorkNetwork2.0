@@ -49,6 +49,28 @@
 
             return View();
         }
+
+        //public IActionResult VerPerfil (int id)
+        //{
+        //    var persona = _context.Persona.Where(p => p.PersonaID == id).FirstOrDefault();
+        //    if(persona != null) 
+        //    {
+        //        var personaMostrar = new PersonaMostrar
+        //        {
+        //            ImagenPersona = persona.ImagenPersona,
+        //            NombrePersona = persona.NombrePersona,
+        //            ApellidoPersona = persona.ApellidoPersona,
+        //            Telefono1 = persona.Telefono1,
+        //            LocalidadID = persona.LocalidadID,
+        //            DomicilioPersona = persona.DomicilioPersona,
+        //            Correo = persona.Correo,
+
+        //        };
+        //        ViewData("persona") = personaMostrar;
+        //    }
+        //    return View();
+        //}
+
         public IActionResult VacanteDetalle(int id)
         {
             var vacante = _context.Vacante.Where(v => v.VacanteID == id).FirstOrDefault();

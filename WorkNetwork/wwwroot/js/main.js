@@ -107,12 +107,27 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('load', () => {
 		aos_init();
 	});
+
+	//Para que la pestaña en la que este el usuario, se pinte de color
+	// Get the current URL or controller (you may need to adjust this based on your routing)
+	const currentUrl = window.location.pathname;
+
+	// Get all the nav-links
+	const navLinks = document.querySelectorAll('.nav-link');
+
+	// Loop through each nav-link
+	navLinks.forEach(link => {
+		// Get the href attribute of the link
+		const href = link.getAttribute('href');
+
+		// Check if the current URL matches the link's href
+		if (currentUrl === href) {
+			// Add a CSS class to make it active
+			link.classList.add('active');
+		} else {
+			// Remove the active class from other links
+			link.classList.remove('active');
+		}
+	});
 });
 
-//const activePage = window.location.pathname;
-//const navLinks = document.querySelectorAll('nav li a')
-//    .forEach(link => {
-//        if (link.href.includes('$activePage}')) {
-//            link.classList.add('active');
-//        }
-//    })

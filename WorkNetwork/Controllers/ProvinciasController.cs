@@ -58,29 +58,39 @@
             //Si es 1 descripcion vacia
             //Si es 2 campo existente
 
-            if (!string.IsNullOrEmpty(NombreProvincia)){
+            if (!string.IsNullOrEmpty(NombreProvincia))
+            {
                 NombreProvincia = NombreProvincia.ToUpper();
-                if(IdProvincia is 0){
-                    if(_context.Provincia.Any(e=>e.NombreProvincia == NombreProvincia && e.PaisID == PaisID )){
+                if (IdProvincia is 0)
+                {
+                    if (_context.Provincia.Any(e => e.NombreProvincia == NombreProvincia && e.PaisID == PaisID))
+                    {
                         resultado = 2;
-                    }else{
+                    }
+                    else
+                    {
                         //Creo la provincia
-                        var provincia = new Provincia{
+                        var provincia = new Provincia
+                        {
                             NombreProvincia = NombreProvincia,
                             PaisID = PaisID,
                         };
                         _context.Add(provincia);
                         _context.SaveChanges();
                     }
-                } else{
-                    if (_context.Provincia.Any(e=>e.NombreProvincia == NombreProvincia && e.ProvinciaID != IdProvincia))
+                }
+                else
+                {
+                    if (_context.Provincia.Any(e => e.NombreProvincia == NombreProvincia && e.PaisID == PaisID && e.ProvinciaID != IdProvincia))
                     {
-                       resultado = 2; 
-                    }else{
+                        resultado = 2;
+                    }
+                    else
+                    {
                         var provincia = _context.Provincia.Single(e => e.ProvinciaID == IdProvincia);
-                            provincia.NombreProvincia = NombreProvincia;
-                            provincia.PaisID = PaisID;
-                            _context.SaveChanges();
+                        provincia.NombreProvincia = NombreProvincia;
+                        provincia.PaisID = PaisID;
+                        _context.SaveChanges();
                     }
                 }
             }

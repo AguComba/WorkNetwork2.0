@@ -33,32 +33,11 @@
             <a href="" class="logo d-flex align-items-center">
                 <h1>Work<span>-</span>Network <span>2.0</span></h1>
             </a>
-
-            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-            <nav id="navbar" class="navbar">
-                <ul>
-                    <li><a href="">Inicio</a></li>
-                    @*   <li class="dropdown">
-                    <a href="#"><span>Iniciar Sesión</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                    <ul>
-                    <li><a data-bs-toggle="modal" style="cursor: pointer;" data-bs-target="#staticBackdrop">Como Empresa</a></li>
-                    <li><a data-bs-toggle="modal" style="cursor: pointer;" data-bs-target="#staticBackdrop">Como Persona</a></li>
-                    </ul>
-                    </li>*@
-
-                    @*<li><a href="#About">Nosotros</a></li>
-                    <li><a href="#get-started">Registrarme</a></li>*@
-                </ul>
-            </nav>
-            <!-- .navbar -->
-
-        </div>
     </header>
     <!-- End Header -->
+
     <!-- ======= Hero Section ======= -->
     <section id="hero" class="hero">
-
         <div class="info d-flex align-items-center">
             <div class="container">
                 <div class="row justify-content-center">
@@ -108,14 +87,10 @@
                         <h3>Estás mas cerca de formar parte de esta gran red!</h3>
                         <p>Si sos una empresa buscando postulantes y tenes vacantes para ofrecer selecciona la opción "Soy una empresa"</p>
                         <p>Si sos una persona buscando trabajo y queres formar parte de esta gran red selecciona la opción "Soy una persona"</p>
-@*                        <p>👇 Si ya estás registrado simplemente haz click aquí abajo</p>
-                        <a data-aos="fade-up" data-aos-delay="200" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="#get-started" class="btn-get-started">Iniciar Sesión</a>*@
                     </div>
                 </div>
             </div>
         </div>
- @*   </section>
-    <section id="get-started" class="get-started">*@
         <br />
         <div id="get-started"class="container" data-aos="fade">
             <form class="php-email-form">
@@ -123,7 +98,7 @@
                 <p class="text-center">Ingrese sus datos y comience a formar parte de Work-Network 2.0</p>
                 <div class="row gy-3">
 
-                    <div class="col-md-12">
+                    <div class="col-md-9">
                         <label>¿Sos una empresa o una persona?</label>
                         <select class="form-select" id='rol' required aria-label='rol'>
                             <option value='' disabled selected>Soy...</option>
@@ -132,17 +107,17 @@
                         </select>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-9">
                         <label>Ingrese su correo</label>
                         <input type="text" id='correo' autocomplete="off" name="name" class="form-control" placeholder="Correo Electrónico" required>
                     </div>
 
-                    <div class="col-md-12 ">
+                    <div class="col-md-9">
                         <label>Establezca una contraseña</label>
                         <input type="password" id='pass' autocomplete="off" class="form-control" name="email" placeholder="Contraseña" required>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-9">
                         <label>Repita la contraseña</label>
                         <input type="password" id='passRepeat' class="form-control" name="phone" placeholder="Repita la contraseña" required>
                     </div>
@@ -158,12 +133,12 @@
             </form>
         </div>
         <!-- End Quote Form -->
-
     </section>
     <!-- End Get Started Section -->
+
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Iniciar Sesión</h3>
@@ -191,7 +166,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="vaciarForm()" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" style="padding: 10px 25px" onclick="vaciarForm()" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-login" id="loginBtn" onclick="login()">Iniciar Sesión</button>
                 </div>
             </div>
