@@ -56,22 +56,6 @@ const GuardarProvincia = () => {
 }
 
 
-//const BuscarProvincia = (provinciaID) => {
-//    $("#Titulo-Modal-Provincia").text("Editar Provincia");
-//    $('#bottonEdit').text('Guardar Cambios');
-//    $("#idProvincia").val(provinciaID);
-//    $('#idPais').val(idPais);
-//    $('#alertProvincia').addClass('visually-hidden');
-//    let url = '../../Provincias/BuscarProvincia';
-//    let data = { ProvinciaID: provinciaID };
-
-//    $.post(url, data).done(provincia => {
-//        $("#nombreProvincia").val(provincia.nombreProvincia);
-//        //$("#idProvincia").val(provinciaID);
-//        $("#idPais").val(provincia.PaisID);
-//        $("#modalCrearProvincia").modal("show");
-//    }).fail(e => console.log(e));
-//}
 
 function BuscarProvincia(provinciaid) {
     $("#Titulo-Modal-Provincia").text("Editar Provincia");
@@ -93,19 +77,7 @@ function BuscarProvincia(provinciaid) {
     });
 }
 
-//const BuscarProvincia = (provinciaID) => {
-//    $('#ProvinciaID').empty();
-//    let url = '../../Provincias/ComboProvincia';
-//    let data = { id: $('#PaisID').val() };
-//    $.post(url, data).done(provincias => {
-//        provincias.length === 0
-//            ? $('#ProvinciaID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
-//            : $.each(provincias, (i, provincia) => {
-//                $('#ProvinciaID').append(`<option value=${provincia.value}>${provincia.text}</option>`)
-//            });
-//    }).fail(e => console.log('error en combo provincias ' + e))
-//    return false
-//}
+
 
 const AbrirModal = () => {
     $('#idProvincia').val(0);
@@ -123,27 +95,18 @@ const VaciarFormulario = () => {
 }
 
 
+
+
 const EliminarProvincia = (provinciaID, elimina) => {
     let url = '../../Provincias/EliminarProvincia';
     let data = { ProvinciaID: provinciaID, Elimina: elimina };
-    $.post(url, data).done(() => CompletarTablaProvincias()).fail(e => console.log(e))
+    $.post(url, data).done(resultado => {
+        if (resultado == 0) {
+            CompletarTablaProvincias();
+        }
+        if (resultado == 1) {
+            alert('No se puede desactivar porque tiene localidades activas')
+        }
+    });
 }
-
-//function EliminarProvincia(provinciaID, elimina) {
-//    $.ajax({
-//        type: "POST",
-//        url: '../../Provincias/EliminarProvincias',
-//        data: { ProvinciaID: provinciaID, Elimina: elimina },
-//        success: function (resultado) {
-//            if (resultado == 0) {
-//                CompletarTablaProvincias();
-//            }
-//            else {
-//                alert("No se puede eliminar porque contiene localidades activas.");
-//            }
-//        },
-//        error: function (data) {
-//        }
-//    });
-//}
 

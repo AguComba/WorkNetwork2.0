@@ -43,6 +43,68 @@
 
 const guardarPersona = () => {
     event.preventDefault();
+    const nombre = $('#nombrePersona').val();
+    const apellido = $('#apellidoPersona').val();
+    const dni = $('#numeroDocumento').val();
+    const nacimiento = $('#fecNac').val();
+    const paisid = $("#paisID").val();
+    const localidadid = $("#localidadID").val();
+    const domicilio = $('#domicilio').val();
+    const telefono = $('#telefono1Persona').val();
+    const cv = $('#curriculPersona').prop('files')[0];
+    const empresaFoto = $('#personaFoto').prop('files')[0];
+
+    const errorMessages = {
+        nombre: 'El nombre no puede quedar vacio.',
+        apellido: 'El apellido no puede quedar vacio.',
+        dni: 'El numero de documento es obligatorio.',
+        nacimiento: 'Seleccione una fecha de nacimiento.',
+        paisid: 'Debe seleccionar un pais',
+        localidadid: 'Debe seleccionar un pais primero',
+        domicilio: 'El domicilio no debe quedar vacio.',
+        telefono: 'El numero de telefono es obligatorio.',
+        cv: 'Debe cargar el Curriculum',
+        //provinciad: 'Debe seleccionar una provincia',
+        empresaFoto: 'Debe seleccionar una foto de perfil.', // New error message for file input
+    };
+    const nombreRegex = /^[A-Za-z\s]+$/
+    const apellidoRegex = /^[A-Za-z\s]+$/
+    const telefonoRegex = /^\d+$/; // Only numbers allowed
+    const dniRegex = /^\d+$/; // Only numbers allowed
+
+    let errorMessage = '';
+    if (nombre.trim() === '') { errorMessage = errorMessages.nombre; }
+    else if (!nombreRegex.test(nombre)) { errorMessage = 'El nombre solo puede contener letras y espacios.'; }
+
+    else if (apellido.trim() === '') { errorMessage = errorMessages.apellido; }
+    else if (!apellidoRegex.test(apellido)) { errorMessage = 'El apellido solo puede contener letras y espacios.'; }
+
+    else if (dni.trim() === '') { errorMessage = errorMessages.dni; }
+    else if (!dniRegex.test(dni)) { errorMessage = 'El DNI solo puede contener números.'; }
+    else if (dni.length !== 8) { errorMessage = 'El DNI debe tener 8 caracteres.' }
+
+    else if (nacimiento.trim() === '') { errorMessage = errorMessages.nacimiento; }
+    else if (domicilio.trim() === '') { errorMessage = errorMessages.domicilio; }
+
+    else if (telefono.trim() === '') { errorMessage = errorMessages.telefono; }
+    else if (!telefonoRegex.test(telefono)) { errorMessage = 'El número  solo puede contener números.'; }
+    else if (telefono.length > 15) { errorMessage = 'El numero no puede tener  mas de 15 caracteres.' }
+
+    else if (paisid === '') { errorMessage = errorMessages.paisid; }
+
+
+    else if (!cv) { errorMessage = errorMessages.cv; }
+    else if (!empresaFoto) { errorMessage = errorMessages.empresaFoto; }
+
+    if (errorMessage) {
+        alertPersona.textContent = errorMessage;
+        alertPersona.classList.add('alert-danger'); // Add text-danger class
+        return false;
+    }
+    else {
+        alertPersona.classList.remove('alert-danger'); // Remove text-danger class
+    }
+
     const parametros = new FormData($('#frmFormulario')[0]);
     const url = '../../Personas/GuardarPersona';
     $.ajax({
@@ -65,9 +127,9 @@ const editarPersona = () => {
     let nombre = $("#PersonaNombre").val().trim();
     let apellido = $("#ApellidoNombre").val().trim();
     let tel = $("#Telefono1").val().trim();
-    let paisid = $("#paisID").val().trim();
-    let provinciaid = $("#provinciaID").val().trim();
-    let localidadid = $("#localidadID").val().trim();
+    let paisid = $("#paisID").val();
+    let provinciaid = $("#provinciaID").val();
+    let localidadid = $("#localidadID").val();
     let domicilio = $("#DomicilioPersona").val().trim();
     let correo = $("#CorreoPersona").val().trim();
     if (nombre != "" && nombre != null) {
@@ -180,7 +242,8 @@ const PerfilPersona = () => {
 function BuscarPersona(idPersona) {
     $("#Titulo-Modal-Persona").text("Editar Perfil");
     $("#PersonaID").val(idPersona);
-   
+    $('#alertPersona').addClass('visually-hidden');
+
     $.ajax({
         type: "GET",
         url: "../Personas/BuscarPersona",

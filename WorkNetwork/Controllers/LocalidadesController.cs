@@ -99,7 +99,7 @@ namespace WorkNetwork.Controllers
                 }
                 else
                 {
-                    if (_context.Localidad.Any(e => e.NombreLocalidad == NombreLocalidad && e.ProvinciaID != ProvinciaID))
+                    if (_context.Localidad.Any(e => e.NombreLocalidad == NombreLocalidad && e.ProvinciaID == ProvinciaID && e.LocalidadID != IdLocalidad))
                     {
                         resultado = 2;
                     }

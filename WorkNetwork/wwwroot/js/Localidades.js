@@ -47,7 +47,9 @@ const GuardarLocalidad = () => {
                             $('#modalCrearLocalidad').modal('hide');
                             CompletarTablaLocalidades();
                         }
-                        alertLocalidad.removeClass('visually-hidden').text('La localidad ingresada ya existe.')
+                        if (resultado == 2) {
+                            alertLocalidad.removeClass('visually-hidden').text('La localidad ingresada ya existe.')
+                        }
                     }).fail(e => console.log(`Error en guardar localidad ${e}`))
 
                 } else alertLocalidad.removeClass('visually-hidden').text('Debe seleccionar una provincia')
@@ -61,43 +63,53 @@ const GuardarLocalidad = () => {
 }
 
 
-$('#idPais').change(() => BuscarProvincia())
+$('#idPais').change(function () { BuscarProvincia() });
 
-const BuscarProvincia = () => {
+function BuscarProvincia() {
     $('#idProvincia').empty();
-    let url = '../../Provincias/ComboProvincia';
-    let data = { id: $('#idPais').val() };
-    $.post(url, data).done(provincias => {
-        provincias.length === 0
-            ? $('#idProvincia').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
-            : $.each(provincias, (i, provincia) => {
-                $('#idProvincia').append(`<option value=${provincia.value}>${provincia.text}</option>`)
-            });
-    }).fail(e => console.log('error en combo provincias ' + e))
-    return false
+    $.ajax({
+        type: 'POST',
+        async: false,
+        url: '../../Provincias/ComboProvincia',
+        data: { id: $('#idPais').val() },
+        success: function (provincias) {
+            if (provincias.length == 0) {
+                $('#idProvincia').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`);
+            }
+            else {
+                $.each(provincias, (i, provincia) => {
+                    $('#idProvincia').append(`<option value=${provincia.value}>${provincia.text}</option>`)
+                });
+            }
+        },
+        error: function (data) {
+            console.log('error en combo provincias ' + data)
+        }
+    });
 }
 
-
-
-$('#idProvincia').change(() => BuscarLocalidad())
-const BuscarLocalidad = (localidadID) => {
+function BuscarLocalidad(localidadID) {
     $("#Titulo-Modal-Localidad").text("Editar Localidad");
-    $('#bottonEdit').text('Guardar Cambios');
     $("#localidadID").val(localidadID);
-
-    //$("#idProvincia").val(idProvincia);
+    $('#bottonEdit').text('Guardar Cambios');
     $('#alertLocalidad').addClass('visually-hidden');
-    let url = '../../Localidades/BuscarLocalidad';
-    let data = { LocalidadID: localidadID, };
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: '../../Localidades/BuscarLocalidad',
+        data: { LocalidadID: localidadID },
+        success: function (localidad) {
+            $("#NombreLocalidad").val(localidad.nombreLocalidad);
+            $("#idPais").val(localidad.paisID);
+            BuscarProvincia();
 
-    $.post(url, data).done(localidad => {
-        $("#NombreLocalidad").val(localidad.nombreLocalidad);
-        $("#idPais").val(localidad.paisID);
-        $("#idProvincia").val(localidad.provinciaID);
-        alert(localidad.provinciaID)
-        $("#CPLocalidad").val(localidad.cp);
-        $("#modalCrearLocalidad").modal("show");
-    }).fail(e => console.log(e));
+            $("#CPLocalidad").val(localidad.cp);
+            $("#idProvincia").val(localidad.provinciaID);
+            $("#modalCrearLocalidad").modal("show");
+        },
+        error: function (data) {
+        }
+    });
 }
 
 

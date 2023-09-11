@@ -96,7 +96,7 @@
 
                                             <div class="modal-body mb-12">
                                                 <form id="frmFormulario">
-                                                    <input type="hidden" name="IdEmpresa" id="EmpresaID" value="0" />
+                                                    <input type="hidden" name="IDEmpresa" id="EmpresaID" value="0" />
                                                     <div class="alert alert-danger" id="alertEmpresa"></div>
 
                                                     <div class="form-group">
@@ -108,13 +108,25 @@
                                                           <div class="form-group">
                                                         @Html.DropDownList("RubroID", null, htmlAttributes:new{@class = "form-select mb-3"})
                                                         </div>*@
-                                                        s
+                                                        
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="form-label">CUIT</label>
                                                         <input type="text" name="cuitEmpresa" id="Cuit" class="form-control mb-3" required />
                                                     </div>
 
-
+                                                   @*  <div>
+                                                        <label>Redes Sociales</label>
+                                                        <div class="form-group">
+                                                            <input type="text" name="instagram" placeholder="Instagram" class="form-control" id="instagram" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" name="twitter" placeholder="Twitter" class="form-control" id="twitter" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" name="linkedin" placeholder="Linkedin" class="form-control" id="linkedin" />
+                                                        </div>
+                                                    </div>
+ *@
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="form-label">Telefono</label>
                                                         <input type="tel" name="telefono1Empresa" id="Telefono1" class="form-control mb-3" maxlength="15" />
@@ -122,17 +134,17 @@
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="form-label">Pais</label>
                                                         <div class="form-group">
-                                                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select mb-3", @id = "paisID"})
+                                                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select mb-2", @id = "paisID"})
                                                         </div>
 
                                                         <label for="recipient-name" class="form-label">Provincia</label>
                                                         <div class="form-group">
-                                                            @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select", @id = "provinciaID"})
+                                                            @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select mb-2", @id = "provinciaID"})
                                                         </div>
 
                                                         <label for="recipient-name" class="form-label">Localidad</label>
                                                         <div class="form-group">
-                                                            @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select", @id = "localidadID"})
+                                                            @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select mb-2", @id = "localidadID"})
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="recipient-name" class="form-label">Domicilio</label>
@@ -149,7 +161,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" onclick="VaciarFormulario()" data-bs-dismiss="modal" aria-label="back">Atrás</button>
-                                                <button type="submit" class="btn btn-primary" onclick="guardarEmpresa()">Guardar</button>
+                                                <button type="submit" class="btn btn-primary" onclick="editarEmpresa()">Guardar</button>
                                             </div>
                                         </div>
                                     </div>
