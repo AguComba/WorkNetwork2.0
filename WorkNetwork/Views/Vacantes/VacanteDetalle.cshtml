@@ -21,7 +21,7 @@
             <div class="meta-top">
                 <ul>
                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion</time></a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion.ToString("dd/MM/yyyy")</time></a></li>
                 </ul>
             </div>
             <!-- End meta top -->
@@ -34,7 +34,7 @@
                 <p>Para esta vacante tendrás que saber hablar muy bien en @vacanteMostrar.Idiomas</p>
 
                 <h3>Se requieren @vacanteMostrar.ExperienciaRequerida años de experiencia</h3>
-                <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion</span></h3>
+                <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion.ToString("dd/MM/yyyy")</span></h3>
 
 
             </div>

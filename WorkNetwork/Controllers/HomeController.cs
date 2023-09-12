@@ -26,19 +26,28 @@
             var rolNombre = _context.Roles.Where(u => u.Id == rolUsuario.RoleId).Select(r=>r.Name).FirstOrDefault();
             if(rolNombre is "Empresa"){
 
-                var empresaUsuario = (from e in _context.EmpresaUsuarios where e.UsuarioID == usuarioActual select e).Count();
-                if (empresaUsuario is 0)
+                var empresaUsuario = (from e in _context.EmpresaUsuarios where e.UsuarioID == usuarioActual select e).ToList();
+                if (empresaUsuario.Count is 0)
                     return RedirectToAction("Index","Empresas");
-                
+
+                var empresa = _context.Empresa.Where(e => e.EmpresaID == empresaUsuario[0].EmpresaID).FirstOrDefault();
+                ViewBag.Nombre = empresa.RazonSocial;
+
             }
 
-            if (rolNombre is "Usuario"){
+            if (rolNombre is "Usuario") {
 
                 var personaUsuarioCount = (from p in _context.PersonaUsuarios where p.UsuarioID == usuarioActual select p).Count();
-                if(personaUsuarioCount == 0){
-                    return RedirectToAction("NewPerson","Personas");
+                if (personaUsuarioCount == 0) {
+                    return RedirectToAction("NewPerson", "Personas");
                 }
+                var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+                var persona = _context.Persona.Where(u => u.PersonaID == personaUsuario.PersonaID).FirstOrDefault();
+                ViewBag.Nombre = persona.NombrePersona + " " + persona.ApellidoPersona;
             }
+
+
+          
 
             return View();
         }

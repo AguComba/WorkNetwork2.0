@@ -55,7 +55,7 @@
                     @if (User.IsInRole("Usuario"))
                     {
                         <li><a asp-area="" class="nav-link text-white" asp-controller="home" asp-action="index">Inicio</a></li>
-                        <li><a asp-area="" class="nav-link text-white" asp-controller="vacantes" asp-action="index">Mis Postulaciones</a></li>
+                        <li><a asp-area="" class="nav-link text-white" asp-controller="vacantes" asp-action="PostulantesPersona">Mis Postulaciones</a></li>
                         <li><a asp-area="" class="nav-link text-white" asp-controller="personas" asp-action="PerfilUser">Perfil</a></li>
                         <li>
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">

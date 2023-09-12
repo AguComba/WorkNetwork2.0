@@ -32,10 +32,18 @@
     }).fail(e => console.error('Error al cargar tabla localidades ' + e));
 }
 
-function formatCuit(input) {
+function formatCuit(input, event) {
+    console.log(event.key)
     // Remove all non-numeric characters
     let value = input.value.replace(/\D/g, '');
-       
+
+    if (event.key === 'Backspace') {
+        //alert(event.key)
+        value = value.substring(0, value.length - 1);
+    } else if (event.key === 'Delete') {
+       // alert(event.key)
+        value = value.substring(1);
+    }
     // Add hyphens at specific positions
     if (value.length > 2) {
         value = value.substring(0, 2) + '-' + value.substring(2, 10) + '-' + value.substring(10, 11);
@@ -45,8 +53,24 @@ function formatCuit(input) {
     input.value = value;
 }
 
+const validateSocialMedia = (fieldId, regex, errorMessage) => {
+    const field = $(fieldId).val().trim();
+    if (field !== '' && !regex.test(field)) {
+        alertEmpresa.textContent = errorMessage;
+        alertEmpresa.classList.add('alert-danger');
+        return false;
+    }
+    alertEmpresa.textContent = ''; // Clear any previous error message
+    alertEmpresa.classList.remove('alert-danger');
+    return true;
+}
+
 
 const guardarEmpresa = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
     event.preventDefault();
     const formulario = $('#registrarEmpresa')[0];
     const razonSocial = $('#RazonSocial').val();
@@ -57,7 +81,20 @@ const guardarEmpresa = () => {
     const localidadid = $("#localidadID").val();
     const domicilio = $('#domicilio').val();
     const empresaFoto = $('#fotoPerfilEmpresa').prop('files')[0]; // Get the selected file
+    if (empresaFoto) {
+        const fileName = empresaFoto.name;
+        const ext = fileName.split('.').pop().toLowerCase();
 
+        // Usar una expresión regular para extraer la extensión
+        const extRegex = /(?:\.([^.]+))?$/;
+        const extMatch = extRegex.exec(fileName);
+        const fileExtension = extMatch && extMatch[1] ? extMatch[1].toLowerCase() : null;
+
+        if (!fileExtension || !['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+            alert('Por favor selecciona un archivo de imagen (jpg, jpeg, png o gif).');
+            // Aquí puedes decidir qué hacer si no es una imagen
+        }
+    }
    
     const errorMessages = {
         razonSocial: 'El nombre de la empresa no puede quedar vacio.',
@@ -74,8 +111,17 @@ const guardarEmpresa = () => {
     const razonSocialRegex = /^[A-Za-z\s.'']+$/; // Only letters and spaces allowed
     const cuitEmpresaRegex = /^[\d-]+$/; // Only numbers allowed
     const telefono1EmpresaRegex = /^\d+$/; // Only numbers allowed
+    const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/[\w-]+\/?$/i;
+    const instagramRegex = /^(https?:\/\/)?(www\.)?instagram\.com\/[\w-]+\/?$/i;
+    const twitterRegex = /^(https?:\/\/)?(www\.)?twitter\.com\/[\w-]+\/?$/i;
+    const linkedinValid = validateSocialMedia('#linkedin', linkedinRegex, 'El formato del enlace de LinkedIn no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+    const instagramValid = validateSocialMedia('#instagram', instagramRegex, 'El formato del enlace de Instagram no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+    const twitterValid = validateSocialMedia('#twitter', twitterRegex, 'El formato del enlace de Twitter no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+    if (!linkedinValid || !instagramValid || !twitterValid) {
+        return false;
+    }
 
-
+    console.log(paisid);
     let errorMessage = '';
     if (razonSocial.trim() === '') { errorMessage = errorMessages.razonSocial; }
     else if (!razonSocialRegex.test(razonSocial)) { errorMessage = 'El nombre de la empresa solo puede contener letras y espacios.'; }
@@ -91,7 +137,8 @@ const guardarEmpresa = () => {
     else if (descripcion.trim() === '') { errorMessage = errorMessages.descripcion; }
     else if (descripcion.length <50 || descripcion.length > 400) { errorMessage = 'La descripción debe estar entre 50 y 400 caracteres.' }
 
-    else if (paisid === '') { errorMessage = errorMessages.paisid; }
+    else if (paisid === '0') { errorMessage = errorMessages.paisid; }
+    
 
     else if (domicilio.trim() === '') { errorMessage = errorMessages.domicilio; }
 
@@ -121,7 +168,20 @@ const guardarEmpresa = () => {
         error: e => console.log('error' + e)
     })
 }
+$('#linkedin').on('input', function () {
+    validateSocialMedia('#linkedin', linkedinRegex, 'El formato del enlace de LinkedIn no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+});
+
+$('#instagram').on('input', function () {
+    validateSocialMedia('#instagram', instagramRegex, 'El formato del enlace de Instagram no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+});
+
+$('#twitter').on('input', function () {
+    validateSocialMedia('#twitter', twitterRegex, 'El formato del enlace de Twitter no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+});
+
 $('#registrarEmpresa').on('submit', guardarEmpresa);
+
 
 const editarEmpresa = () => {
     event.preventDefault();

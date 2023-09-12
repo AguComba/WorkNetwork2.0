@@ -31,6 +31,38 @@
             ViewBag.RubroID = new SelectList(rubros.OrderBy(x => x.NombreRubro), "RubroID", "NombreRubro");
 
 
+
+            return View();
+        }
+
+        public IActionResult PostulantesPersona()
+        {
+            var paises = _context.Pais.ToList();
+            paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
+            ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
+
+            var provincias = _context.Provincia.ToList();
+            provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
+            ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
+
+            var localidad = _context.Localidad.ToList();
+            localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
+            ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
+
+            var rubros = _context.Rubro.ToList();
+            rubros.Add(new Rubro { RubroID = 0, NombreRubro = "[SELECCIONE UN RUBRO]" });
+            ViewBag.RubroID = new SelectList(rubros.OrderBy(x => x.NombreRubro), "RubroID", "NombreRubro");
+
+            var usuarioActual = _userManager.GetUserId(HttpContext.User);
+            if (usuarioActual == null)
+            { return RedirectToAction("Index", "Home"); }
+            //BUSCO LA RELACION ENTRE PERSONA USUARIO
+            var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+            if (personaUsuario == null)
+            {
+                return RedirectToAction("NewPerson", "Personas");
+            }
+
             return View();
         }
         public IActionResult VerPDF(int id)
@@ -49,27 +81,6 @@
 
             return View();
         }
-
-        //public IActionResult VerPerfil (int id)
-        //{
-        //    var persona = _context.Persona.Where(p => p.PersonaID == id).FirstOrDefault();
-        //    if(persona != null) 
-        //    {
-        //        var personaMostrar = new PersonaMostrar
-        //        {
-        //            ImagenPersona = persona.ImagenPersona,
-        //            NombrePersona = persona.NombrePersona,
-        //            ApellidoPersona = persona.ApellidoPersona,
-        //            Telefono1 = persona.Telefono1,
-        //            LocalidadID = persona.LocalidadID,
-        //            DomicilioPersona = persona.DomicilioPersona,
-        //            Correo = persona.Correo,
-
-        //        };
-        //        ViewData("persona") = personaMostrar;
-        //    }
-        //    return View();
-        //}
 
         public IActionResult VacanteDetalle(int id)
         {
@@ -237,6 +248,31 @@
             foreach (var vacante in vacantes)
             {
                 var existeRelacion = vacantesEmpresa.Where(v => v.VacanteID == vacante.VacanteID).Count();
+                if (existeRelacion != 0)
+                {
+                    listaVacantes.Add(vacante);
+                }
+            }
+
+            return Json(listaVacantes);
+        }
+
+
+        //[Authorize(Roles = "Empresa")]
+        public JsonResult TablaVacantesPersonas()
+        {
+            //BUSCO EL USUARIO ACTUAL
+            var usuarioActual = _userManager.GetUserId(HttpContext.User);
+            //EN BASE A ESE ID BUSCAMOS EN LA TABLA DE RELACION USUARRIO-EMPRESA QUE REGISTRO TIENE
+            var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+            //EN BASE A ESA VARIABLE RECURRIMOS AL ID DE LA EMPRESA ACTUAL PARA RELACIONARLA CON LA VACANTE 
+            var personaID = _context.PersonaUsuarios.Where(u => u.UsuarioID == personaUsuario.UsuarioID).Select(r => r.UsuarioID).FirstOrDefault();
+            var listaVacantes = new List<Vacante>();
+            var vacantesPersona = _context.PersonaVacante.Where(u => u.PersonaID == personaUsuario.PersonaID).ToList();
+            var vacantes = _context.Vacante.ToList();
+            foreach (var vacante in vacantes)
+            {
+                var existeRelacion = vacantesPersona.Where(v => v.VacanteID == vacante.VacanteID).Count();
                 if (existeRelacion != 0)
                 {
                     listaVacantes.Add(vacante);

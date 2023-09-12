@@ -54,8 +54,14 @@ namespace WorkNetwork.Controllers
             {
                 //BUSCO L USUARIO ACTUAL
                 var usuarioActual = _userManager.GetUserId(HttpContext.User);
+                if (usuarioActual == null)
+                {  return RedirectToAction("Index","Home"); }
                 //BUSCO LA RELACION ENTRE PERSONA USUARIO
                 var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+                if(personaUsuario == null)
+                {
+                    return RedirectToAction("NewPerson", "Personas");
+                }
                 //SEGUN EL ID DE LA PERSONA OBTENGO TODA LA COLUMNA
                 var persona = _context.Persona.Where(u => u.PersonaID == personaUsuario.PersonaID).FirstOrDefault();
                 var correo = _context.Users.Where(u => u.Id == personaUsuario.UsuarioID).Select(c => c.Email).Single();

@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label>CUIT</label>
-                                <input type="text" class="form-control" name="cuitEmpresa" id="cuitEmpresa" placeholder="XX-XXXXXXXX-X" oninput="formatCuit(this)">
+                                <input type="text" class="form-control" name="cuitEmpresa" id="cuitEmpresa" placeholder="XX-XXXXXXXX-X" onkeyup="formatCuit(this,event)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -84,11 +84,11 @@
 
                         <div class="row">
                             <label>Ingrese su domicilio</label>
-                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 form-group">                                
+                            <div class=" col-xs-9 col-8 form-group">                                
                                 <input type="text" name="domicilio" class="form-control" id="domicilio" placeholder="Domicilio">
                             </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-group">
-                                <input type="number" class="form-control" name="nro" id="nro" placeholder="Nro">
+                            <div class="col-xs-3 col-4 form-group">
+                                <input type="text" class="form-control" name="nro" id="nro" placeholder="Nro">
                             </div>
                         </div>
 

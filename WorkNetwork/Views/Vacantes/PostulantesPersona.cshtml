@@ -1,0 +1,31 @@
+﻿<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/img/carrusel-1.png');"></div>
+<section>
+    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Mis Postulaciones</h2></div>
+    <div class="container">
+
+        <table class='table'>
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        Vacante
+                    </th>
+                    <th>
+                        Idioma
+                    </th>
+                    <th>
+                        Experiencia
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody id='tbody-postulacion'></tbody>
+        </table>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/Vacantes.js"></script>
+    <script>
+        window.onload = CompletarTablaPostulacionPersona();
+    </script>
+}

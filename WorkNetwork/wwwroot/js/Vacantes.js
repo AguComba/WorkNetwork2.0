@@ -31,6 +31,29 @@ const CompletarTablaVacantes = () => {
     }).fail(e => console.error('Error al cargar tabla localidades ', e));
 }
 
+
+const CompletarTablaPostulacionPersona = () => {
+    /*VaciarFormulario*/
+
+    let url = '../../Vacantes/TablaVacantesPersonas'
+
+    $.get(url).done(vacantes => {
+        $('#tbody-postulacion').empty();
+        $.each(vacantes, function (index, vacante) {
+           
+            $("#tbody-postulacion").append(
+                `<tr class= 'tabla-hover'>
+                        <td class='texto'>${vacante.nombre}</td>
+                        <td class='texto'>${vacante.idiomas}</td> 
+                        <td class='texto'>${vacante.experienciaRequerida} años</td>                                                                        
+                </tr>`
+
+            )
+        })
+    }).fail(e => console.error('Error al cargar tabla localidades ', e));
+}
+
+
 function VacanteDetalle(vacanteID) {
     location.href = "../../Vacantes/VacanteDetalle/" + vacanteID;
 }
@@ -222,7 +245,7 @@ const GuardarVacante = () => {
 
             } else alertVacante.removeClass('visually-hidden').text("Debe ingresar la experiencia requerida");
 
-        } else alertVacante.removeClass('visually-hidden').text("Debe ingresar una descripción");
+        } else alertVacante.removeClass('visually-hidden').tet("Debe ingresar una descripción");
 
     } else alertVacante.removeClass('visually-hidden').text('Debe ingresar el titulo de la Vacante');
 
@@ -244,8 +267,8 @@ const BuscarProvincia = (paisID, provinciaID, localidadID) => {
                 if (provinciaID == provincia.value)
                     selected = "selected";
                 $('#ProvinciaID').append(`<option ${selected} value=${provincia.value}>${provincia.text}</option>`)
-                BuscarLocalidad(localidadID)
             });
+        BuscarLocalidad(localidadID)
     }).fail(e => console.log('error en combo provincias ' + e));
     return false
 }
@@ -257,6 +280,7 @@ const BuscarLocalidad = (localidadID) => {
     let url = '../../Localidades/ComboLocalidades';
     let data = { id: $('#ProvinciaID').val() };
     $.post(url, data).done(localidades => {
+        $('#LocalidadID').empty(); console.log(localidades)
         localidades.length === 0
             ? $('#LocalidadID').append(`<option value=${0}>[NO EXISTEN LOCALIDADES]</option>`)
             : $.each(localidades, (i, localidad) => {

@@ -41,7 +41,24 @@
     });
 }
 
+
+const validateSocialMedia = (fieldId, regex, errorMessage) => {
+    const field = $(fieldId).val().trim();
+    if (field !== '' && !regex.test(field)) {
+        alertPersona.textContent = errorMessage;
+        alertPersona.classList.add('alert-danger');
+        return false;
+    }
+    alertPersona.textContent = ''; // Clear any previous error message
+    alertPersona.classList.remove('alert-danger');
+    return true;
+}
+
 const guardarPersona = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
     event.preventDefault();
     const nombre = $('#nombrePersona').val();
     const apellido = $('#apellidoPersona').val();
@@ -53,6 +70,21 @@ const guardarPersona = () => {
     const telefono = $('#telefono1Persona').val();
     const cv = $('#curriculPersona').prop('files')[0];
     const empresaFoto = $('#personaFoto').prop('files')[0];
+
+    if (empresaFoto) {
+        const fileName = empresaFoto.name;
+        const ext = fileName.split('.').pop().toLowerCase();
+
+        // Usar una expresión regular para extraer la extensión
+        const extRegex = /(?:\.([^.]+))?$/;
+        const extMatch = extRegex.exec(fileName);
+        const fileExtension = extMatch && extMatch[1] ? extMatch[1].toLowerCase() : null;
+
+        if (!fileExtension || !['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+            alert('Por favor selecciona un archivo de imagen (jpg, jpeg, png o gif).');
+            // Aquí puedes decidir qué hacer si no es una imagen
+        }
+    }
 
     const errorMessages = {
         nombre: 'El nombre no puede quedar vacio.',
@@ -71,6 +103,13 @@ const guardarPersona = () => {
     const apellidoRegex = /^[A-Za-z\s]+$/
     const telefonoRegex = /^\d+$/; // Only numbers allowed
     const dniRegex = /^\d+$/; // Only numbers allowed
+    const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/[\w-]+\/?$/i;
+    const instagramRegex = /^(https?:\/\/)?(www\.)?instagram\.com\/[\w-]+\/?$/i;
+    const twitterRegex = /^(https?:\/\/)?(www\.)?twitter\.com\/[\w-]+\/?$/i;
+    const linkedinValid = validateSocialMedia('#linkedin', linkedinRegex, 'El formato del enlace de LinkedIn no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+    const instagramValid = validateSocialMedia('#instagram', instagramRegex, 'El formato del enlace de Instagram no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+    const twitterValid = validateSocialMedia('#twitter', twitterRegex, 'El formato del enlace de Twitter no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+
 
     let errorMessage = '';
     if (nombre.trim() === '') { errorMessage = errorMessages.nombre; }
@@ -118,6 +157,18 @@ const guardarPersona = () => {
         error: e=>console.log('error' + e)
     })
 }
+$('#linkedin').on('input', function () {
+    validateSocialMedia('#linkedin', linkedinRegex, 'El formato del enlace de LinkedIn no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+});
+
+$('#instagram').on('input', function () {
+    validateSocialMedia('#instagram', instagramRegex, 'El formato del enlace de Instagram no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+});
+
+$('#twitter').on('input', function () {
+    validateSocialMedia('#twitter', twitterRegex, 'El formato del enlace de Twitter no es válido. Por favor, ingrese un enlace válido o deje el campo vacío.');
+});
+
 
 const editarPersona = () => {
     event.preventDefault();
