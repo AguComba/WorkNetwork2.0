@@ -9,7 +9,7 @@
 <!-- Fin primera parte -->
 
 <section>
-        <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Vacantes</h2></div>
+    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Vacantes</h2></div>
     <div class="container">
 
         <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearVacante)'>Crear Vacante</button>
@@ -48,73 +48,84 @@
                 <div class="contact">
 
                     <form class="php-email-form" id='nuevaVacante'>
-                        <input type="hidden" id='idVacante' name='vacanteID' value=0 />
-                        <div class="alert alert-danger" id="alertVacante"></div>
-                        <div>
-                            <label>Titulo de la vacante</label>
-                            <input placeholder="Ingrese un título" type="text" id="tituloVacante" name='tituloVacante' class="form-control mb-3" required />
-                            
-                        </div>
+                        <div class="row gy-4 mt-1">
+                            <input type="hidden" id='idVacante' name='vacanteID' value=0 />
+                            <div class="alert alert-danger" id="alertVacante"></div>
+                            <div class="col-lg-6">
+                                <div class="php-email-form">
+                                    <div>
+                                        <label>Titulo de la vacante</label>
+                                        <input placeholder="Ingrese un título" type="text" id="tituloVacante" name='tituloVacante' class="form-control mb-3" required />
 
-                        <div>
-                            <label>Describa el puesto</label>
-                            <input placeholder="Ingrese una descripción" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" required />
-                        </div>
+                                    </div>
 
-                        <div>
-                            <label>Experiencia requerida para el puesto</label>
-                            <input placeholder="Experiencia requerida en años" type="number" id="expRequeridaVacante" name='experienciaRequerida' class='form-control mb-3' required />
-                            <p id="Error-Exp"></p>
-                        </div>
+                                    <div>
+                                        <label>Describa el puesto</label>
+                                        <input placeholder="Ingrese una descripción" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" required />
+                                    </div> @* preguntar si mejor seria un textarea *@
 
-                        <div class="form-group">
-                            <label class="control-label"><b> Pais: </b></label>
-                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select mb-3"})
-                        </div>
-                        <div>
-                            <label class="control-label"><b> Provincia: </b></label>
-                            @Html.DropDownList("ProvinciaID", null, htmlAttributes: new {@class = "form-select mb-3"})
-                        </div>
-                        <div>
-                            <label class="control-label"><b> Localidad: </b></label>
-                            @Html.DropDownList("LocalidadID", null, htmlAttributes: new {@class = "form-select mb-3"})
-                        </div>
-                        <div class="form-group">
-                            <label class='control-label'><b>Rubro</b></label>
-                            @Html.DropDownList("RubroID", null, htmlAttributes:new {@class = "form-select mb-3"})
-                        </div>
+                                    <div>
+                                        <label>Experiencia requerida para el puesto</label>
+                                        <input placeholder="Experiencia requerida en años" type="number" id="expRequeridaVacante" name='experienciaRequerida' class='form-control mb-3' required />
+                                        @* <p id="Error-Exp"></p> *@
+                                    </div>
 
-                        <div>
-                            <label class="control-label"><b> Fecha de finalización: </b></label>
-                            <input type="date" class="form-control mb-3" name='fechaFinalizacion' id="fechaFinalizacionVacante">
-                            <p id="Error-FechaFin"></p>
-                        </div>
+                                    <div>
+                                        <label class="control-label"><b> Pais: </b></label>
+                                        @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select mb-3"})
+                                    </div>
+                                    <div>
+                                        <label class="control-label"><b> Provincia: </b></label>
+                                        @Html.DropDownList("ProvinciaID", null, htmlAttributes: new {@class = "form-select mb-3"})
+                                    </div>
+                                    <div>
+                                        <label class="control-label"><b> Localidad: </b></label>
+                                        @Html.DropDownList("LocalidadID", null, htmlAttributes: new {@class = "form-select mb-3"})
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div>
-                            <label class="control-label"><b>Idioma requerido</b></label>
-                            <input placeholder='Ingrese que idioma es requerido' type='text' name='idiomaVacante' id="idiomaVacante" class='form-control mb-3' />
-                            <p id="Error-Idioma"></p>
-                        </div>
+                            <div class="col-lg-6">
+                                <div class="php-email-form">
+                                    <div>
+                                        <label class='control-label'><b>Rubro</b></label>
+                                        @Html.DropDownList("RubroID", null, htmlAttributes:new {@class = "form-select mb-3"})
+                                    </div>
 
-                        <div>
-                            <label class="control-label"><b> Disponibilidad horaria: </b></label>
-                            <select id='disponibilidadHoraria' name='disponibilidadHoraria' class="form-control mb-3">
-                                <option selected disabled>Seleccione la disponibilidad</option>
-                                <option value=0>Fulltime</option>
-                                <option value=1>Partime</option>
-                            </select>
-                            <p id="Error-Hora"></p>
-                        </div>
+                                    <div>
+                                        <label class="control-label"><b> Fecha de finalización: </b></label>
+                                        <input type="date" class="form-control mb-3" name='fechaFinalizacion' id="fechaFinalizacionVacante">
+                                        <p id="Error-FechaFin"></p>
+                                    </div>
 
-                        <div>
-                            <label class="control-label"><b>Modalidad: </b></label>
-                            <select id='modalidadVacante' name='modalidadVacante' class="form-control mb-3">
-                                <option selected>Seleccione la modalidad</option>
-                                <option value=0>Presencial</option>
-                                <option value=1>Semi-presencial</option>
-                                <option value=2>Remoto</option>
-                            </select>
-                            <p id="Error-Modalidad"></p>
+                                    <div>
+                                        <label class="control-label"><b>Idioma requerido</b></label>
+                                        <input placeholder='Dejar en blanco si el puesto no requiere idiomas' type='text' name='idiomaVacante' id="idiomaVacante" class='form-control mb-3' />
+                                        <p id="Error-Idioma"></p>
+                                    </div>
+
+                                    <div>
+                                        <label class="control-label"><b> Disponibilidad horaria: </b></label>
+                                        <select id='disponibilidadHoraria' name='disponibilidadHoraria' class="form-control mb-3">
+                                            <option selected disabled>Seleccione la disponibilidad</option>
+                                            <option value=0>Fulltime</option>
+                                            <option value=1>Partime</option>
+                                        </select>
+                                        <p id="Error-Hora"></p>
+                                    </div>
+
+                                    <div>
+                                        <label class="control-label"><b>Modalidad: </b></label>
+                                        <select id='modalidadVacante' name='modalidadVacante' class="form-control mb-3">
+                                            <option selected>Seleccione la modalidad</option>
+                                            <option value=0>Presencial</option>
+                                            <option value=1>Semi-presencial</option>
+                                            <option value=2>Remoto</option>
+                                        </select>
+                                        <p id="Error-Modalidad"></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

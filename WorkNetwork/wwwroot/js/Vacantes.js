@@ -7,25 +7,24 @@ const CompletarTablaVacantes = () => {
         $('#tbody-vacante').empty();
         $.each(vacantes, function (index, vacante) {
             let claseEliminado = '';
-            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "EditarVacantes(${vacante.vacanteID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm' onclick = "EliminarVacante(${vacante.vacanteID},1)"><i class="bi bi-trash3"></i> Eliminar</btn>
+            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-1' onclick = "EditarVacantes(${vacante.vacanteID})"><i class="bi bi-pencil-square"></i> Editar</btn>
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm me-1' onclick = "EliminarVacante(${vacante.vacanteID},1)"><i class="bi bi-trash3"></i> Eliminar</btn>
                                 <a class ='btn btn-outline-primary btn-sm' onclick = "GestionarVacante(${vacante.vacanteID})">Gestionar</a>`
 
             if (vacantes.eliminado) {
                 claseEliminado = 'table-danger';
                 botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarVacante(${vacante.vacanteID},0)"><i class="bi bi-recycle"></i> Activar</btn>`
             }
-            //const idiomasTexto = vacante.idiomas ? vacante.idiomas : '-';
+            
             $("#tbody-vacante").append(
                 `<tr class= 'tabla-hover${claseEliminado}'>
                         <td class='texto'>${vacante.nombre}</td>
-                        <td class='texto'>${vacante.idiomas}</td> 
-                        <td class='texto'>${vacante.experienciaRequerida} años</td>
+                        <td class='texto'>${vacante.idiomas ? vacante.idiomas: "No se requieren idiomas"}</td>
+                        <td class='texto'>${vacante.experienciaRequerida} a\u00F1os</td>                      
                         <td class = 'text-center'>
                         ${botones}
                         </td>
                 </tr>`
-
             )
         })
     }).fail(e => console.error('Error al cargar tabla localidades ', e));
@@ -45,7 +44,7 @@ const CompletarTablaPostulacionPersona = () => {
                 `<tr class= 'tabla-hover'>
                         <td class='texto'>${vacante.nombre}</td>
                         <td class='texto'>${vacante.idiomas}</td> 
-                        <td class='texto'>${vacante.experienciaRequerida} años</td>                                                                        
+                        <td class='texto'>${vacante.experienciaRequerida} a\u00F1os</td>                                                                        
                 </tr>`
 
             )
@@ -80,6 +79,8 @@ const EditarVacantes = vacanteID => {
     $('#idVacante').val(vacanteID);
     const url = '../../Vacantes/BuscarVacante';
     const data = { vacanteID: vacanteID }
+    //validar que todos los campos esten completos
+    //sacar el alert si no hay ninguna alerta
     $.post(url, data).done(vacante => {
         console.log(vacante)
         $('#modalCrearVacante').modal('show');
@@ -118,6 +119,8 @@ const MostrarVacantes = () => {
         $('#cardVacantes').empty();
         console.log(vacantes)
         $.each(vacantes, function (index, vacante) {
+            const fechaCreacion = new Date(vacante.fechaCreacion);
+            const formattedFechaCreacion = `${String(fechaCreacion.getDate()).padStart(2, '0')}/${String(fechaCreacion.getMonth() + 1).padStart(2, '0')}/${fechaCreacion.getFullYear()}`;
             $('#cardVacantes').append(
                 `
                 <div class="col-xl-4 col-md-6">
@@ -125,7 +128,7 @@ const MostrarVacantes = () => {
 
                     <div class="post-img position-relative overflow-hidden">
                         <img src="data:${vacante.tipoImagen};base64,${vacante.imagenVacante}" class="img-fluid" alt="imagen de la vacante">
-                        <span class="post-date">${vacante.fechaCreacion}</span>
+                        <span class="post-date">${formattedFechaCreacion}</span>
                     </div>
 
                     <div class="post-content d-flex flex-column">
@@ -148,7 +151,7 @@ const MostrarVacantes = () => {
 
                         <hr>
 
-                        <a href="#" onclick ="VacanteDetalle(${vacante.vacanteID})" class="readmore stretched-link"><span>Ver mas</span><i class="bi bi-arrow-right"></i></a>
+                        <a href="#" onclick ="VacanteDetalle(${vacante.vacanteID})" class="readmore stretched-link"><span>Ver m\u00E1s</span><i class="bi bi-arrow-right"></i></a>
 
                     </div>
 
@@ -184,6 +187,10 @@ const pustularVacante = () => {
 
 const GuardarVacante = () => {
     //console.log('llega')
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
     event.preventDefault();
     const url = '../../Vacantes/GuardarVacante';
     const formulario = $('#nuevaVacante')[0];
@@ -213,7 +220,7 @@ const GuardarVacante = () => {
                             if (idRubro != 0) {
 
                                 if (fechaFin != "" && fechaFin != null) {
-                                    if (idioma != "" && idioma != null) {
+                                    
                                         if (dispHora != "" && dispHora != null) {
                                             if (modalidad != "" && modalidad != null) {
                                                 $.ajax({
@@ -229,10 +236,9 @@ const GuardarVacante = () => {
 
                                             } else alertVacante.removeClass('visually-hidden').text("La modalidad es obligatioria");
 
-                                        } else alertVacante.removeClass('visually-hidden').text("La Disponibilidad Horaria es obligatoria");
+                                        } else alertVacante.removeClass('visually-hidden').text("La Disponibilidad horaria es obligatoria");
 
-                                    } else alertVacante.removeClass('visually-hidden').text("Debe ingresar un idioma");
-
+                                    
                                 } else alertVacante.removeClass('visually-hidden').text("Debe ingresar una fecha");
 
                             } else alertVacante.removeClass('visually-hidden').text("El rubro es obligatiorio");
@@ -241,13 +247,13 @@ const GuardarVacante = () => {
 
                     } else alertVacante.removeClass('visually-hidden').text("La provincia es obligatioria");
 
-                } else alertVacante.removeClass('visually-hidden').text("El pais es obligatiorio");
+                } else alertVacante.removeClass('visually-hidden').text("El pa\u00EDs es obligatiorio");
 
             } else alertVacante.removeClass('visually-hidden').text("Debe ingresar la experiencia requerida");
 
-        } else alertVacante.removeClass('visually-hidden').tet("Debe ingresar una descripción");
+        } else alertVacante.removeClass('visually-hidden').text("Debe ingresar una descripci\u00F3n");
 
-    } else alertVacante.removeClass('visually-hidden').text('Debe ingresar el titulo de la Vacante');
+    } else alertVacante.removeClass('visually-hidden').text('Debe ingresar el t\u00EDtulo de la Vacante');
 
 }
 
@@ -320,6 +326,7 @@ const VaciarFormulario = () => {
     $('#disponibilidadHoraria').append();
     $('#modalidadVacante').append();
     $('#imagenVacante').val('');
+   
 }
 
 function EliminarVacante(vacanteID, elimina) {
@@ -337,3 +344,8 @@ function EliminarVacante(vacanteID, elimina) {
 
     });
 }
+
+//ver la posibilidad de poner una condicion de que si
+//la fecha de finalizacion es el dia en el que se esta
+//ocultar automaticamente la postulacion
+//pero que al usuario le siga figurando en su historial.

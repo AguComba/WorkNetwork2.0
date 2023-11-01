@@ -8,7 +8,7 @@
 <!-- Fin primera parte -->
 
 <section id="perfilEmpresa" class="section profile">
-    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Perfil</h2></div>
+    <div class="container position-relative d-flex flex-column text-center mt-1"><h2> Perfil </h2></div>
     <div class="container">
         <div class="row ">
             <div class="col-xl-4">
@@ -43,13 +43,13 @@
                 <div class="card">
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
-                        <ul class="nav nav-tabs nav-tabs-bordered">
+                        @* <ul class="nav nav-tabs nav-tabs-bordered">
 
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">General</button>
                             </li>
 
-                        </ul>
+                        </ul> *@
                         <div class="tab-content pt-2">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -160,8 +160,8 @@
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" onclick="VaciarFormulario()" data-bs-dismiss="modal" aria-label="back">Atrás</button>
-                                                <button type="submit" class="btn btn-primary" onclick="editarEmpresa()">Guardar</button>
+                                                <button type="button" class="btn btn-secondary btn-custom" onclick="VaciarFormulario()" data-bs-dismiss="modal" aria-label="back">Atrás</button>
+                                                <button type="submit" class="btn btn-primary btn-custom" onclick="editarEmpresa()">Guardar</button>
                                             </div>
                                         </div>
                                     </div>

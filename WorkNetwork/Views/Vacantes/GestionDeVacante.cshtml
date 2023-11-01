@@ -8,7 +8,7 @@
 <!-- Fin primera parte -->
 
 <section class="blog" id="blog">
-        <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Gestión de la Vacante</h2></div>
+    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Gesti&oacuten de la Vacante</h2></div>
     <div class="container" data-aos="fade-up" data-aos-dalay="100">
         <article class="blog-details">
 
@@ -21,7 +21,7 @@
             <div class="meta-top">
                 <ul>
                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion</time></a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion.ToString("dd/MM/yyyy")</time></a></li>
                 </ul>
             </div>
             <!-- End meta top -->
@@ -31,10 +31,10 @@
                 <p>
                     @vacanteMostrar.Descripcion
                 </p>
-                <p>Para ésta vacante tendrás que saber hablar muy bien en @vacanteMostrar.Idiomas</p>
+                <i>Para &eacutesta vacante tendr&aacutes que saber hablar muy bien en @vacanteMostrar.Idiomas</i>
 
-                <h3>Se requieren @vacanteMostrar.ExperienciaRequerida años de experiencia</h3>
-                <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion</span></h3>
+                <h3>Se requieren @vacanteMostrar.ExperienciaRequerida a&ntildeos de experiencia</h3>
+                <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion.ToString("dd/MM/yyyy")</span></h3>
             </div>
             <!-- End post content -->
 
@@ -62,7 +62,7 @@
                  class="rounded-circle flex-shrink-0"
                  alt="" />
                 <div>
-                    <h4 class="text-center">@persona.NombrePersona @persona.ApellidoPersona</h4>
+                    <h4>@persona.NombrePersona @persona.ApellidoPersona</h4>
                     <div class="social-links">
                         <a target="_blank" href="@persona.Twitter">
                             <i class="bi bi-twitter"></i>
