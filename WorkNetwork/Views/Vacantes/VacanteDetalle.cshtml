@@ -31,9 +31,29 @@
                 <p>
                     @vacanteMostrar.Descripcion
                 </p>
-                <p>Para esta vacante tendrás que saber hablar muy bien en @vacanteMostrar.Idiomas</p>
+                @* <p>
+                    Para esta vacante tendrás que saber hablar muy bien en
+                    @if (!string.IsNullOrEmpty(vacanteMostrar.Idiomas))
+                    {
+                        @vacanteMostrar.Idiomas
+                    }
+                    else
+                    {
+                        <i>No se requiere un idioma en especifico</i>
+                    }
+                </p> *@
+                @if (!string.IsNullOrEmpty(vacanteMostrar.Idiomas))
+                {
+                    <p>Para esta vacante tendrás que saber hablar muy bien en @vacanteMostrar.Idiomas</p>
+                }
+                else
+                {
+                    <i>No se requiere un idioma en especifico</i>
+                }
 
-                <h3>Se requieren @vacanteMostrar.ExperienciaRequerida años de experiencia</h3>
+
+
+                <h3>Se requiere al menos @vacanteMostrar.ExperienciaRequerida año/s de experiencia</h3>
                 <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion.ToString("dd/MM/yyyy")</span></h3>
 
 
@@ -48,8 +68,8 @@
 
                 <i class="bi bi-tags"></i>
                 <ul class="tags">
-                    <li><a style="text-transform:uppercase; cursor:pointer" >@vacanteMostrar.DisponibilidadHoraria</a></li>
-                    <li><a style="text-transform:uppercase; cursor:pointer" >@vacanteMostrar.tipoModalidad</a></li>
+                    <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.DisponibilidadHoraria</a></li>
+                    <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.tipoModalidad</a></li>
                 </ul>
             </div>
             <!-- End meta bottom -->
@@ -65,10 +85,10 @@
                 </p>
                 <div class="row">
                     <input type="hidden" id="vacanteID" value="@vacanteMostrar.VacanteID" />
-                    <div class="alert alert-danger" id="Error-descripcionVacante"></div>
+                    <div class="alert alert-danger" id="alertPostVacante"></div>
                     <div class="col form-group">
                         <textarea name="comment" class="form-control" placeholder="Su descripción" id="descripcionVacante">
-                        </textarea>                        
+                        </textarea>
                     </div>
                 </div>
                 <button type="submit" onclick="pustularVacante()" class="btn btn-primary">

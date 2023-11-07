@@ -19,7 +19,7 @@ const CompletarTablaVacantes = () => {
             $("#tbody-vacante").append(
                 `<tr class= 'tabla-hover${claseEliminado}'>
                         <td class='texto'>${vacante.nombre}</td>
-                        <td class='texto'>${vacante.idiomas ? vacante.idiomas: "No se requieren idiomas"}</td>
+                        <td class='texto'>${vacante.idiomas ? vacante.idiomas : '<i>' + "No se requieren idiomas" + '</i>'}</td>
                         <td class='texto'>${vacante.experienciaRequerida} a\u00F1os</td>                      
                         <td class = 'text-center'>
                         ${botones}
@@ -84,7 +84,7 @@ const EditarVacantes = vacanteID => {
     $.post(url, data).done(vacante => {
         console.log(vacante)
         $('#modalCrearVacante').modal('show');
-        $('#titulo-modal-vacante').text('Editar Vacante')
+        $('#btn-edit').text('Guardar Cambios')
         $('#tituloVacante').val(vacante.nombre);
         $('#descripcionVacante').val(vacante.descripcion);
         $('#expRequeridaVacante').val(vacante.experienciaRequerida);
@@ -169,9 +169,11 @@ const MostrarVacantes = () => {
 const pustularVacante = () => {
     console.log("llego al js")
     const url = '../../PersonaVacante/postularVacante';
-    const descripcion = $('#descripcionVacante').val();
+    const descripcion = $('#descripcionVacante').val().trim();
     const vacanteID = $('#vacanteID').val();
+    const alertPostVacante = $("#alertPostVacante");
     const params = { vacanteID: vacanteID, descripcionVacante: descripcion };
+       
     if (descripcion != null && descripcion != "") {
         $.ajax({
             type: "POST",
@@ -182,7 +184,10 @@ const pustularVacante = () => {
             },
             error: e => console.log("F")
         });
-    }else $("#Error-descripcionVacante").text("Debe ingresar una descripción")
+        alertPostVacante.addClass('visually-hidden').text(''); // Hide the alert
+    } else {
+        alertPostVacante.removeClass('visually-hidden').text('Debe escribir porque es apto para esta vacante');
+    }
 }
 
 const GuardarVacante = () => {
@@ -204,7 +209,7 @@ const GuardarVacante = () => {
     let descripcion = $("#descripcionVacante").val().trim();
     let exp = $("#expRequeridaVacante").val().trim();
     let fechaFin = $("#fechaFinalizacionVacante").val().trim();
-    let idioma = $("#idiomaVacante").val().trim();
+    /*let idioma = $("#idiomaVacante").val().trim();*/
     let dispHora = $("#disponibilidadHoraria").val();
     let modalidad = $("#modalidadVacante").val();
     //Validar Pais-Provincia-Localidad-Rubro,
@@ -326,6 +331,7 @@ const VaciarFormulario = () => {
     $('#disponibilidadHoraria').append();
     $('#modalidadVacante').append();
     $('#imagenVacante').val('');
+    $('#alertVacante').addClass('visually-hidden')
    
 }
 
