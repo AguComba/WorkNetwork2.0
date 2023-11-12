@@ -44,6 +44,15 @@
 
 const validateSocialMedia = (fieldId, regex, errorMessage) => {
     const field = $(fieldId).val().trim();
+
+    if (field !== '' && !/^https?:\/\/(www\.)?/.test(field)) {
+        if (field.startsWith('www.')) {
+            $(fieldId).val('https://' + field);
+        } else {
+            $(fieldId).val('https://www.' + field);
+        }
+    }
+
     if (field !== '' && !regex.test(field)) {
         alertPersona.textContent = errorMessage;
         alertPersona.classList.add('alert-danger');

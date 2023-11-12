@@ -190,7 +190,7 @@
 
         public JsonResult EditarEmpresa(int IdEmpresa, string razonSocial, string cuitEmpresa, int LocalidadID, string domicilio, string telefono1Empresa, string correoEmpresa)
         {
-
+            //no actualiza los datos
             var telefono1Clean = ClearNumber(telefono1Empresa);
             //    //string domicilioCompleto = domicilio + " " + nro;
             var empresa = _context.Empresa.FirstOrDefault(p => p.EmpresaID == IdEmpresa);

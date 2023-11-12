@@ -1,26 +1,40 @@
+function comparacionFechas(act, fin) {
+    return new Date(fin.fechaDeFinalizacion) - new Date(act.fechaDeFinalizacion);
+}
+
 const CompletarTablaVacantes = () => {
     VaciarFormulario();
 
     let url = '../../Vacantes/TablaVacasntes'
 
     $.get(url).done(vacantes => {
+        vacantes.sort(comparacionFechas);
         $('#tbody-vacante').empty();
+        let currentDate = new Date();
+
         $.each(vacantes, function (index, vacante) {
-            let claseEliminado = '';
+            let claseFinalizado = '';
             let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-1' onclick = "EditarVacantes(${vacante.vacanteID})"><i class="bi bi-pencil-square"></i> Editar</btn>
                                 <btn type='button' class = 'btn btn-outline-danger btn-sm me-1' onclick = "EliminarVacante(${vacante.vacanteID},1)"><i class="bi bi-trash3"></i> Eliminar</btn>
-                                <a class ='btn btn-outline-primary btn-sm' onclick = "GestionarVacante(${vacante.vacanteID})">Gestionar</a>`
+                                <a class ='btn btn-outline-primary btn-sm' onclick = "GestionarVacante(${vacante.vacanteID})"><i class='bi bi-gear'></i> Gestionar</a>`
 
-            if (vacantes.eliminado) {
-                claseEliminado = 'table-danger';
-                botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarVacante(${vacante.vacanteID},0)"><i class="bi bi-recycle"></i> Activar</btn>`
+
+            let fechaCreacion = new Date(vacante.fechaCreacion).toLocaleDateString('es-AR');
+            let fechaFinalizacion = new Date(vacante.fechaDeFinalizacion).toLocaleDateString('es-AR');
+
+            if (new Date(vacante.fechaDeFinalizacion) < currentDate) {
+                claseFinalizado = 'table-danger';
             }
-            
+
+            let expTexto = vacante.experienciaRequerida === '1' ? 'a&ntildeo' : 'a&ntildeos';
+
             $("#tbody-vacante").append(
-                `<tr class= 'tabla-hover${claseEliminado}'>
+                `<tr class= 'tabla-hover ${claseFinalizado}'>
+                        <td class='texto'>${fechaCreacion}</td>
+                        <td class='texto'>${fechaFinalizacion}</td>
                         <td class='texto'>${vacante.nombre}</td>
                         <td class='texto'>${vacante.idiomas ? vacante.idiomas : '<i>' + "No se requieren idiomas" + '</i>'}</td>
-                        <td class='texto'>${vacante.experienciaRequerida} a\u00F1os</td>                      
+                        <td class='texto'>${vacante.experienciaRequerida} ${expTexto}</td>                      
                         <td class = 'text-center'>
                         ${botones}
                         </td>
@@ -32,19 +46,24 @@ const CompletarTablaVacantes = () => {
 
 
 const CompletarTablaPostulacionPersona = () => {
-    /*VaciarFormulario*/
-
+    
     let url = '../../Vacantes/TablaVacantesPersonas'
 
     $.get(url).done(vacantes => {
         $('#tbody-postulacion').empty();
         $.each(vacantes, function (index, vacante) {
+
+            let fechaSolicitudVacante = new Date(vacante.fechaSolicitud).toLocaleDateString('es-AR');
+            let expTexto = vacante.experienciaRequerida === '1' ? 'a&ntildeo' : 'a&ntildeos';
+
            
             $("#tbody-postulacion").append(
                 `<tr class= 'tabla-hover'>
+                        <td class='texto'>${fechaSolicitudVacante}</td>
+                        <td class='texto'>${vacante.empresaNombre}</td>
                         <td class='texto'>${vacante.nombre}</td>
-                        <td class='texto'>${vacante.idiomas}</td> 
-                        <td class='texto'>${vacante.experienciaRequerida} a\u00F1os</td>                                                                        
+                        <td class='texto'>${vacante.idiomas ? vacante.idiomas : '<i>' + "No se requieren idiomas" + '</i>'}</td>
+                        <td class='texto'>${vacante.experienciaRequerida} ${expTexto}</td>                                                                        
                 </tr>`
 
             )
@@ -117,12 +136,16 @@ const MostrarVacantes = () => {
     const url = '../../Vacantes/MostrarVantes';
     $.get(url).done(vacantes => {
         $('#cardVacantes').empty();
-        console.log(vacantes)
-        $.each(vacantes, function (index, vacante) {
-            const fechaCreacion = new Date(vacante.fechaCreacion);
-            const formattedFechaCreacion = `${String(fechaCreacion.getDate()).padStart(2, '0')}/${String(fechaCreacion.getMonth() + 1).padStart(2, '0')}/${fechaCreacion.getFullYear()}`;
-            $('#cardVacantes').append(
-                `
+
+        if (vacantes.length === 0) {
+            $('#NoVacantes').removeClass('d-none');
+        } else {
+            $('#NoVacantes').addClass('d-none');
+            $.each(vacantes, function (index, vacante) {
+                const fechaCreacion = new Date(vacante.fechaCreacion);
+                const formattedFechaCreacion = `${String(fechaCreacion.getDate()).padStart(2, '0')}/${String(fechaCreacion.getMonth() + 1).padStart(2, '0')}/${fechaCreacion.getFullYear()}`;
+                $('#cardVacantes').append(
+                    `
                 <div class="col-xl-4 col-md-6">
                 <div class="post-item position-relative h-100">
 
@@ -158,11 +181,17 @@ const MostrarVacantes = () => {
                 </div>
             </div>
                 `
-            )
-        });
+                )
+            });
+
+        }
     });
 
 }
+//const userRoleIsPersona = () => {
+//    return @User.IsInRole("Persona").ToString().ToLower() === true;
+//}
+
 
 
 
@@ -173,18 +202,22 @@ const pustularVacante = () => {
     const vacanteID = $('#vacanteID').val();
     const alertPostVacante = $("#alertPostVacante");
     const params = { vacanteID: vacanteID, descripcionVacante: descripcion };
+    //el cursor en textarea aparece a la altura del placeholder, 
+    //pero el texto placeholder no se ve.
+    
        
     if (descripcion != null && descripcion != "") {
+    
         $.ajax({
             type: "POST",
             url: url,
             data: params,
             success: vacante => {
+                alertPostVacante.addClass('visually-hidden').text('');
                 location.href = "/";
             },
             error: e => console.log("F")
         });
-        alertPostVacante.addClass('visually-hidden').text(''); // Hide the alert
     } else {
         alertPostVacante.removeClass('visually-hidden').text('Debe escribir porque es apto para esta vacante');
     }
@@ -212,7 +245,17 @@ const GuardarVacante = () => {
     /*let idioma = $("#idiomaVacante").val().trim();*/
     let dispHora = $("#disponibilidadHoraria").val();
     let modalidad = $("#modalidadVacante").val();
-    //Validar Pais-Provincia-Localidad-Rubro,
+
+    //Validar Fecha Finalizacion
+    const fechaHoy = new Date();
+    const fechaFinDate = new Date(fechaFin);
+
+    if (fechaFinDate <= fechaHoy) {
+        alertVacante.removeClass('visually-hidden').text("La fecha de finalizaci\u00F3n debe ser posterior a la actual");
+        return;
+    }
+
+
     if (titulo != "" && titulo != null) {
         if (descripcion != "" && descripcion != null) {
             if (exp != "" && exp != null) {

@@ -90,7 +90,7 @@
             var vacanteEmpresa = _context.VacanteEmpresas.Where(v => v.VacanteID == id).FirstOrDefault();
             var imgEmpresa = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.Imagen).Single();
             var tipoImg = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(i => i.TipoImagen).Single();
-            var empresaNombre = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Select(r => r.RazonSocial).Single();
+            var empresa = _context.Empresa.Where(e => e.EmpresaID == vacanteEmpresa.EmpresaID).Single();
             if (imgEmpresa != null)
             {
                 var vacanteMostrar = new VacanteMostrar
@@ -106,7 +106,8 @@
                     Eliminado = vacante.Eliminado,
                     ImagenVacante = Convert.ToBase64String(imgEmpresa),
                     TipoImagen = tipoImg,
-                    EmpresaNombre = empresaNombre,
+                    EmpresaID = empresa.EmpresaID,
+                    EmpresaNombre = empresa.RazonSocial,
                     FechaCreacion = vacante.FechaCreacion,
                     DisponibilidadHoraria = vacante.DisponibilidadHoraria,
                     tipoModalidad = vacante.tipoModalidad
@@ -126,7 +127,8 @@
                     FechaDeFinalizacion = vacante.FechaDeFinalizacion,
                     Idiomas = vacante.Idiomas,
                     Eliminado = vacante.Eliminado,
-                    EmpresaNombre = empresaNombre,
+                    EmpresaID = empresa.EmpresaID,
+                    EmpresaNombre = empresa.RazonSocial,
                     FechaCreacion = vacante.FechaCreacion,
                     DisponibilidadHoraria = vacante.DisponibilidadHoraria,
                     tipoModalidad = vacante.tipoModalidad
@@ -263,21 +265,55 @@
         {
             //BUSCO EL USUARIO ACTUAL
             var usuarioActual = _userManager.GetUserId(HttpContext.User);
+
             //EN BASE A ESE ID BUSCAMOS EN LA TABLA DE RELACION USUARRIO-EMPRESA QUE REGISTRO TIENE
-            var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
+            var personaUsuario = _context.PersonaUsuarios
+                .Where(u => u.UsuarioID == usuarioActual)
+                .FirstOrDefault();
+            
             //EN BASE A ESA VARIABLE RECURRIMOS AL ID DE LA EMPRESA ACTUAL PARA RELACIONARLA CON LA VACANTE 
-            var personaID = _context.PersonaUsuarios.Where(u => u.UsuarioID == personaUsuario.UsuarioID).Select(r => r.UsuarioID).FirstOrDefault();
-            var listaVacantes = new List<Vacante>();
-            var vacantesPersona = _context.PersonaVacante.Where(u => u.PersonaID == personaUsuario.PersonaID).ToList();
+            var personaID = _context.PersonaUsuarios
+                .Where(u => u.UsuarioID == personaUsuario.UsuarioID)
+                .Select(r => r.UsuarioID).FirstOrDefault();
+
+            var listaVacantes = new List<VacanteMostrar>();
+            var vacantesPersona = _context.PersonaVacante
+                .Where(u => u.PersonaID == personaUsuario.PersonaID)
+                .ToList();
+
+            var listadoVacanteEmpresa = _context.VacanteEmpresas.ToList(); 
+
             var vacantes = _context.Vacante.ToList();
             foreach (var vacante in vacantes)
             {
-                var existeRelacion = vacantesPersona.Where(v => v.VacanteID == vacante.VacanteID).Count();
-                if (existeRelacion != 0)
+                var existeRelacion = vacantesPersona
+                    .Where(v => v.VacanteID == vacante.VacanteID);
+                if (existeRelacion.Count() != 0)
                 {
-                    listaVacantes.Add(vacante);
+                    var empresaid = listadoVacanteEmpresa
+                        .Where(ve => ve.VacanteID == vacante.VacanteID)
+                        .Single().EmpresaID;
+                    var empresarelacion = _context.Empresa
+                        .Where(e => e.EmpresaID == empresaid)
+                        .Single();
+
+                    var nombrePostulacion = new VacanteMostrar()
+                    {
+                        FechaSolicitud = vacantesPersona
+                        .Where(s => s.VacanteID == vacante.VacanteID)
+                        .Single().FechaSolicitud,
+                        EmpresaNombre = empresarelacion.RazonSocial,
+                        Nombre = vacante.Nombre,
+                        Idiomas = vacante.Idiomas,
+                        ExperienciaRequerida = vacante.ExperienciaRequerida,
+
+                    };
+                    listaVacantes.Add(nombrePostulacion);
                 }
             }
+
+            // Ordenar la lista por FechaSolicitud de forma descendente
+            listaVacantes = listaVacantes.OrderByDescending(v => v.FechaSolicitud).ToList();
 
             return Json(listaVacantes);
         }
@@ -294,10 +330,11 @@
                 var personaUsuario = _context.PersonaUsuarios.Where(u => u.UsuarioID == usuarioActual).FirstOrDefault();
                 var vacantesPostuladas = _context.PersonaVacante.Where(u => u.PersonaID == personaUsuario.PersonaID).ToList();
                 var vacantes = _context.Vacante.ToList();
+                var fechaActual = DateTime.Now.Date;
                 foreach (var vacante in vacantes)
                 {
                     var existePostulacion = vacantesPostuladas.Where(v => v.VacanteID == vacante.VacanteID).Count();
-                    if (existePostulacion == 0)
+                    if (existePostulacion == 0 && vacante.FechaDeFinalizacion >= fechaActual)
                     {
                         var empresaID = _context.VacanteEmpresas.Where(v => v.VacanteID == vacante.VacanteID).Select(e => e.EmpresaID).Single();
                         var empresaNombre = _context.Empresa.Where(e => e.EmpresaID == empresaID).Select(e => e.RazonSocial).Single();
@@ -478,17 +515,9 @@
                 }
                 else
                 {
-                    //NO PUEDE ELIMINAR EMPRESA SI TIENE RUBROS ACTIVOS
-                    // var cantidadRubros = (from o in _context.Rubros where o.EmpresaID == EmpresaID && o.Eliminado == false select o).Count();
-                    //if (cantidadRubros == 0)
-                    //{
-                    //Vacante.Eliminado = true;
-                    //_context.SaveChanges();
-                    //}
-                    //else
-                    //{
+                    //no eliminar, solo cambiar estado.
                       resultado = 1;
-                    //}
+                    
                 }
             }
 

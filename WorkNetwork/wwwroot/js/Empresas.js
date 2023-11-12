@@ -72,6 +72,8 @@ const guardarEmpresa = () => {
         behavior: 'smooth'
     });
     event.preventDefault();
+    //Validar Rubro, ya que sino guarda, 
+    //se rompe al editar
     const formulario = $('#registrarEmpresa')[0];
     const razonSocial = $('#RazonSocial').val();
     const cuitEmpresa = $('#cuitEmpresa').val();

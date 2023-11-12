@@ -8,7 +8,7 @@
 
 <!-- ======= Blog Section ======= -->
 <section id="blog" class="blog">
-    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Bienvenido! @ViewBag.Nombre</h2></div>
+    <div class="container position-relative d-flex flex-column align-items-center mt-1 mb-5"><h2>Bienvenido! @ViewBag.Nombre</h2></div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -17,6 +17,31 @@
         </div>
     </div>
 </section><!-- End Blog Section -->
+
+<section class="notscroll">
+    @if (User.IsInRole("Empresa"))
+    {
+        <div class="row">
+            <div class="m-5 col-5">
+                <h3>¿Que puedes hacer con este aplicativo?</h3>
+
+                <p><span class="dotdotpunto"> - </span>Puedes cargar,editar y eliminar vacantes para que los usuarios puedan acceder a las oportunidades</p>
+                <p><span class="dotdotpunto"> - </span>Puedes ver los usuarios que se postularon a las mismas</p>
+                <p><span class="dotdotpunto"> - </span>Puedes editar tu perfil las veces que quieras</p>
+            </div>
+            <div class="col-2">
+                <img src="/img/carrusel-2.svg">
+
+            </div>
+
+        </div>
+    }else if (User.IsInRole("Usuario"))
+    {
+        <div id="NoVacantes" class="text-center mt-5 d-none">
+            <p style="font-style: italic; color: #555; font-size: 1.5rem;">No hay vacantes disponibles actualmente. . .</p>
+        </div>
+    }
+</section>
 @section Scripts{
 <script src="~/js/Vacantes.js"></script>
 <script>

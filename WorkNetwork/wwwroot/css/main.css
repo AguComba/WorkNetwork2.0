@@ -2799,3 +2799,44 @@ section {
 .modal-top {
     top: 90px;
 }
+
+.dotdotpunto{
+    font-weight:bolder;
+    font-size:large;
+}
+
+.notscroll{
+    padding:20px 0;
+}
+
+.inputsaling{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+    .inputsaling .form-group {
+        display: block;
+    }
+
+.texty{
+    color: black;
+}
+
+.texty:hover{
+   color: var(--color-primary);
+}
+
+.edit-icon{
+    display:none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #000;
+    cursor: pointer;
+}
+
+.edit-card:hover .edit-icon {
+    display:block;
+    color: var(--color-primary);
+}

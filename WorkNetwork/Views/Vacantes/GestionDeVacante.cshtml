@@ -8,7 +8,8 @@
 <!-- Fin primera parte -->
 
 <section class="blog" id="blog">
-    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Gesti&oacuten de la Vacante</h2></div>
+    <div class="container position-relative d-flex flex-column align-items-center mt-1 mb-4"><h2>Gesti&oacuten de la Vacante</h2></div>
+    <a asp-area="" asp-controller="vacantes" asp-action="index"><i class="bi bi-arrow-left-circle" style="font-size:xx-large; padding: 10px;" title="VOLVER ATR&Aacute;S"></i></a>
     <div class="container" data-aos="fade-up" data-aos-dalay="100">
         <article class="blog-details">
 
@@ -31,8 +32,16 @@
                 <p>
                     @vacanteMostrar.Descripcion
                 </p>
-                <i>Para &eacutesta vacante tendr&aacutes que saber hablar muy bien en @vacanteMostrar.Idiomas</i>
-
+                @if (!string.IsNullOrEmpty(vacanteMostrar.Idiomas))
+                {
+                    <p>Para &eacutesta vacante tendr&aacutes que saber hablar muy bien en @vacanteMostrar.Idiomas</p>
+                }
+                else
+                {
+                    <i>No se requiere un idioma en especifico</i>
+                }
+@*                 <i>Para &eacutesta vacante tendr&aacutes que saber hablar muy bien en @vacanteMostrar.Idiomas</i>
+ *@
                 <h3>Se requieren @vacanteMostrar.ExperienciaRequerida a&ntildeos de experiencia</h3>
                 <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion.ToString("dd/MM/yyyy")</span></h3>
             </div>
@@ -64,7 +73,21 @@
                 <div>
                     <h4>@persona.NombrePersona @persona.ApellidoPersona</h4>
                     <div class="social-links">
-                        <a target="_blank" href="@persona.Twitter">
+                        @if (!string.IsNullOrEmpty(persona.Twitter))
+                        {
+                            <a target="_blank" href="@persona.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
+                        }
+
+                        @if (!string.IsNullOrEmpty(persona.Instagram))
+                        {
+                            <a target="_blank" href="@persona.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                        }
+
+                        @if (!string.IsNullOrEmpty(persona.Linkedin))
+                        {
+                            <a target="_blank" href="@persona.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        }
+                        @* <a target="_blank" href="@persona.Twitter">
                             <i class="bi bi-twitter"></i>
                         </a>
                         <a target="_blank" href="@persona.Linkedin">
@@ -72,13 +95,18 @@
                         </a>
                         <a target="_blank" href="@persona.Instagram">
                             <i class="biu bi-instagram"></i>
-                        </a>
+                        </a> *@
                         <a target="_blank" href="/Vacantes/VerPDF/@persona.PersonaID">
                             <i class="biu bi-paperclip"></i>
                         </a>
+
+                        <!--Dirige al perfil del postulante-->
+                       
                         <a target="_blank" href="/Personas/PerfilUser/@persona.PersonaID">
-                            <i class="bi bi-person"></i> <!--Tiene que dirigir al perfil del postulante-->
+                            <i class="bi bi-person"></i> 
                         </a>
+
+                        
                     </div>
                     <p>
                         @persona.ComentarioVacante
@@ -86,55 +114,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="cv-@persona.PersonaID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-lg modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="titulo-modal-vacante">Crear Vacante</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick='VaciarFormulario()'></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="contact">
-
-                                <form class="php-email-form" id='nuevaVacante'>
-                                    @*<div class="alert alert-danger "id='alertVacante'>El campo descripcion no puede estar vacio</div> *@
-                                    <input type="hidden" id='idVacante' name='vacanteID' value=0 />
-                                    <input placeholder="Ingrese un título" type="text" id="tituloVacante" name='tituloVacante' class="form-control mb-3" />
-                                    <input placeholder="Ingrese una descripción" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" />
-                                    <input placeholder="Experiencia requerida" type="number" id="expRequeridaVacante" name='experienciaRequerida' class='form-control mb-3' />
-                                    <div>
-                                        <label class="control-label"><b> Fecha de finalización: </b></label>
-                                        <input type="date" class="form-control mb-3" name='fechaFinalizacion' id="fechaFinalizacionVacante">
-                                    </div>
-                                    <div>
-                                        <label class="control-label"><b>Idioma requerido</b></label>
-                                        <input placeholder='Ingrese que idioma es requerido' type='text' name='idiomaVacante' id="idiomaVacante" class='form-control mb-3' />
-                                    </div>
-                                    <div>                                      
-                                        <select id='disponibilidadHoraria' name='disponibilidadHoraria' class="form-control mb-3">
-                                            <option selected disabled>Disponibilidad Horaria:</option>
-                                            <option value=0>Fulltime</option>
-                                            <option value=1>Partime</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <select id='modalidadVacante' name='modalidadVacante' class="form-control mb-3">
-                                            <option selected disabled>Modalidad</option>
-                                            <option value=0>Presencial</option>
-                                            <option value=1>Semi-presencial</option>
-                                            <option value=2>Remoto</option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick='VaciarFormulario()' data-bs-dismiss="modal">Cerrar</button>
-                            <button class="btn btn-login" onclick='GuardarVacante()'>Crear</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         }
     </div>
 </section>

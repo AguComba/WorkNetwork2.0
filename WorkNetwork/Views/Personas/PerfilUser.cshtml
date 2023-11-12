@@ -13,7 +13,7 @@
         <div class="row ">
             <div class="col-xl-4">
 
-                <div class="card">
+                <div class="card edit-card" onmouseover="showEditIcon(this)" onmouseout="hideEditIcon(this)">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                         <img src="data:@infoUser.TipoImagen;base64,@infoUser.Imagen" alt="" class="rounded-circle">
@@ -35,6 +35,9 @@
                             <a target="_blank" href="@infoUser.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
                             }
 
+                           @* <a href="#" class="edit-icon" data-toggle="modal" data-target="#editSocialModal"><i class="bi bi-pencil"></i></a>*@
+                           @* futuro modal para editar redes *@
+
                         </div>
                     </div>
                 </div>
@@ -43,14 +46,7 @@
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-body pt-3">
-                        <!-- Bordered Tabs -->
-                        @* <ul class="nav nav-tabs nav-tabs-bordered">
-
-                            <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">General</button>
-                            </li>
-
-                        </ul> *@
+                        
                         <div class="tab-content pt-2">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -76,15 +72,29 @@
                                     <div class="col-lg-9 col-md-8">@infoUser.DomicilioPersona</div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Correo Electrónico</div>
-                                    <div class="col-lg-9 col-md-8">@infoUser.Correo</div>
-                                </div>
+                                @if (ViewBag.VistaLectura == 2)
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Correo Electrónico</div>
+                                        <div class="col-lg-9 col-md-8">
+                                            <a class="texty" title="Enviar Mensaje" href="mailto:@infoUser.Correo">@infoUser.Correo</a>
+                                        </div>
+                                    </div>
+                                }
 
-
-                                <p>
-                                    <button class="btn btn-secondary" onclick="BuscarPersona(@infoUser.PersonaID)">Editar Perfil</button>
-                                </p>
+                                @if (ViewBag.VistaLectura != 2)
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Correo Electrónico</div>
+                                        <div class="col-lg-9 col-md-8">
+                                            <div class="col-lg-9 col-md-8">@infoUser.Correo</div>                                            
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <button class="btn btn-secondary" onclick="BuscarPersona(@infoUser.PersonaID)">Editar Perfil</button>
+                                    </p>
+                                }
+                                
 
                                 <div class="modal" tabindex="-1" id="exampleModal" role="dialog" aria-labeledby="exampleModalLabel">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -140,8 +150,8 @@
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" onclick="VaciarFormulario()" data-bs-dismiss="modal" aria-label="back">Atrás</button>
-                                                <button type="submit" class="btn btn-primary" onclick="editarPersona()">Guardar</button>
+                                                <button type="button" class="btn btn-secondary btn-custom" onclick="VaciarFormulario()" data-bs-dismiss="modal" aria-label="back">Atrás</button>
+                                                <button type="submit" class="btn btn-primary btn-custom" onclick="editarPersona()">Guardar</button>
                                             </div>
                                         </div>
                                     </div>
