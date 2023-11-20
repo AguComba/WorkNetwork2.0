@@ -334,7 +334,7 @@
                 foreach (var vacante in vacantes)
                 {
                     var existePostulacion = vacantesPostuladas.Where(v => v.VacanteID == vacante.VacanteID).Count();
-                    if (existePostulacion == 0 && vacante.FechaDeFinalizacion >= fechaActual)
+                    if (existePostulacion == 0 && vacante.FechaDeFinalizacion >= fechaActual && !vacante.Eliminado)
                     {
                         var empresaID = _context.VacanteEmpresas.Where(v => v.VacanteID == vacante.VacanteID).Select(e => e.EmpresaID).Single();
                         var empresaNombre = _context.Empresa.Where(e => e.EmpresaID == empresaID).Select(e => e.RazonSocial).Single();
@@ -404,9 +404,10 @@
 
             if (modalidadVacante is 1) tipoModalidadEnum = tipoModalidad.semipresencial;
 
-            else
+            else if (modalidadVacante is 2)
+            {
                 tipoModalidadEnum = tipoModalidad.remoto;
-
+            }
 
             if (vacanteID is 0)
             {
@@ -501,23 +502,23 @@
             return Json(vacanteVer);
         }
 
-        public JsonResult EliminarVacante(int VacanteID, int Elimina)
+        public JsonResult FinalizarVacante(int VacanteID, int Finalizar)
         {
             int resultado = 0;
 
             var vacante = _context.Vacante.Find(VacanteID);
             if (vacante is not null)
             {
-                if (Elimina is 0)
+                if (Finalizar is 0)
                 {
                     vacante.Eliminado = false;
                     _context.SaveChanges();
                 }
-                else
+                else if (Finalizar is 1)
                 {
-                    //no eliminar, solo cambiar estado.
-                      resultado = 1;
-                    
+                    vacante.Eliminado = true;
+                    resultado = 1;
+                    _context.SaveChanges();
                 }
             }
 

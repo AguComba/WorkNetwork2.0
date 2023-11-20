@@ -30,7 +30,7 @@
         public string? RazonSocial { get; set; }
         public string CUIT { get; set; }
         public int LocalidadID { get; set; }
-        public string Localidad { get; set; }
+        public string? Localidad { get; set; }
         public int ProvinciaID { get; set; }
         public string ProvinciaNombre { get; set; } 
         public int PaisID { get; set; }

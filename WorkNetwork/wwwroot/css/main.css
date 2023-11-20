@@ -2213,7 +2213,7 @@ section {
         font-size: 16px;
     }
 
-.blog .posts-list .post-item:hover .post-title,
+/*.blog .posts-list .post-item:hover .post-title,*/
 .blog .posts-list .post-item:hover .readmore {
     color: var(--color-primary);
 }
@@ -2839,4 +2839,87 @@ section {
 .edit-card:hover .edit-icon {
     display:block;
     color: var(--color-primary);
+}
+
+.fuente-titulo {
+    color: black;
+    font-size: 1.3em;
+    font-weight: 700;
+    font-family: var(--font-primary);
+}
+
+.tags-gestion {
+    color: rgba(82, 86, 94, 0.8);
+    transition: 0.3s;
+}
+
+.titleDeco {
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.fix-img-empresa{
+    width: 100%;
+    max-width: 50vh;
+    height: auto;
+    margin-right: 20px;
+}
+
+
+/*media ipads*/
+@media only screen and (min-width: 768px) and (max-width: 1024px){
+    .m-5{
+        margin: 20px 0 !important;
+    }
+
+
+    .fix-img-empresa{
+        max-width: 50vh;
+        margin-right: 0;
+    }
+
+    .notscroll {
+        padding: 30px 0 !important;
+    }
+}
+
+
+
+/*Media para Celus*/
+@media (max-width: 767px){
+
+  
+    .m-5 {
+        margin: 10px 0 !important;
+        /* adding: 10px 0;*/
+
+    }
+
+    .fix-img-empresa{
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    .notscroll{
+        padding: 20px 0 !important;
+    }
+   
+}
+
+/*media para iphone 6,7 y 8 plus*/
+@media(max-width: 414px) and (max-height: 736px){
+    .m-5{
+        margin: 20px 0 !important;
+    }
+
+    
+}
+
+.img-fondo {
+    background-image: url('/img/admin.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat: no-repeat;
+   
+
 }

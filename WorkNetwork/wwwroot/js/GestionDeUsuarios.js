@@ -1,18 +1,32 @@
-﻿////function login(){	
-////	event.preventDefault();
-////	let correo =	$('#loginCorreo').val();
-////	let pass = $('#loginPass').val();
-////	let url = '../../GestionDeUsuarios/Ingresar';
-////	let data = { email: correo, password:pass};
-////	$.post(url, data).done(resultado => {
-////		resultado ? window.location.href='/' : alert('usuario o contraseña incorrecta')
-////	}).fail(e => console.log(e))
-////}
+﻿
 
 function vaciarForm() {
     $("#loginCorreo").val("");
     $("#loginPass").val("");
     $('#loginError').addClass('visually-hidden');
+}
+
+function isValidEmail(email) {
+    // Expresión regular para validar el formato del correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Lista de dominios permitidos
+    const allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'live.com', 'hotmail.com.ar']; 
+
+    // Verifica el formato del correo electrónico
+    if (!emailRegex.test(email)) {
+        return false;
+    }
+
+    // Obtiene el dominio del correo electrónico
+    const domain = email.split('@')[1];
+
+    // Verifica si el dominio está en la lista de dominios permitidos
+    if (!allowedDomains.includes(domain)) {
+        return false;
+    }
+
+    return true;
 }
 
 function registerPerson() {
@@ -27,21 +41,28 @@ function registerPerson() {
     let data = { email: correo, password: pass, Rol: rol }
     if (rol) {
         if (correo) {
-            if (pass === passConfirm && pass !== '') {
-                $.post(url, data).done(
-                    (resultado) => {
-                        if (resultado) {
-                            window.location.href = '/'
-                        } else {
-                            $('#registerError').text('El usuario ya existe')
-                            $('#registerError').removeClass("visually-hidden");
-                            $('#registerLoader').addClass("visually-hidden");
-                            $("#registerBtn").removeClass("visually-hidden");
+            if (isValidEmail(correo)) {
+                if (pass === passConfirm && pass !== '') {
+                    $.post(url, data).done(
+                        (resultado) => {
+                            if (resultado) {
+                                window.location.href = '/'
+                            } else {
+                                $('#registerError').text('El usuario ya existe')
+                                $('#registerError').removeClass("visually-hidden");
+                                $('#registerLoader').addClass("visually-hidden");
+                                $("#registerBtn").removeClass("visually-hidden");
+                            }
                         }
-                    }
-                )
+                    )
+                } else {
+                    $('#registerError').text('Las contraseñas no coinciden')
+                    $('#registerError').removeClass("visually-hidden");
+                    $('#registerLoader').addClass("visually-hidden");
+                    $("#registerBtn").removeClass("visually-hidden");
+                }
             } else {
-                $('#registerError').text('Las contraseñas no coinciden')
+                $('#registerError').text('El Correo no es válido')
                 $('#registerError').removeClass("visually-hidden");
                 $('#registerLoader').addClass("visually-hidden");
                 $("#registerBtn").removeClass("visually-hidden");
@@ -73,9 +94,7 @@ function login() {
     $.post(url, data).done(resultado => {
         if (resultado) {            
             window.location.href = '/'
-            //una vez logueado el usuario, dirigirlo a Paises si es superusuario
-            //a perfil si es empresa o usuario preguntar si se envia a su perfil
-            //o al listado de vacantes
+            
         } else {
             $("#loginLoader").addClass('visually-hidden');
             $('#loginError').removeClass('visually-hidden');

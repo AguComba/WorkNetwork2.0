@@ -22,8 +22,8 @@
             <div class="meta-top">
                 <ul>
                     @* Tiene que dirigir al perfil de la empresa *@
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="/Personas/VerEmpresa/@vacanteMostrar.EmpresaID" style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion.ToString("dd/MM/yyyy")</time></a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-briefcase"></i> <a href="/Personas/VerEmpresa/@vacanteMostrar.EmpresaID" style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a class="text-black"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion.ToString("dd/MM/yyyy")</time></a></li>
                 </ul>
             </div>
             <!-- End meta top -->
@@ -33,17 +33,6 @@
                 <p>
                     @vacanteMostrar.Descripcion
                 </p>
-                @* <p>
-                    Para esta vacante tendrás que saber hablar muy bien en
-                    @if (!string.IsNullOrEmpty(vacanteMostrar.Idiomas))
-                    {
-                        @vacanteMostrar.Idiomas
-                    }
-                    else
-                    {
-                        <i>No se requiere un idioma en especifico</i>
-                    }
-                </p> *@
                 @if (!string.IsNullOrEmpty(vacanteMostrar.Idiomas))
                 {
                     <p>Para esta vacante tendrás que saber hablar muy bien en @vacanteMostrar.Idiomas</p>
@@ -67,13 +56,9 @@
                         }
                     }                                                     
                    
-                } 
-
-
-                @* h3>Se requiere al menos @vacanteMostrar.ExperienciaRequerida año/s de experiencia</h3>   *@    
+                }                              
                 
                 <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion.ToString("dd/MM/yyyy")</span></h3>
-
 
             </div>
             <!-- End post content -->
@@ -81,13 +66,13 @@
             <div class="meta-bottom">
                 <i class="bi bi-folder"></i>
                 <ul class="cats">
-                    <li><a style="cursor:pointer">@vacanteMostrar.RubroNombre</a></li>
+                    <li><a class="text-black">@vacanteMostrar.RubroNombre</a></li>
                 </ul>
 
                 <i class="bi bi-tags"></i>
                 <ul class="tags">
-                    <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.DisponibilidadHoraria</a></li>
-                    <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.tipoModalidad</a></li>
+                    <li><a style="text-transform:uppercase; color:black">@vacanteMostrar.DisponibilidadHoraria</a></li>
+                    <li><a style="text-transform:uppercase; color:black">@vacanteMostrar.tipoModalidad</a></li>
                 </ul>
             </div>
             <!-- End meta bottom -->

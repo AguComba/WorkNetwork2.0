@@ -43,6 +43,7 @@ const VaciarFormulario = () => {
     $("#nombrePais").val('');
 }
 
+const nombrePaisRegex = /^[A-Za-z\s.'']+$/; // Only letters and spaces allowed
 const GuardarPais = () => {
     let idPais = $('#idPais').val();
     let nombrePais = $('#nombrePais').val().trim();
@@ -52,15 +53,18 @@ const GuardarPais = () => {
     $('#bottonEdit').text('Agregar');
 
     if (nombrePais != '' && nombrePais != null) {
-        $.post(url, data).done((resultado) =>{
-            if (resultado == 0) {
-                $('#modalCrearPais').modal('hide');
-                CompletarTablaPaises();
-            }
-            if (resultado == 2) {
-                alertPais.removeClass('visually-hidden').text('El pais ingresado ya existe');
-            }
-        }).fail(err => console.log('error en agregar el Pais: ', err));
+        if (nombrePaisRegex.test(nombrePais)) {
+            $.post(url, data).done((resultado) => {
+                if (resultado == 0) {
+                    $('#modalCrearPais').modal('hide');
+                    CompletarTablaPaises();
+                }
+                if (resultado == 2) {
+                    alertPais.removeClass('visually-hidden').text('El pais ingresado ya existe');
+                }
+            }).fail(err => console.log('error en agregar el Pais: ', err));
+
+        } else alertPais.removeClass('visually-hidden').text('El nombre del país no puede contener números');
 
     } else alertPais.removeClass('visually-hidden').text('El campo nombre no puede estar vacio');
     
@@ -84,9 +88,26 @@ const BuscarPais = (paisID)=>{
     .fail(e=>console.log(e))
 }
 
-const EliminarPais= (paisID, elimina)=>{
-    let url = '../../Paises/EliminarPais'
-    let data = { PaisID: paisID, Elimina: elimina }
-    $.post(url, data).done(() => CompletarTablaPaises()).fail(e => console.log(e));
-}
+//const EliminarPais= (paisID, elimina)=>{
+//    let url = '../../Paises/EliminarPais'
+//    let data = { PaisID: paisID, Elimina: elimina }
+//    $.post(url, data).done(() => CompletarTablaPaises()).fail(e => console.log(e));
+//}
 
+function EliminarPais(paisID, elimina) {
+    $.ajax({
+        type: "POST",
+        url: '../../Paises/EliminarPais',
+        data: { PaisID: paisID, Elimina: elimina },
+        success: function (resultado) {
+            if (resultado == 0) {
+                CompletarTablaPaises();
+            }
+            else {
+                alert("No se puede eliminar porque contiene provincias o localidades activas.");
+            }
+        },
+        error: function (data) {
+        }
+    });
+}

@@ -204,9 +204,6 @@
             empresa.Domicilio = domicilio;
             user.Email = correoEmpresa;
             empresa.Telefono1 = telefono1Clean;
-
-            _context.Update(empresa);
-            _context.Update(user);
             _context.SaveChanges();
 
             return Json(empresa);

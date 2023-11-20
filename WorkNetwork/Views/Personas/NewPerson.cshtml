@@ -31,12 +31,12 @@
 
                             @*<label>Nombre</label>*@
                             <div class=" col-xs-6 form-group mt-1">
-                                <input type="text" name="nombrePersona" class="form-control mb-1" id="nombrePersona" placeholder="Nombre" required>
+                                <input type="text" name="nombrePersona" class="form-control mb-1" id="nombrePersona" placeholder="Nombre/s" required>
                             </div>
 
 
                             <div class="col-xs-6 form group mt-1">
-                                <input type="text" class="form-control mb-3" name="apellidoPersona" id="apellidoPersona" placeholder="Apellido" required>
+                                <input type="text" class="form-control mb-3" name="apellidoPersona" id="apellidoPersona" placeholder="Apellido/s" required>
                             </div>
 
 
@@ -44,7 +44,7 @@
 
                         <div class="form-group">
                             <label>Ingrese su Documento</label><small style="color:red"> *</small>
-                            <input type="number" class="form-control" name="numeroDocumento" id="numeroDocumento" placeholder="Número de documento" required maxlength="8">
+                            <input type="text" class="form-control" name="numeroDocumento" id="numeroDocumento" placeholder="Número de documento" required maxlength="8">
                         </div>
 
                         <div class="form-group">
@@ -54,17 +54,17 @@
 
                         <div class="form-group">
                             <label>Pais</label><small style="color:red"> *</small>
-                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select"})
+                            @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select", @id = "paisID"})
                         </div>
 
                         <div class="form-group">
                             <label>Provincia</label><small style="color:red"> *</small>
-                            @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select"})
+                            @Html.DropDownList("ProvinciaID", null, htmlAttributes:new{@class = "form-select", @id = "provinciaID"})
                         </div>
 
                         <div class="form-group">
                             <label>Localidad</label><small style="color:red"> *</small>
-                            @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select"})
+                            @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select", @id = "localidadID"})
                         </div>
 
                         <div class="row">
@@ -92,13 +92,13 @@
                         <div>
                             <label>Redes Sociales</label>
                             <div class="input-group mb-3">
-                                <input type="text" name="instagram" placeholder="Instagram" class="form-control" id="instagram" />
+                                <input type="text" name="instagram" placeholder="Ej.: www.instagram.com/SuUsuario" class="form-control" id="instagram" />
                             </div>
                             <div class="form-group">
-                                <input type="text" name="twitter" placeholder="Twitter" class="form-control" id="twitter" />
+                                <input type="text" name="twitter" placeholder="Ej.: www.twitter.com/SuUsuario" class="form-control" id="twitter" />
                             </div>
                             <div class="form-group">
-                                <input type="text" name="linkedin" placeholder="Linkedin" class="form-control" id="linkedin" />
+                                <input type="text" name="linkedin" placeholder="Ej.: www.linkedin.com/SuUsuario" class="form-control" id="linkedin" />
                             </div>
                         </div>
 
@@ -112,7 +112,7 @@
                         </div>
                         <div class="form-group">
                             <label>Curriculum</label><small style="color:red"> *</small>
-                            <input type="file" name="curriculPersona" placeholder="Curriculum" class="form-control" id="curriculPersona" required accept=".pdf" />
+                            <input type="file" name="curriculPersona" accept="application/pdf" placeholder="Curriculum" class="form-control" id="curriculPersona" required accept=".pdf" />
                         </div>
                         <div class="form-group">
                             <label>Foto de perfil</label><small style="color:red"> *</small>

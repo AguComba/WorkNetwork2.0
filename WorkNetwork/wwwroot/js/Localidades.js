@@ -7,16 +7,17 @@
         $('#tbody-localidad').empty();
         $.each(localidades, await function (index, localidades) {
             let claseEliminado = '';
-            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarLocalidad(${localidades.localidadID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
+            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-2' onclick = "BuscarLocalidad(${localidades.localidadID})"><i class="bi bi-pencil-square"></i> Editar</btn>
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},1)"><i class="bi bi-trash3"></i> Deshabilitar</btn>`
 
             if (localidades.eliminado) {
                 claseEliminado = 'table-danger';
-                botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},0)"><i class="bi bi-recycle"></i> Activar</btn>`
+                botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},0)"><i class="bi bi-recycle"></i> Rehabilitar</btn>`
             }
             $("#tbody-localidad").append(
                 `<tr class= 'tabla-hover ${claseEliminado} '>
                         <td class='texto'>${localidades.nombreLocalidad}</td>
+                        <td class='texto'>${localidades.nombreProvincia}</td>
                         <td class='texto'>${localidades.cp}</td>
                         <td class = 'text-end'>
                             ${botones}
@@ -27,6 +28,8 @@
     }).fail(e => console.error('Error al cargar tabla localidades ' + e))
 }
 
+const localidadRegex = /^[0-9A-Za-záéíóúüÜñÑ\s]+$/u;
+const cpRegex = /^[0-9]+$/;
 const GuardarLocalidad = () => {
     let idLocalidad = $('#localidadID').val();
     let nombreLocalidad = $('#NombreLocalidad').val().trim();
@@ -38,27 +41,36 @@ const GuardarLocalidad = () => {
     let data = { IdLocalidad: idLocalidad, NombreLocalidad: nombreLocalidad, ProvinciaID: idProvincia, CP: parseInt(cpLocalidad) };
     $('#bottonEdit').text('Agregar');
     if (nombreLocalidad != '' && nombreLocalidad != null) {
+        if (localidadRegex.test(nombreLocalidad)) {
+            if (cpLocalidad != null && cpLocalidad != undefined && cpLocalidad != 0) {
+                if (cpRegex.test(cpLocalidad)) {
+                    if (idPais != 0) {
+                        if (idProvincia != 0) {
+                            $.post(url, data).done(resultado => {
+                                if (resultado == 0) {
+                                    $('#modalCrearLocalidad').modal('hide');
+                                    CompletarTablaLocalidades();
 
-        if (cpLocalidad != null && cpLocalidad != undefined && cpLocalidad != 0) {
-            if (idPais != 0) {
-                if (idProvincia != 0) {
-                    $.post(url, data).done(resultado => {
-                        if (resultado == 0) {
-                            $('#modalCrearLocalidad').modal('hide');
-                            CompletarTablaLocalidades();
-                        }
-                        if (resultado == 2) {
-                            alertLocalidad.removeClass('visually-hidden').text('La localidad ingresada ya existe.')
-                        }
-                    }).fail(e => console.log(`Error en guardar localidad ${e}`))
+                                } else if (resultado == 2) {
+                                    alertLocalidad.removeClass('visually-hidden').text('La localidad ingresada ya existe.');
 
-                } else alertLocalidad.removeClass('visually-hidden').text('Debe seleccionar una provincia')
+                                } else if (resultado == 3) {
+                                    alertLocalidad.removeClass('visually-hidden').text('El código postal ya existe.');
+                                }
 
-            } else alertLocalidad.removeClass('visually-hidden').text('Debe seleccionar un pais.')
+                            }).fail(e => console.log(`Error en guardar localidad ${e}`))
 
-        } else alertLocalidad.removeClass('visually-hidden').text('Debe ingresar un codigo postal.')
+                        } else alertLocalidad.removeClass('visually-hidden').text('Debe seleccionar una provincia');
 
-    } else alertLocalidad.removeClass('visually-hidden').text('Debe ingresar un nombre para la localidad.')
+                    } else alertLocalidad.removeClass('visually-hidden').text('Debe seleccionar un país.');
+
+                } else alertLocalidad.removeClass('visually-hidden').text('Sólo números');
+
+            } else alertLocalidad.removeClass('visually-hidden').text('Debe ingresar un código postal.');
+
+        } else alertLocalidad.removeClass('visually-hidden').text('El nombre no es correcto');
+
+    } else alertLocalidad.removeClass('visually-hidden').text('Debe ingresar un nombre para la localidad.');
 
 }
 
@@ -140,7 +152,7 @@ const EliminarLocalidad = (localidadID, elimina) => {
         success: function (resultado) {
             resultado == 0
                 ? CompletarTablaLocalidades()
-                : alert("No se puede eliminar la localidad.");
+                : alert("No se puede deshabilitar porque usuarios o vacantes utilizan la Localidad.");
         },
         error: function (data) {
         }

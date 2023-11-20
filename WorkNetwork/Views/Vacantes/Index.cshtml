@@ -67,12 +67,13 @@
 
                                     <div>
                                         <label>Describa el puesto</label><small style="color:red"> *</small>
-                                        <input placeholder="Ingrese una descripción" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" required />
-                                    </div> @* preguntar si mejor seria un textarea *@
+                                            @*<input placeholder="Ingrese una descripción" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" required />*@                                        
+                                            <textarea class="form-control mb-3" id="descripcionVacante" name="descripcionVacante" rows="2" placeholder="Ingrese una descripción"></textarea>
+                                    </div>
 
                                     <div>
                                         <label>Experiencia requerida</label><small style="color:red"> *</small>
-                                        <input placeholder="Experiencia requerida en años" type="number" id="expRequeridaVacante" name='experienciaRequerida' class='form-control mb-3' required />
+                                        <input placeholder="Experiencia requerida en años" type="text" id="expRequeridaVacante" name='experienciaRequerida' class='form-control mb-3' required />
                                        
                                     </div>
 
@@ -123,7 +124,7 @@
                                     <div>
                                         <label class="control-label">Modalidad: </label><small style="color:red"> *</small>
                                         <select id='modalidadVacante' name='modalidadVacante' class="form-control mb-3">
-                                            <option selected>Seleccione la modalidad</option>
+                                            <option selected disabled>Seleccione la modalidad</option>
                                             <option value=0>Presencial</option>
                                             <option value=1>Semi-presencial</option>
                                             <option value=2>Remoto</option>

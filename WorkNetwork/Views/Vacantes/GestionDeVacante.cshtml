@@ -21,8 +21,8 @@
 
             <div class="meta-top">
                 <ul>
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a style="cursor:pointer">@vacanteMostrar.EmpresaNombre</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a style="cursor:pointer"><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion.ToString("dd/MM/yyyy")</time></a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-person tags-gestion"></i>@vacanteMostrar.EmpresaNombre</li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i><time datetime="@vacanteMostrar.FechaCreacion">@vacanteMostrar.FechaCreacion.ToString("dd/MM/yyyy")</time></a></li>
                 </ul>
             </div>
             <!-- End meta top -->
@@ -40,8 +40,7 @@
                 {
                     <i>No se requiere un idioma en especifico</i>
                 }
-@*                 <i>Para &eacutesta vacante tendr&aacutes que saber hablar muy bien en @vacanteMostrar.Idiomas</i>
- *@
+
                 <h3>Se requieren @vacanteMostrar.ExperienciaRequerida a&ntildeos de experiencia</h3>
                 <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion.ToString("dd/MM/yyyy")</span></h3>
             </div>
@@ -50,13 +49,13 @@
             <div class="meta-bottom">
                 <i class="bi bi-folder"></i>
                 <ul class="cats">
-                    <li><a style="cursor:pointer">@vacanteMostrar.RubroNombre</a></li>
+                    <li class="tags-gestion">@vacanteMostrar.RubroNombre</li>
                 </ul>
 
                 <i class="bi bi-tags"></i>
                 <ul class="tags">
-                    <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.DisponibilidadHoraria</a></li>
-                    <li><a style="text-transform:uppercase; cursor:pointer">@vacanteMostrar.tipoModalidad</a></li>
+                    <li style="text-transform:uppercase;" class="tags-gestion">@vacanteMostrar.DisponibilidadHoraria</li>
+                    <li style="text-transform:uppercase;" class="tags-gestion">@vacanteMostrar.tipoModalidad</li>
                 </ul>
             </div>
             <!-- End meta bottom -->
@@ -71,7 +70,9 @@
                  class="rounded-circle flex-shrink-0"
                  alt="" />
                 <div>
-                    <h4>@persona.NombrePersona @persona.ApellidoPersona</h4>
+                    <div>
+                        <a class="fuente-titulo" href="/Personas/PerfilUser/@persona.PersonaID" title="IR AL PERFIL">@persona.NombrePersona @persona.ApellidoPersona <i class="bi bi-arrow-right-circle"></i></a>
+                    </div>
                     <div class="social-links">
                         @if (!string.IsNullOrEmpty(persona.Twitter))
                         {
@@ -87,24 +88,16 @@
                         {
                             <a target="_blank" href="@persona.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
                         }
-                        @* <a target="_blank" href="@persona.Twitter">
-                            <i class="bi bi-twitter"></i>
-                        </a>
-                        <a target="_blank" href="@persona.Linkedin">
-                            <i class="bi bi-linkedin"></i>
-                        </a>
-                        <a target="_blank" href="@persona.Instagram">
-                            <i class="biu bi-instagram"></i>
-                        </a> *@
-                        <a target="_blank" href="/Vacantes/VerPDF/@persona.PersonaID">
-                            <i class="biu bi-paperclip"></i>
+                        
+                        <a target="_blank" href="/Vacantes/VerPDF/@persona.PersonaID" title="VER CURRICULUM">
+                            <i class="bi bi-person-video2"></i>
                         </a>
 
                         <!--Dirige al perfil del postulante-->
                        
-                        <a target="_blank" href="/Personas/PerfilUser/@persona.PersonaID">
+                       @*  <a href="/Personas/PerfilUser/@persona.PersonaID">
                             <i class="bi bi-person"></i> 
-                        </a>
+                        </a> *@
 
                         
                     </div>
@@ -118,9 +111,6 @@
         }
     </div>
 </section>
-
-
-
 
 @section Scripts{
     <script src="~/js/Vacantes.js"></script>

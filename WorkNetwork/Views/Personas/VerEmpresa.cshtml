@@ -51,10 +51,10 @@
 
                                 <h5 class="card-title">Detalles del perfil</h5>
 
-                                <div class="row">
+                               @*  <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Razon Social</div>
                                     <div class="col-lg-9 col-md-8">@infoEmpresa.RazonSocial</div>
-                                </div>
+                                </div> *@
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Rubro</div>
@@ -74,6 +74,12 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Telefono</div>
                                     <div class="col-lg-9 col-md-8">@infoEmpresa.Telefono1</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Correo</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        <a class="texty" title="Enviar Mensaje" href="mailto:@infoEmpresa.Correo">@infoEmpresa.Correo</a>
+                                    </div>
                                 </div>
 
                               

@@ -22,15 +22,19 @@
     @if (User.IsInRole("Empresa"))
     {
         <div class="row">
-            <div class="m-5 col-5">
+            <div class="m-5 mt-5 col-lg-4">
                 <h3>¿Que puedes hacer con este aplicativo?</h3>
 
-                <p><span class="dotdotpunto"> - </span>Puedes cargar,editar y eliminar vacantes para que los usuarios puedan acceder a las oportunidades</p>
-                <p><span class="dotdotpunto"> - </span>Puedes ver los usuarios que se postularon a las mismas</p>
-                <p><span class="dotdotpunto"> - </span>Puedes editar tu perfil las veces que quieras</p>
+                <ul>
+                <li>Podrás cargar,editar y finalizar o reactivar vacantes para que los posibles candidatos puedan acceder a las oportunidades</li>
+                <li>Podrás gestionar las vacantes y así ver que usuarios que se postularon a las mismas</li>
+                <li>Podrás ver los perfiles de los candidatos y comunicarte con ellos </li>
+                <li>Podrás ver sus Curriculum y redes sociales </li>
+                <li>Podrás editar tu perfil para mantenerlo actualizado</li>
+                </ul>
             </div>
-            <div class="col-2">
-                <img src="/img/carrusel-2.svg">
+            <div class="col-lg-4 order-lg-last">
+                <img src="/img/carrusel-2.svg" class="fix-img-empresa">
 
             </div>
 
@@ -39,6 +43,35 @@
     {
         <div id="NoVacantes" class="text-center mt-5 d-none">
             <p style="font-style: italic; color: #555; font-size: 1.5rem;">No hay vacantes disponibles actualmente. . .</p>
+        </div>
+
+    }else if (User.IsInRole("SuperUsuario"))
+    {
+        <div class="row">
+            <div class="img-fondo text-white">
+                
+                <div class="m-5 mt-5 col-lg-4">
+                    <h4>¿Que puedes hacer con este aplicativo?</h4>
+                    <br>
+                    <ul>
+                        <li>
+                            Podrás cargar y editar <a asp-area="" asp-controller="paises" asp-action="index">Paises</a>,
+                            <a asp-area="" asp-controller="provincias" asp-action="index">Provincias</a> y
+                            sus respectivas <a asp-area="" asp-controller="localidades" asp-action="index">Localidades.</a>
+                            <br>
+                            <br>
+                        </li>
+                        
+                        <li>
+                            Además podrás cargar los distintos <a asp-area="" asp-controller="rubros" asp-action="index">Rubros</a>
+                            para que las empresas puedan utilizar para sus vacantes
+                            <br>
+                            <br>
+                            <br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     }
 </section>

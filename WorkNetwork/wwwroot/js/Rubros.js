@@ -26,6 +26,7 @@
     })
 }
 
+const nombreRubroRegex = /^[A-Za-záéíóúüÜñÑ\s.'']+$/u;
 const GuardarRubro = () => {
     let idRubro = $('#idRubro').val();
     let nombreRubro = $('#nombreRubro').val().trim();
@@ -33,18 +34,21 @@ const GuardarRubro = () => {
     let url = '../../Rubros/GuardarRubro'
     let data = { idRubro: idRubro, NombreRubro: nombreRubro }
     if (nombreRubro != '' && nombreRubro != null) {
-        $.post(url, data).done(resultado => {
-            if (resultado == 0) {
-                $('#modalCrearRubro').modal('hide')
-                CompletarTablaRubro();
-            }
-            if (resultado == 2) {
-                alertRubro.removeClass('visually-hidden').text('El rubro ingresado ya existe')
-            }
-        }).fail(e => console.log('error en guardar rubro' + e))
-    } else {
-        alertRubro.removeClass('visually-hidden')
-    }
+        if (nombreRubroRegex.test(nombreRubro)) {
+            $.post(url, data).done(resultado => {
+                if (resultado == 0) {
+                    $('#modalCrearRubro').modal('hide')
+                    CompletarTablaRubro();
+                }
+                if (resultado == 2) {
+                    alertRubro.removeClass('visually-hidden').text('El rubro ingresado ya existe')
+                }
+            }).fail(e => console.log('error en guardar rubro' + e))
+
+        } else alertRubro.removeClass('visually-hidden').text('Formato no aceptado');
+
+    } else alertRubro.removeClass('visually-hidden');
+    
 
 }
 

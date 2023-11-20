@@ -1,4 +1,6 @@
-﻿namespace WorkNetwork.Controllers
+﻿using WorkNetwork.Models;
+
+namespace WorkNetwork.Controllers
 {
     [Authorize(Roles = "SuperUsuario,Empresa, Usuario")]
     public class ProvinciasController : Controller
@@ -16,7 +18,7 @@
         [Authorize(Roles = "SuperUsuario")]
         public async Task<IActionResult> Index()
         {
-            var paiss = _context.Pais.ToList();
+            var paiss = _context.Pais.Where(x => x.Eliminado == false).ToList();
             paiss.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
             ViewBag.PaisID = new SelectList(paiss.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
             return View(await _context.Provincia.ToListAsync());
@@ -26,7 +28,9 @@
         [Authorize(Roles = "SuperUsuario ,Usuario, Empresa")]
         public JsonResult ComboProvincia(int id)
         {
-            var provincias = (from p in _context.Provincia where p.PaisID == id select p).ToList();
+            var provincias = _context.Provincia
+                .Where(p => p.PaisID == id && p.Eliminado == false)
+                .ToList();
             return Json(new SelectList(provincias, "ProvinciaID", "NombreProvincia"));
         }
 
@@ -34,19 +38,18 @@
         {
             var provincias = _context.Provincia.Include(p => p.Pais).ToList();
 
-            List<ProvinciaMostrar> listadoProvincias = new List<ProvinciaMostrar>();
-            foreach (var provincia in provincias)
-            {
-                var provinciasVer = new ProvinciaMostrar
+            List<ProvinciaMostrar> listadoProvincias = provincias
+                .Select(provincia => new ProvinciaMostrar
                 {
-                    ProvinciaID= provincia.ProvinciaID,
+                    ProvinciaID = provincia.ProvinciaID,
                     NombreProvincia = provincia.NombreProvincia,
-                    PaisID= provincia.PaisID,
+                    PaisID = provincia.PaisID,
                     NombrePais = provincia.Pais.NombrePais,
                     Eliminado = provincia.Eliminado,
-                };
-                listadoProvincias.Add(provinciasVer);
-            }
+                })
+                .OrderBy(p => p.NombrePais)
+                .ThenBy(p => p.NombreProvincia)
+                .ToList();
 
             return Json(listadoProvincias);
         }
@@ -110,7 +113,9 @@
         {
             int resultado = 0;
 
-            var provincia = _context.Provincia.Find(ProvinciaID);
+            var provincia = _context.Provincia
+                .Include(p => p.Localidades)
+                .FirstOrDefault(p => p.ProvinciaID == ProvinciaID);
             if (provincia is not null)
             {
                 if (Elimina is 0)
@@ -120,27 +125,57 @@
                 }
                 else
                 {
-                    //NO PUEDE ELIMINAR LA PROVINCIA A SI TIENE LOCALIDADES
-                    var cantidadlocalidades = (from o in _context.Localidad where o.ProvinciaID == ProvinciaID && o.Eliminado == false select o).Count();
-                    if (cantidadlocalidades is 0)
+                    //Verificar si las localidades no estan relacionadas a Empresas, Vacantes o Personas
+                    bool tieneLocalidadesActivas = provincia.Localidades != null && provincia.Localidades              
+                        .Any(l => l.Eliminado == false && 
+                                 (!_context.Empresa.Any(e => e.LocalidadID == l.LocalidadID && e.Eliminado == false) &&
+                                  !_context.Persona.Any(p => p.LocalidadID == l.LocalidadID && p.Eliminado == false) &&
+                                  !_context.Vacante.Any(v => v.LocalidadID == l.LocalidadID && v.Eliminado == false)));
+
+
+                    if (!tieneLocalidadesActivas)
                     {
                         provincia.Eliminado = true;
+
+
+                        if (provincia.Localidades != null)
+                        {
+                            foreach (var localidad in provincia.Localidades)
+                            {
+                                localidad.Eliminado = true;
+                            }
+                        }
                         _context.SaveChanges();
+                        resultado = 0; //ENHORABUENA, SE ELIMINÓ
+                        
                     }
                     else
                     {
-                        resultado = 1;
+                        resultado = 1; //hay localidades
                     }
                 }
+
+
+                //NO PUEDE ELIMINAR LA PROVINCIA A SI TIENE LOCALIDADES
+                //var cantidadlocalidades = (from o in _context.Localidad where o.ProvinciaID == ProvinciaID && o.Eliminado == false select o).Count();
+                //if (cantidadlocalidades is 0)
+                //{
+                //    provincia.Eliminado = true;
+                //    _context.SaveChanges();
+                //}
+
+
             }
 
             return Json(resultado);
-
-            //private bool ProvinciaExists(int id)//
-            //  {
-            // return _context.Rubros.Any(e => e.RubroID == id);
-            // }//
-
         }
+
+
+        //private bool ProvinciaExists(int id)//
+        //  {
+        // return _context.Rubros.Any(e => e.RubroID == id);
+        // }//
+
+
     }
 }

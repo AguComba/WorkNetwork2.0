@@ -77,6 +77,7 @@ const guardarPersona = () => {
     const localidadid = $("#localidadID").val();
     const domicilio = $('#domicilio').val();
     const telefono = $('#telefono1Persona').val();
+    //const generoid = $("#generoID").val();
     const cv = $('#curriculPersona').prop('files')[0];
     const empresaFoto = $('#personaFoto').prop('files')[0];
 
@@ -105,7 +106,7 @@ const guardarPersona = () => {
         domicilio: 'El domicilio no debe quedar vacio.',
         telefono: 'El numero de telefono es obligatorio.',
         cv: 'Debe cargar el Curriculum',
-        //provinciad: 'Debe seleccionar una provincia',
+        generoid: 'Debe seleccionar un genero',
         empresaFoto: 'Debe seleccionar una foto de perfil.', // New error message for file input
     };
     const nombreRegex = /^[A-Za-z\s]+$/
@@ -132,13 +133,14 @@ const guardarPersona = () => {
     else if (dni.length !== 8) { errorMessage = 'El DNI debe tener 8 caracteres.' }
 
     else if (nacimiento.trim() === '') { errorMessage = errorMessages.nacimiento; }
+    else if (paisid === '0') { errorMessage = errorMessages.paisid; }
     else if (domicilio.trim() === '') { errorMessage = errorMessages.domicilio; }
 
     else if (telefono.trim() === '') { errorMessage = errorMessages.telefono; }
     else if (!telefonoRegex.test(telefono)) { errorMessage = 'El número  solo puede contener números.'; }
     else if (telefono.length > 15) { errorMessage = 'El numero no puede tener  mas de 15 caracteres.' }
+    //else if (generoid.trim() === '') { errorMessage = errorMessages.generoid; }
 
-    else if (paisid === '') { errorMessage = errorMessages.paisid; }
 
 
     else if (!cv) { errorMessage = errorMessages.cv; }
@@ -156,14 +158,23 @@ const guardarPersona = () => {
     const parametros = new FormData($('#frmFormulario')[0]);
     const url = '../../Personas/GuardarPersona';
     $.ajax({
-        type:'POST',
+        type: 'POST',
         url: url,
         data: parametros,
         contentType: false,
         processData: false,
         async: false,
-        success: e => window.location.href = '/',
-        error: e=>console.log('error' + e)
+        success: response => {
+            if (response) {
+                if (response.msjError) {
+                    alertPersona.textContent = response.msjError;
+                    alertPersona.classList.add('alert-danger');
+                    return false;
+                }
+                window.location.href = '/';
+            }
+        },
+        error: e => console.log('error' + e)
     })
 }
 $('#linkedin').on('input', function () {
@@ -207,8 +218,14 @@ const editarPersona = () => {
                                         contentType: false,
                                         processData: false,
                                         async: false,
-                                        success: e => window.location.href = '/personas/PerfilUser',
-                                        error: e => console.log('error' + e)
+                                        success: function (response) {
+                                            if (response.resultado) {
+                                                window.location.href = '/personas/PerfilUser';
+                                            } else {
+                                                alertPersona.removeClass('visually-hidden').addClass('alert-danger').text(response.msjError);
+                                            }
+                                        },
+                                        error: function (e) { console.log('error' + e) }
                                     });
 
                                 } else alertPersona.removeClass('visually-hidden').text('Debe ingresar un correo');
@@ -220,7 +237,7 @@ const editarPersona = () => {
                     } else alertPersona.removeClass('visually-hidden').text('Debe seleccionar una provincia');
 
                 } else alertPersona.removeClass('visually-hidden').text('Debe seleccionar un país');
-            
+
             } else alertPersona.removeClass('visually-hidden').text('El telefono es requerido');
 
         } else alertPersona.removeClass('visually-hidden').text('El apellido es requerido');
@@ -228,44 +245,109 @@ const editarPersona = () => {
     } else alertPersona.removeClass('visually-hidden').text('El nombre es requerido');
 }
 
-$('#PaisID').change(() => BuscarProvincia());
+function BuscarProvincia(provinciaID) {
+    $('#provinciaID').empty();
+    $.ajax({
+        type: 'POST',
+        async: false,
+        url: '../../Provincias/ComboProvincia',
+        data: { id: $('#paisID').val() },
+        success: function (provincias) {
+            if (provincias.length == 0) {
+                $('#provinciaID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`);
+            }
+            else {
+                $.each(provincias, (i, provincia) => {
+                    $('#provinciaID').append(`<option value=${provincia.value}>${provincia.text}</option>`)
+                });
+            }
 
-const BuscarProvincia = () => {
-    $('#ProvinciaID').empty();
-    let url = '../../Provincias/ComboProvincia';
-    let data = { id: $('#PaisID').val() };
-    $.post(url, data).done(provincias => {
-        provincias.length === 0
-            ? $('#ProvinciaID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
-            : $.each(provincias, (i, provincia) => {
-                $('#ProvinciaID').append(`<option value=${provincia.value}>${provincia.text}</option>`)
-            });
-        BuscarLocalidad()
-    }).fail(e => console.log('error en combo provincias ' + e))
-    return false
+            if (provinciaID > 0) {
+                $("#provinciaID").val(provinciaID);
+            }
+            BuscarLocalidad(0);
+
+        },
+        error: function (data) {
+            console.log('error en combo provincias ' + data)
+        }
+    });
 }
 
+$('#paisID').change(function () {
+    $('#provinciaID').prop('disabled', false);
+    // Clear provincia dropdown
+    $('#provinciaID').empty();
+    // Clear localidad dropdown
+    $('#localidadID').empty();
+    // Call the function to populate provincia dropdown
+    BuscarProvincia(0);
+});
 
-$('#ProvinciaID').change(() => BuscarLocalidad());
-const BuscarLocalidad = () => {
-    $('#LocalidadID').empty();
+
+$('#provinciaID').change(function () {
+    $('#localidadID').prop('disabled', false);
+    BuscarLocalidad(0);
+});
+
+const BuscarLocalidad = (localidadID) => {
+    $('#localidadID').empty();
     let url = '../../Localidades/ComboLocalidades';
-    let data = { id: $('#ProvinciaID').val() };
+    let data = { id: $('#provinciaID').val() };
     $.post(url, data).done(localidades => {
         localidades.length === 0
-            ? $('#LocalidadID').append(`<option value=${0}>[NO EXISTEN LOCALIDADES]</option>`)
+            ? $('#localidadID').append(`<option value=${0}>[NO EXISTEN LOCALIDADES]</option>`)
             : $.each(localidades, (i, localidad) => {
-                $('#LocalidadID').append(`<option value=${localidad.value}>${localidad.text}</option>`)
+                $('#localidadID').append(`<option value=${localidad.value}>${localidad.text}</option>`)
             });
+        if (localidadID > 0) {
+            $("#localidadID").val(localidadID);
+        }
+
     }).fail(e => console.log('error en combo localidades' + e))
     return false
 }
+
+//$('#PaisID').change(() => BuscarProvincia());
+
+//const BuscarProvincia = () => {
+//    $('#ProvinciaID').empty();
+//    let url = '../../Provincias/ComboProvincia';
+//    let data = { id: $('#PaisID').val() };
+//    $.post(url, data).done(provincias => {
+//        provincias.length === 0
+//            ? $('#ProvinciaID').append(`<option value=${0}>[NO EXISTEN PROVINCIAS]</option>`)
+//            : $.each(provincias, (i, provincia) => {
+//                $('#ProvinciaID').append(`<option value=${provincia.value}>${provincia.text}</option>`)
+//            });
+//        BuscarLocalidad()
+//    }).fail(e => console.log('error en combo provincias ' + e))
+//    return false
+//}
+
+
+//$('#ProvinciaID').change(() => BuscarLocalidad());
+//const BuscarLocalidad = () => {
+//    $('#LocalidadID').empty();
+//    let url = '../../Localidades/ComboLocalidades';
+//    let data = { id: $('#ProvinciaID').val() };
+//    $.post(url, data).done(localidades => {
+//        localidades.length === 0
+//            ? $('#LocalidadID').append(`<option value=${0}>[NO EXISTEN LOCALIDADES]</option>`)
+//            : $.each(localidades, (i, localidad) => {
+//                $('#LocalidadID').append(`<option value=${localidad.value}>${localidad.text}</option>`)
+//            });
+//    }).fail(e => console.log('error en combo localidades' + e))
+//    return false
+//}
 
 
 const AbrirModal = () => {
     $('#idPersona').val(0);
     $('#modalCrearPersona').modal('show');
     $('#exampleModal').modal('show');
+    //$('#ProvinciaID').val(0);
+    //$('#LocalidadID').val(0);
     $("#alertPersona").addClass('visually-hidden');
 }
 
@@ -315,12 +397,16 @@ function BuscarPersona(idPersona) {
             $("#Telefono1").val(persona.telefono1);
             $("#LocalidadNombre").val(persona.localidad);
             $("#paisID").val(persona.paisID);
-            $("#provinciaID").val(persona.provinciaID);
-            $("#localidadID").val(persona.localidadID);
+            BuscarProvincia(persona.provinciaID);
+            //$("#provinciaID").val(persona.provinciaID);
+            BuscarLocalidad(persona.localidadID);
+            //$("#localidadID").val(persona.localidadID);
             $("#DomicilioPersona").val(persona.domicilioPersona);
+            console.log(persona.numeroDocumento);
+            $("#dni").val(persona.numeroDocumento);
             $("#CorreoPersona").val(persona.correo);
             $("#exampleModal").modal("show");
-            console.log(persona)
+            //console.log(persona.localidadID)
         },
         error: function (data) { }
     });

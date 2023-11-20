@@ -13,7 +13,7 @@
         <div class="row ">
             <div class="col-xl-4">
 
-                <div class="card edit-card" onmouseover="showEditIcon(this)" onmouseout="hideEditIcon(this)">
+                <div class="card edit-card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                         <img src="data:@infoUser.TipoImagen;base64,@infoUser.Imagen" alt="" class="rounded-circle">
@@ -60,6 +60,11 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Teléfono</div>
                                     <div class="col-lg-9 col-md-8">@infoUser.Telefono1</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Documento</div>
+                                    <div class="col-lg-9 col-md-8">@infoUser.NumeroDocumento</div>
                                 </div>
 
                                 <div class="row">
@@ -120,6 +125,10 @@
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="form-label">Telefono</label>
                                                         <input type="tel" name="telefono1Persona" id="Telefono1" class="form-control" maxlength="15" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="form-label">Documento</label>
+                                                        <input type="tel" name="NumeroDocumento" id="dni" class="form-control" maxlength="15" />
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="form-label">Pais:</label>

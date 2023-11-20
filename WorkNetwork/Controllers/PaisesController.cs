@@ -74,22 +74,36 @@
             return Json(pais);
         }
 
-        public void EliminarPais(int PaisID, int Elimina)
+        public JsonResult EliminarPais(int PaisID, int Elimina)
         {
-            ArgumentNullException.ThrowIfNull(nameof(PaisID));
+            //ArgumentNullException.ThrowIfNull(nameof(PaisID));
+            int resultado = 0;
+
             var pais = _context.Pais.Find(PaisID);
 
-            if (pais is not null)
+            if (pais != null)
             {
                 if (Elimina is 0)
                 {
                     pais.Eliminado = false;
-                } else 
-                { 
-                    pais.Eliminado = true;               
+                    _context.SaveChanges(true);
+                }
+                else
+                {
+                    var cantidadProvincias = (from o in _context.Provincia where o.PaisID == PaisID && o.Eliminado == false select o).Count();
+                    if (cantidadProvincias == 0)
+                    {
+                        pais.Eliminado = true;
+                        _context.SaveChanges();
+
+                    }
+                    else
+                    {
+                        resultado = 1;
+                    }
                 }
             }
-             _context.SaveChanges();
+            return Json(resultado);
         }
     }
 }

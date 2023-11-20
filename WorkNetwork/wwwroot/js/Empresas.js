@@ -33,7 +33,7 @@
 }
 
 function formatCuit(input, event) {
-    console.log(event.key)
+    
     // Remove all non-numeric characters
     let value = input.value.replace(/\D/g, '');
 
@@ -55,6 +55,15 @@ function formatCuit(input, event) {
 
 const validateSocialMedia = (fieldId, regex, errorMessage) => {
     const field = $(fieldId).val().trim();
+
+    if (field !== '' && !/^https?:\/\/(www\.)?/.test(field)) {
+        if (field.startsWith('www.')) {
+            $(fieldId).val('https://' + field);
+        } else {
+            $(fieldId).val('https://www.' + field);
+        }
+    }
+
     if (field !== '' && !regex.test(field)) {
         alertEmpresa.textContent = errorMessage;
         alertEmpresa.classList.add('alert-danger');
@@ -82,6 +91,8 @@ const guardarEmpresa = () => {
     const paisid = $("#paisID").val();
     const localidadid = $("#localidadID").val();
     const domicilio = $('#domicilio').val();
+    const altura = $('#nro').val();
+    const rubroid = $("#rubroID").val();
     const empresaFoto = $('#fotoPerfilEmpresa').prop('files')[0]; // Get the selected file
     if (empresaFoto) {
         const fileName = empresaFoto.name;
@@ -106,11 +117,12 @@ const guardarEmpresa = () => {
         paisid: 'Debe seleccionar un pais',
         localidadid: 'Debe seleccionar un pais primero',
         domicilio: 'El domicilio no debe quedar vacio.',
-        //provinciad: 'Debe seleccionar una provincia',
+        altura:'Seleccione la altura de su domicilio',
+        rubroid: 'Debe seleccionar un rubro',
         empresaFoto: 'Debe seleccionar una foto de perfil.', // New error message for file input
     };
 
-    const razonSocialRegex = /^[A-Za-z\s.'']+$/; // Only letters and spaces allowed
+    const razonSocialRegex = /^[A-Za-z0-9_\s.'']+$/; // Only letters, numbers and spaces allowed
     const cuitEmpresaRegex = /^[\d-]+$/; // Only numbers allowed
     const telefono1EmpresaRegex = /^\d+$/; // Only numbers allowed
     const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/[\w-]+\/?$/i;
@@ -123,7 +135,8 @@ const guardarEmpresa = () => {
         return false;
     }
 
-    console.log(paisid);
+    const domicilioCompleto = `${domicilio} ${nro}`;
+
     let errorMessage = '';
     if (razonSocial.trim() === '') { errorMessage = errorMessages.razonSocial; }
     else if (!razonSocialRegex.test(razonSocial)) { errorMessage = 'El nombre de la empresa solo puede contener letras y espacios.'; }
@@ -137,12 +150,14 @@ const guardarEmpresa = () => {
     else if (telefono1Empresa.length > 15) { errorMessage = 'El numero no puede tener  mas de 15 caracteres.' }
 
     else if (descripcion.trim() === '') { errorMessage = errorMessages.descripcion; }
-    else if (descripcion.length <50 || descripcion.length > 400) { errorMessage = 'La descripción debe estar entre 50 y 400 caracteres.' }
+    else if (descripcion.length <50 || descripcion.length > 600) { errorMessage = 'La descripción debe estar entre 50 y 600 caracteres.' }
 
     else if (paisid === '0') { errorMessage = errorMessages.paisid; }
     
+    // Determina cuál campo está vacío y establece el mensaje de error correspondiente
+    else if (domicilio.trim() === '' || altura.trim() === '') { errorMessage = (domicilio.trim() === '') ? errorMessages.domicilio : errorMessages.altura; }
 
-    else if (domicilio.trim() === '') { errorMessage = errorMessages.domicilio; }
+    else if (rubroid === '0') { errorMessage = errorMessages.rubroid; }
 
     else if (!empresaFoto) { errorMessage = errorMessages.empresaFoto; }
    /* else if (provinciaID === '') { errorMessage = errorMessages.provinciad; }*/
@@ -185,12 +200,13 @@ $('#twitter').on('input', function () {
 $('#registrarEmpresa').on('submit', guardarEmpresa);
 
 
+const razonSocialRegex = /^[A-Za-z0-9_\s.'']+$/;
+
 const editarEmpresa = () => {
     event.preventDefault();
     const url = '../../Empresas/EditarEmpresa'
     const params = new FormData($('#frmFormulario')[0]);
-    let alertEmpresa = $("#alertEmpresa");
-    //let foto = $("#fotoPerfilEmpresa").val();
+    let alertEmpresa = $("#alertEmpresa");    
     let razon = $("#RazonSocial").val().trim();
     //let rubroID = $("#RubroID").val();
     let cuit = $("#Cuit").val().trim();
@@ -199,23 +215,24 @@ const editarEmpresa = () => {
     let provinciaid = $("#provinciaID").val();
     let localidadid = $("#localidadID").val();
     let domicilio = $("#DomicilioEmpresa").val().trim();
-    if (razon != "" && razon != null) {        
+    if (razon != "" && razon != null) {
+        if (razonSocialRegex.test(razon)){
             if (cuit != "" && cuit != null) {
                 if (tel != "" && tel != null) {
                     if (paisid != 0) {
                         if (provinciaid != 0) {
                             if (localidadid != 0) {
-                                if (domicilio != "" && domicilio != null) {                                    
-                                        $.ajax({
-                                            type: 'PUT',
-                                            url: url,
-                                            data: params,
-                                            contentType: false,
-                                            processData: false,
-                                            async: false,
-                                            success: e => window.location.href = '/empresas/PerfilEmpresa',
-                                            error: e => console.log('error' + e)
-                                        });                                                                         
+                                if (domicilio != "" && domicilio != null) {
+                                    $.ajax({
+                                        type: 'PUT',
+                                        url: url,
+                                        data: params,
+                                        contentType: false,
+                                        processData: false,
+                                        async: false,
+                                        success: e => window.location.href = '/empresas/PerfilEmpresa',
+                                        error: e => console.log('error' + e)
+                                    });
 
                                 } else alertEmpresa.removeClass('visually-hidden').text('El domicilio es obligatorio');
 
@@ -225,19 +242,17 @@ const editarEmpresa = () => {
 
                     } else alertEmpresa.removeClass('visually-hidden').text('Debe seleccionar un país');
 
-                } else alertEmpresa.removeClass('visually-hidden').text('El Telefono es obligatorio');
+                } else alertEmpresa.removeClass('visually-hidden').text('El Teléfono es obligatorio');
 
             } else alertEmpresa.removeClass('visually-hidden').text('Debe escribir un CUIT');
 
-    } else alertEmpresa.removeClass('visually-hidden').text('La Razon Social no puede estar vacía');
+        } else alertEmpresa.removeClass('visually-hidden').text('La Razón Social contiene caracteres no permitidos');
+
+    } else alertEmpresa.removeClass('visually-hidden').text('La Razón Social no puede estar vacía');
 }
 
 
-$('#provinciaID').prop('disabled', true);
-$('#localidadID').prop('disabled', true);
-
-
-function BuscarProvincia() {
+function BuscarProvincia(provinciaID) {
     $('#provinciaID').empty();
     $.ajax({
         type: 'POST',
@@ -253,6 +268,12 @@ function BuscarProvincia() {
                     $('#provinciaID').append(`<option value=${provincia.value}>${provincia.text}</option>`)
                 });
             }
+
+            if (provinciaID > 0) {
+                $("#provinciaID").val(provinciaID);
+            }
+            //BuscarLocalidad(0);
+
         },
         error: function (data) {
             console.log('error en combo provincias ' + data)
@@ -267,25 +288,28 @@ $('#paisID').change(function () {
     // Clear localidad dropdown
     $('#localidadID').empty();
     // Call the function to populate provincia dropdown
-    BuscarProvincia();
+    BuscarProvincia(0);
 });
 
 
 $('#provinciaID').change(function() {
     $('#localidadID').prop('disabled', false);
-    BuscarLocalidad();
+    BuscarLocalidad(0);
 });
 
-const BuscarLocalidad = () => {
+const BuscarLocalidad = (localidadID) => {
     $('#localidadID').empty();
     let url = '../../Localidades/ComboLocalidades';
     let data = { id: $('#provinciaID').val() };
     $.post(url, data).done(localidades => {
-        localidades.length === 0
+        localidades.length === 0            
             ? $('#localidadID').append(`<option value=${0}>[NO EXISTEN LOCALIDADES]</option>`)
             : $.each(localidades, (i, localidad) => {
                 $('#localidadID').append(`<option value=${localidad.value}>${localidad.text}</option>`)
             });
+        if (localidadID > 0) {
+            $("#localidadID").val(localidadID);
+        }
        
     }).fail(e => console.log('error en combo localidades' + e))
     return false
@@ -297,11 +321,15 @@ const BuscarEmpresa = (empresaID) => {
     $("#EmpresaID").val(empresaID);
     $("#RazonSocial").val(RazonSocial);
     $("#Cuit").val(Cuit);
+    $("#paisID").val(paisID);
+    $("#provinciaID").val(provinciaID);
+    $("#localidadID").val(localidadID);
     $("#Telefono1").val(Telefono1);
     $("#DomicilioEmpresa").val(DomicilioEmpresa);
+    $("#CorreoEmpresa").val(CorreoEmpresa);
     $('#alertEmpresa').addClass('visually-hidden');
     let url = '../../Empresas/BuscarEmpresa';
-    let data = { EmpresaID: empresaID };
+    let data = { EmpresaID: empresaID };  
     $.post(url, data)
         .done(empresa => {
             $("#RazonSocial").val(empresa.razonSocial);
@@ -309,9 +337,11 @@ const BuscarEmpresa = (empresaID) => {
             $("#Telefono1").val(empresa.telefono1);
             $("#DomicilioEmpresa").val(empresa.domicilio);
             $("#paisID").val(empresa.paisID);
-            $("#provinciaID").val(empresa.provinciaID);
-            $("#localidadID").val(empresa.localidadID);
-            //$("#CorreoEmpresa").val(empresa.emailEmpresa);
+            BuscarProvincia(empresa.provinciaID);
+            
+            BuscarLocalidad(empresa.localidadID);
+            
+            $("#CorreoEmpresa").val(empresa.correo);
             $("#modalCrearEmpresa").modal("show");
         })
         .fail(e => console.log(e));
@@ -319,8 +349,8 @@ const BuscarEmpresa = (empresaID) => {
 
 const AbrirModal = () => {
     $('#modalCrearEmpresa').modal('show');
-    $('#ProvinciaID').val(0);
-    $('#LocalidadID').val(0);
+    $('#provinciaID').val(0);
+    $('#localidadID').val(0);
     $("#alertEmpresa").addClass('visually-hidden');
 }
 
