@@ -2819,6 +2819,16 @@ section {
         display: block;
     }
 
+.inputsaling2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+    .inputsaling2 .form-group {
+        display: block;
+    }
+
 .texty{
     color: black;
 }
@@ -2922,4 +2932,16 @@ section {
     background-repeat: no-repeat;
    
 
+}
+
+@media (max-width: 991px) {
+    .ocultarCol991{
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .ocultarCol767 {
+        display: none;
+    }
 }

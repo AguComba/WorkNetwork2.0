@@ -22,21 +22,21 @@
                         <div class="social-links mt-2">
                             @if (!string.IsNullOrEmpty(infoUser.Twitter))
                             {
-                            <a target="_blank" href="@infoUser.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a target="_blank" href="@infoUser.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
                             }
 
                             @if (!string.IsNullOrEmpty(infoUser.Instagram))
                             {
-                            <a target="_blank" href="@infoUser.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a target="_blank" href="@infoUser.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
                             }
 
                             @if (!string.IsNullOrEmpty(infoUser.Linkedin))
                             {
-                            <a target="_blank" href="@infoUser.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                <a target="_blank" href="@infoUser.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
                             }
 
-                           @* <a href="#" class="edit-icon" data-toggle="modal" data-target="#editSocialModal"><i class="bi bi-pencil"></i></a>*@
-                           @* futuro modal para editar redes *@
+                            @* <a href="#" class="edit-icon" data-toggle="modal" data-target="#editSocialModal"><i class="bi bi-pencil"></i></a>*@
+                            @* futuro modal para editar redes *@
 
                         </div>
                     </div>
@@ -46,7 +46,7 @@
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-body pt-3">
-                        
+
                         <div class="tab-content pt-2">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -92,14 +92,14 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Correo Electrónico</div>
                                         <div class="col-lg-9 col-md-8">
-                                            <div class="col-lg-9 col-md-8">@infoUser.Correo</div>                                            
+                                            <div class="col-lg-9 col-md-8">@infoUser.Correo</div>
                                         </div>
                                     </div>
                                     <p>
                                         <button class="btn btn-secondary" onclick="BuscarPersona(@infoUser.PersonaID)">Editar Perfil</button>
                                     </p>
                                 }
-                                
+
 
                                 <div class="modal" tabindex="-1" id="exampleModal" role="dialog" aria-labeledby="exampleModalLabel">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -114,23 +114,29 @@
                                                     <input type="hidden" name="IdPersona" id="PersonaID" value="0" />
                                                     <div class="alert alert-danger" id="alertPersona"></div>
 
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="form-label">Nombre</label>
-                                                        <input type="text" name="nombrePersona" id="PersonaNombre" class="form-control" required />
+                                                    <div class="inputsaling">
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="form-label">Nombre</label>
+                                                            <input type="text" name="nombrePersona" id="PersonaNombre" class="form-control" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="form-label">Apellido</label>
+                                                            <input type="text" name="apellidoPersona" id="ApellidoNombre" class="form-control" required />
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="form-label">Apellido</label>
-                                                        <input type="text" name="apellidoPersona" id="ApellidoNombre" class="form-control" required />
+
+                                                    <div class="inputsaling mt-1">
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="form-label">Telefono</label>
+                                                            <input type="tel" name="telefono1Persona" id="Telefono1" class="form-control" maxlength="15" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="form-label">Documento</label>
+                                                            <input type="tel" name="NumeroDocumento" id="dni" class="form-control" maxlength="15" />
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="form-label">Telefono</label>
-                                                        <input type="tel" name="telefono1Persona" id="Telefono1" class="form-control" maxlength="15" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="form-label">Documento</label>
-                                                        <input type="tel" name="NumeroDocumento" id="dni" class="form-control" maxlength="15" />
-                                                    </div>
-                                                    <div class="form-group">
+
+                                                    <div>
                                                         <label for="recipient-name" class="form-label">Pais:</label>
                                                         <div class="form-group">
                                                             @Html.DropDownList("PaisID", null, htmlAttributes:new{@class = "form-select mb-3", @id = "paisID"})
@@ -145,6 +151,9 @@
                                                         <div class="form-group">
                                                             @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select", @id = "localidadID"})
                                                         </div>
+                                                    </div>
+
+                                                    <div class="inputsaling mt-1">
                                                         <div class="form-group">
                                                             <label for="recipient-name" class="form-label">Domicilio</label>
                                                             <input type="text" name="domicilio" id="DomicilioPersona" class="form-control" />
@@ -156,6 +165,7 @@
                                                         </div>
                                                     </div>
 
+
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
@@ -166,7 +176,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>

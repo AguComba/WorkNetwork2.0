@@ -58,19 +58,19 @@
                 empresaMostrar.Rubro = rubroNombre;
                 empresaMostrar.Correo = correo;
 
-                var paises = _context.Pais.ToList();
+                var paises = _context.Pais.Where(x => x.Eliminado == false).ToList();
                 paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
                 ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
 
-                var provincias = _context.Provincia.ToList();
+                var provincias = _context.Provincia.Where(x => x.Eliminado == false).ToList();
                 provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
                 ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
 
-                var localidad = _context.Localidad.ToList();
+                var localidad = _context.Localidad.Where(x => x.Eliminado == false).ToList();
                 localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
                 ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
 
-                var rubros = _context.Rubro.ToList();
+                var rubros = _context.Rubro.Where(x => x.Eliminado == false).ToList();
                 rubros.Add(new Rubro { RubroID = 0, NombreRubro = "[SELECCIONE UN RUBRO]" });
                 ViewBag.RubroID = new SelectList(rubros.OrderBy(x => x.NombreRubro), "RubroID", "NombreRubro");
 
@@ -110,19 +110,19 @@
         public IActionResult NewEmpresa()
         {
 
-            var paises = _context.Pais.ToList();
+            var paises = _context.Pais.Where(x => x.Eliminado == false).ToList();
             paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
             ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
 
-            var provincias = _context.Provincia.ToList();
+            var provincias = _context.Provincia.Where(x => x.Eliminado == false).ToList();
             provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
             ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
 
-            var localidad = _context.Localidad.ToList();
+            var localidad = _context.Localidad.Where(x => x.Eliminado == false).ToList();
             localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
             ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
 
-            var rubros = _context.Rubro.ToList();
+            var rubros = _context.Rubro.Where(x => x.Eliminado == false).ToList();
             rubros.Add(new Rubro { RubroID = 0, NombreRubro = "[SELECCIONE UN RUBRO]" });
             ViewBag.RubroID = new SelectList(rubros.OrderBy(x => x.NombreRubro), "RubroID", "NombreRubro");
 

@@ -42,26 +42,32 @@
 
                     @if (User.IsInRole("Empresa"))
                     {
-                        <li><a asp-area="" class="nav-link text-white" asp-controller="home" asp-action="index">Inicio</a></li>
-                        <li><a asp-area="" class="nav-link text-white" asp-controller="vacantes" asp-action="index">Vacantes</a></li>
-                        <li><a asp-area="" class="nav-link text-white" asp-controller="empresas" asp-action="PerfilEmpresa">Perfil</a></li>
-                        <li>
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión <i class="bi bi-power"></i></button>
-                            </form>
-                        </li>
+                        @if (!(ViewContext.RouteData.Values["controller"].ToString().Equals("Empresas") && ViewContext.RouteData.Values["action"].ToString().Equals("NewEmpresa")))
+                        {
+                            <li><a asp-area="" class="nav-link text-white" asp-controller="home" asp-action="index">Inicio</a></li>
+                            <li><a asp-area="" class="nav-link text-white" asp-controller="vacantes" asp-action="index">Vacantes</a></li>
+                            <li><a asp-area="" class="nav-link text-white" asp-controller="empresas" asp-action="PerfilEmpresa">Perfil</a></li>
+                            <li>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                    <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión <i class="bi bi-power"></i></button>
+                                </form>
+                            </li>
+                        }
                     }
 
                     @if (User.IsInRole("Usuario"))
                     {
-                        <li><a asp-area="" class="nav-link text-white" asp-controller="home" asp-action="index">Inicio</a></li>
-                        <li><a asp-area="" class="nav-link text-white" asp-controller="vacantes" asp-action="PostulantesPersona">Mis Postulaciones</a></li>
-                        <li><a asp-area="" class="nav-link text-white" asp-controller="personas" asp-action="PerfilUser">Perfil</a></li>
-                        <li>
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión <i class="bi bi-power"></i></button>
-                            </form>
-                        </li>
+                        @if (!(ViewContext.RouteData.Values["controller"].ToString().Equals("Personas") && ViewContext.RouteData.Values["action"].ToString().Equals("NewPerson")))
+                        {
+                            <li><a asp-area="" class="nav-link text-white" asp-controller="home" asp-action="index">Inicio</a></li>
+                            <li><a asp-area="" class="nav-link text-white" asp-controller="vacantes" asp-action="PostulantesPersona">Mis Postulaciones</a></li>
+                            <li><a asp-area="" class="nav-link text-white" asp-controller="personas" asp-action="PerfilUser">Perfil</a></li>
+                            <li>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                    <button type="submit" class="nav-link btn btn-link text-white">Cerrar Sesión <i class="bi bi-power"></i></button>
+                                </form>
+                            </li>
+                        }
                     }
 
                     @if (User.IsInRole("SuperUsuario"))

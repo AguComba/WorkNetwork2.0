@@ -80,15 +80,15 @@ namespace WorkNetwork.Controllers
                 personaMostrar.LocalidadNombre = localidadNombre;
                 personaMostrar.Correo = correo;
 
-                var paises = _context.Pais.ToList();
+                var paises = _context.Pais.Where(x => x.Eliminado == false).ToList();
                 paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
                 ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
 
-                var provincias = _context.Provincia.ToList();
+                var provincias = _context.Provincia.Where(x => x.Eliminado == false).ToList();
                 provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
                 ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
 
-                var localidad = _context.Localidad.ToList();
+                var localidad = _context.Localidad.Where(x => x.Eliminado == false).ToList();
                 localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
                 ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
 
@@ -157,16 +157,16 @@ namespace WorkNetwork.Controllers
 
         public IActionResult NewPerson()
         {
-            var paises = _context.Pais.ToList();
+            var paises = _context.Pais.Where(x=>x.Eliminado == false).ToList();
             paises.Add(new Pais { PaisID = 0, NombrePais = "[SELECCIONE UN PAIS]" });
             ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
 
-            var provincias = _context.Provincia.ToList();
-            provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
+            var provincias = _context.Provincia.Where(x => x.Eliminado == false).ToList();
+            provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UNA PROVINCIA]" });
             ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
 
-            var localidad = _context.Localidad.ToList();
-            localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
+            var localidad = _context.Localidad.Where(x => x.Eliminado == false).ToList();
+            localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN LOCALIDAD]" });
             ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
 
             return View();
@@ -367,43 +367,61 @@ namespace WorkNetwork.Controllers
 
         public IActionResult VerEmpresa(int? id)
         {
-            //cuando cierro sesion mientras estoy viendo el perfil de la empresa
-            //se rompe en localidad mostrando un invalidoperationexception
-            //Cierra igual la sesion pero se rompe
+            
+            //Busca al usuario antes de cerrar sesion
+            var usuarioActual = _userManager.GetUserId(HttpContext.User);
+            if (usuarioActual == null)
+            { return RedirectToAction("Index", "Home"); }
 
+
+            var empresaUsuario = _context.EmpresaUsuarios
+                .Where(u => u.EmpresaID == id)
+                .FirstOrDefault();
+
+            var empresa = _context.Empresa
+                .Where(u => u.EmpresaID == id)
+                .FirstOrDefault();
+
+            var localidadNombre = _context.Localidad
+                .Where(u => u.LocalidadID == empresa.LocalidadID)
+                .Select(l => l.NombreLocalidad)
+                .FirstOrDefault();
+
+            var correo = _context.Users
+                .Where(c => c.Id == empresaUsuario.UsuarioID)
+                .Select(c => c.Email)
+                .Single();
+
+            var rubroNombre = _context.Rubro
+                .Where(r => r.RubroID == empresa.RubroID)
+                .Select(r => r.NombreRubro)
+                .Single();
 
             var empresaMostrar = new EmpresaMostrar();
-
-            var empresaUsuario = _context.EmpresaUsuarios.Where(u => u.EmpresaID == id).FirstOrDefault();
-
-            var empresa = _context.Empresa.Where(u => u.EmpresaID == id).FirstOrDefault();
-            var localidadNombre = _context.Localidad.Where(u => u.LocalidadID == empresa.LocalidadID).Select(l => l.NombreLocalidad).FirstOrDefault();
-            var correo = _context.Users.Where(c => c.Id == empresaUsuario.UsuarioID).Select(c => c.Email).Single();
-            var rubroNombre = _context.Rubro.Where(r => r.RubroID == empresa.RubroID).Select(r => r.NombreRubro).Single();
-
-            empresaMostrar.EmpresaID = empresa.EmpresaID;
-            empresaMostrar.RazonSocial = empresa.RazonSocial;
-            empresaMostrar.Descripcion = empresa.Descripcion;
-            empresaMostrar.CUIT = empresa.CUIT;
-            empresaMostrar.Domicilio = empresa.Domicilio;
-            empresaMostrar.Localidad = localidadNombre;
-            empresaMostrar.Telefono1 = empresa.Telefono1;
-            empresaMostrar.Instagram = empresa.Instagram;
-            empresaMostrar.Twitter = empresa.Twitter;
-            empresaMostrar.Linkedin = empresa.Linkedin;
-            empresaMostrar.Domicilio = empresa.Domicilio;
-            empresaMostrar.Rubro = rubroNombre;
-            empresaMostrar.Correo = correo;
-
-            if (empresa.Imagen != null)
             {
-                empresaMostrar.ImagenEmpresa = empresa.Imagen;
-                empresaMostrar.TipoImagen = empresa.TipoImagen;
-                empresaMostrar.Imagen = Convert.ToBase64String(empresa.Imagen);
+                empresaMostrar.EmpresaID = empresa.EmpresaID;
+                empresaMostrar.RazonSocial = empresa.RazonSocial;
+                empresaMostrar.Descripcion = empresa.Descripcion;
+                empresaMostrar.CUIT = empresa.CUIT;
+                empresaMostrar.Domicilio = empresa.Domicilio;
+                empresaMostrar.Localidad = localidadNombre;
+                empresaMostrar.Telefono1 = empresa.Telefono1;
+                empresaMostrar.Instagram = empresa.Instagram;
+                empresaMostrar.Twitter = empresa.Twitter;
+                empresaMostrar.Linkedin = empresa.Linkedin;
+                empresaMostrar.Domicilio = empresa.Domicilio;
+                empresaMostrar.Rubro = rubroNombre;
+                empresaMostrar.Correo = correo;
             }
-            empresaMostrar.Eliminado = empresa.Eliminado;
+                if (empresa.Imagen != null)
+                {
+                    empresaMostrar.ImagenEmpresa = empresa.Imagen;
+                    empresaMostrar.TipoImagen = empresa.TipoImagen;
+                    empresaMostrar.Imagen = Convert.ToBase64String(empresa.Imagen);
+                }
+                empresaMostrar.Eliminado = empresa.Eliminado;
 
-            ViewData["empresa"] = empresaMostrar;
+                ViewData["empresa"] = empresaMostrar;
 
             return View();
         }

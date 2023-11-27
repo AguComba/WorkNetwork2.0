@@ -7,11 +7,11 @@
         $('#tbody-provincias').empty();
         $.each(provincias, await function (index, provincia) {
             let claseEliminado = '';
-            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-2' onclick = "BuscarProvincia(${provincia.provinciaID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarProvincia(${provincia.provinciaID},1)"><i class="bi bi-trash3"></i> Deshabilitar</btn>`;
+            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-2' onclick = "BuscarProvincia(${provincia.provinciaID})"><i class="bi bi-pencil-square"></i><i class="ocultarCol767"> Editar</i></btn>
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarProvincia(${provincia.provinciaID},1)"><i class="bi bi-trash3"></i><i class="ocultarCol767"> Deshabilitar<i/></btn>`;
             if (provincia.eliminado) {
                 claseEliminado = 'table-danger';
-                botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm' onclick = 'EliminarProvincia(${provincia.provinciaID},0)'><i class="bi bi-recycle"></i> Habilitar</btn>`;
+                botones = `<btn type='button' class = 'btn btn-outline-primary btn-sm' onclick = 'EliminarProvincia(${provincia.provinciaID},0)'><i class="bi bi-arrow-clockwise"></i><i class="ocultarCol767"> Habilitar<i/></btn>`;
             }
             
             $("#tbody-provincias").append(
@@ -109,7 +109,7 @@ const EliminarProvincia = (provinciaID, elimina) => {
             CompletarTablaProvincias();
         }
         else if (resultado == 1) {
-            alert('No se puede desactivar porque existen Localidades activas');
+            alert('No se puede deshabilitar porque existen Localidades activas');
         }
         //} if (resultado == 2) {
         //    alert('Localidades Activas!')

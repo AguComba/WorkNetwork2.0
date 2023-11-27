@@ -25,9 +25,9 @@ const CompletarTablaVacantes = () => {
 
         $.each(vacantes, function (index, vacante) {
             let claseFinalizado = '';
-            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-1' onclick = "EditarVacantes(${vacante.vacanteID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm me-1' onclick = "FinalizarVacante(${vacante.vacanteID},1)"><i class="bi bi-circle-fill"></i> Finalizar</btn>
-                                <a class ='btn btn-outline-dark btn-sm' onclick = "GestionarVacante(${vacante.vacanteID})"><i class='bi bi-gear'></i> Gestionar</a>`
+            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-1' onclick = "EditarVacantes(${vacante.vacanteID})"><i class="bi bi-pencil-square"></i><i class="ocultarCol991"> Editar</i></btn>
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm me-1' onclick = "FinalizarVacante(${vacante.vacanteID},1)"><i class="bi bi-circle-fill"></i><i class="ocultarCol991"> Finalizar</i></btn>
+                                <a class ='btn btn-outline-dark btn-sm' onclick = "GestionarVacante(${vacante.vacanteID})"><i class='bi bi-gear'></i><i class="ocultarCol991"> Gestionar</i></a>`
 
 
             let fechaCreacion = formatoFecha (new Date(vacante.fechaCreacion));
@@ -35,9 +35,9 @@ const CompletarTablaVacantes = () => {
 
             if (new Date(vacante.fechaDeFinalizacion) < currentDate || vacante.eliminado) {                
                 claseFinalizado = 'table-danger';
-                botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-1' onclick = "EditarVacantes(${vacante.vacanteID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                <btn type='button' class = 'btn btn-outline-primary btn-sm me-1' onclick = "FinalizarVacante(${vacante.vacanteID},0)" title="Si la fecha de finalizaci\u00F3n ha concluido, edite la vacante"><i class="bi bi-arrow-clockwise"></i> Reactivar</btn>
-                                <a class ='btn btn-outline-dark btn-sm' onclick = "GestionarVacante(${vacante.vacanteID})"><i class='bi bi-gear'></i> Gestionar</a>`
+                botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-1' onclick = "EditarVacantes(${vacante.vacanteID})"><i class="bi bi-pencil-square"></i><i class="ocultarCol991"> Editar</i></btn>
+                <btn type='button' class = 'btn btn-outline-primary btn-sm me-1' onclick = "FinalizarVacante(${vacante.vacanteID},0)" title="Si la fecha de finalizaci\u00F3n ha concluido, edite la vacante"><i class="bi bi-arrow-clockwise"></i><i class="ocultarCol991"> Reactivar</i></btn>
+                                <a class ='btn btn-outline-dark btn-sm' onclick = "GestionarVacante(${vacante.vacanteID})"><i class='bi bi-gear'></i><i class="ocultarCol991"> Gestionar</i></a>`
 
             }
 
@@ -45,10 +45,10 @@ const CompletarTablaVacantes = () => {
 
             $("#tbody-vacante").append(
                 `<tr class= 'tabla-hover ${claseFinalizado}'>
-                        <td class='texto'>${fechaCreacion}</td>
+                        <td class='texto ocultarCol767'>${fechaCreacion}</td>
                         <td class='texto'>${fechaFinalizacion}</td>
                         <td class='texto'>${vacante.nombre}</td>
-                        <td class='texto'>${vacante.idiomas ? vacante.idiomas : '<i>' + "No se requieren idiomas" + '</i>'}</td>
+                        <td class='texto ocultarCol767'>${vacante.idiomas ? vacante.idiomas : '<i>' + "Sin idiomas" + '</i>'}</td>
                         <td class='texto'>${vacante.experienciaRequerida} ${expTexto}</td>                      
                         <td class = 'text-center'>
                         ${botones}
@@ -76,7 +76,7 @@ const CompletarTablaPostulacionPersona = () => {
                         <td class='texto'>${fechaSolicitudVacante}</td>
                         <td class='texto'>${vacante.empresaNombre}</td>
                         <td class='texto'>${vacante.nombre}</td>
-                        <td class='texto'>${vacante.idiomas ? vacante.idiomas : '<i>' + "No se requieren idiomas" + '</i>'}</td>
+                        <td class='texto ocultarCol767'>${vacante.idiomas ? vacante.idiomas : '<i>' + "Sin idiomas" + '</i>'}</td>
                         <td class='texto'>${vacante.experienciaRequerida} ${expTexto}</td>
                         
                 </tr>`

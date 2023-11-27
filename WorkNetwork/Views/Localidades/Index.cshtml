@@ -10,7 +10,7 @@
 <!-- Fin primera parte -->
 
 <section>
-    <div class="container position-relative d-flex flex-column align-items-center mt-2"><h2>Localidades</h2></div>
+    <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Localidades</h2></div>
     <div class="container">
         <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearLocalidad)'>Agregar Localidad</button>
 
@@ -20,13 +20,16 @@
                     <th>
                         Localidad
                     </th>
+
                     <th>
                         Provincia
                     </th>
-                    <th>
+
+                    <th class="ocultarCol767">
                         Código Postal
                     </th>
                     <th></th>
+                    
                 </tr>
             </thead>
             <tbody id='tbody-localidad'></tbody>

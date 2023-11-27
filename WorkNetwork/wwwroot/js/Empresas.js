@@ -150,7 +150,7 @@ const guardarEmpresa = () => {
     else if (telefono1Empresa.length > 15) { errorMessage = 'El numero no puede tener  mas de 15 caracteres.' }
 
     else if (descripcion.trim() === '') { errorMessage = errorMessages.descripcion; }
-    else if (descripcion.length <50 || descripcion.length > 600) { errorMessage = 'La descripción debe estar entre 50 y 600 caracteres.' }
+    else if (descripcion.length <10 || descripcion.length > 600) { errorMessage = 'La descripción debe estar entre 10 y 600 caracteres.' }
 
     else if (paisid === '0') { errorMessage = errorMessages.paisid; }
     

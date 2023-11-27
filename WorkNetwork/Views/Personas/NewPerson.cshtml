@@ -13,8 +13,6 @@
     </div>
 </div>
 <!-- Fin primera parte -->
-@*//HACER VALIDACIONES JS
-//DNI Y TELEFONO SOLO NUMEROS, EL RESTO SOLO LETRAS. DARLES LENGTH A C/U*@
 
 <div class="contact">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -41,15 +39,16 @@
 
 
                         </div>
+                        <div class="inputsaling">
+                            <div class="form-group">
+                                <label>Ingrese su Documento</label><small style="color:red"> *</small>
+                                <input type="text" class="form-control" name="numeroDocumento" id="numeroDocumento" placeholder="Número de documento" required maxlength="8">
+                            </div>
 
-                        <div class="form-group">
-                            <label>Ingrese su Documento</label><small style="color:red"> *</small>
-                            <input type="text" class="form-control" name="numeroDocumento" id="numeroDocumento" placeholder="Número de documento" required maxlength="8">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Fecha de nacimiento</label><small style="color:red"> *</small>
-                            <input class="form-control" type="date" placeholder="Fecha de Nacimiento" id="fecNac" name='fechaNacimiento' />
+                            <div class="form-group">
+                                <label>Fecha de nacimiento</label><small style="color:red"> *</small>
+                                <input class="form-control" type="date" placeholder="Fecha de Nacimiento" id="fecNac" name='fechaNacimiento' />
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -67,19 +66,17 @@
                             @Html.DropDownList("LocalidadID", null, htmlAttributes:new{@class = "form-select", @id = "localidadID"})
                         </div>
 
-                        <div class="row">
+                        <div class="inputsaling">
                             <div class=" form-group">
                                 <label>Domicilio</label><small style="color:red"> *</small>
                                 <input type="text" name="domicilio" class="form-control" id="domicilio" placeholder="Domicilio" required>
                             </div>
-                            @*  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-group">
-                            <input type="number" class="form-control" name="nro" id="nro" placeholder="Nro" required>
-                            </div>*@
-                        </div>
 
-                        <div class="form-group">
-                            <label>Teléfono</label><small style="color:red"> *</small>
-                            <input type="text" class="form-control" name="telefono1Persona" id="telefono1Persona" placeholder="Teléfono" required>
+
+                            <div class="form-group">
+                                <label>Teléfono</label><small style="color:red"> *</small>
+                                <input type="text" class="form-control" name="telefono1Persona" id="telefono1Persona" placeholder="Teléfono" required>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,6 +100,7 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Género</label><small style="color:red"> *</small>
                             <select id="generoID" class="form-select" name="generoID">
                                 <option selected disabled>Seleccione un género...</option>
                                 <option value=0>Masculino</option>
@@ -110,13 +108,15 @@
                                 <option value=2>No Especifica</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Curriculum</label><small style="color:red"> *</small>
-                            <input type="file" name="curriculPersona" accept="application/pdf" placeholder="Curriculum" class="form-control" id="curriculPersona" required accept=".pdf" />
-                        </div>
-                        <div class="form-group">
-                            <label>Foto de perfil</label><small style="color:red"> *</small>
-                            <input type="file" name="personaFoto" placeholder="Foto de perfil" class="form-control" id="personaFoto" required accept="image/*" />
+                        <div class="inputsaling">
+                            <div class="form-group">
+                                <label>Curriculum</label><small style="color:red"> *</small>
+                                <input type="file" name="curriculPersona" accept="application/pdf" placeholder="Curriculum" class="form-control" id="curriculPersona" required accept=".pdf" />
+                            </div>
+                            <div class="form-group">
+                                <label>Foto de perfil</label><small style="color:red"> *</small>
+                                <input type="file" name="personaFoto" placeholder="Foto de perfil" class="form-control" id="personaFoto" required accept="image/*" />
+                            </div>
                         </div>
 
 
@@ -126,8 +126,8 @@
                             <div class="sent-message">Your message has been sent. Thank you!</div>
                         </div>
                         <div class="text-center"><button onclick="guardarPersona()" type="submit">Registrarse</button></div>
+                        <label style="font-size:smaller">Los campos con <span style="color:red"> * </span> son obligatorios</label>
                     </div>
-                    <label style="font-size:smaller">Los campos con <span style="color:red"> * </span> son obligatorios</label>
                 </div>
                 <!-- Fin segunda card-->
             </div>

@@ -78,25 +78,30 @@
             var rubro = _context.Rubro.Find(RubroID);
             if (rubro is not null)
             {
-                if (Elimina is 0)
-                {
-                    rubro.Eliminado = false;
-                    _context.SaveChanges();
+                bool rubroUsado = _context.Empresa.Any(e=>e.RubroID == RubroID)||
+                                  _context.Vacante.Any(v=>v.RubroID == RubroID);
+
+                if (rubroUsado)
+                {   
+                    //Rubro en uso
+                    resultado = 3;
                 }
                 else
-                {
-                    //NO PUEDE ELIMINAR RUBRO SI TIENE SUBRUBROS ACTIVOS
-                    //var cantidadSubRubros = (from o in _context.Subrubros where o.RubroID == RubroID && o.Eliminado == false select o).Count();
-                    //if (cantidadSubRubros == 0)
-                    //{
-                        rubro.Eliminado = true;
+                {   
+                    //Rubro no se usa. ELIMINAR
+                    if (Elimina is 0)
+                    {
+                        rubro.Eliminado = false;
                         _context.SaveChanges();
-                    //}
-                    //else
-                    //{
-                      //  resultado = 1;
-                    //}
-                }                              
+                    }
+                    else
+                    {
+                        //NO PUEDE ELIMINAR RUBRO SI TIENE USUARIOS ACTIVOS
+                         rubro.Eliminado = true;
+                        _context.SaveChanges();
+
+                    }
+                }                             
             }
 
             return Json(resultado);

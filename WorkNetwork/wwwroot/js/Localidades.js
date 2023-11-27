@@ -7,19 +7,19 @@
         $('#tbody-localidad').empty();
         $.each(localidades, await function (index, localidades) {
             let claseEliminado = '';
-            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-2' onclick = "BuscarLocalidad(${localidades.localidadID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},1)"><i class="bi bi-trash3"></i> Deshabilitar</btn>`
+            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-1' onclick = "BuscarLocalidad(${localidades.localidadID})"><i class="bi bi-pencil-square"></i><i class="ocultarCol767"> Editar</i></btn>
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},1)"><i class="bi bi-trash3"></i><i class="ocultarCol767"> Deshabilitar<i/></btn>`;
 
             if (localidades.eliminado) {
                 claseEliminado = 'table-danger';
-                botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},0)"><i class="bi bi-recycle"></i> Rehabilitar</btn>`
+                botones = `<btn type='button' class = 'btn btn-outline-primary btn-sm'onclick = "EliminarLocalidad(${localidades.localidadID},0)"><i class="bi bi-arrow-clockwise"></i> Habilitar</btn>`;
             }
             $("#tbody-localidad").append(
                 `<tr class= 'tabla-hover ${claseEliminado} '>
                         <td class='texto'>${localidades.nombreLocalidad}</td>
                         <td class='texto'>${localidades.nombreProvincia}</td>
-                        <td class='texto'>${localidades.cp}</td>
-                        <td class = 'text-end'>
+                        <td class='texto ocultarCol767'>${localidades.cp}</td>
+                        <td class='text-end'>
                             ${botones}
                         </td>
                     </tr>`

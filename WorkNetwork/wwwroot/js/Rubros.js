@@ -7,12 +7,12 @@
         $.each(rubros, function (i, rubro) {
 
             let claseEliminado = '';
-            let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarRubro(${rubro.rubroID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                           <btn type='button' class = 'btn btn-outline-danger btn-sm'onclick = "EliminarRubro(${rubro.rubroID},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
+            let botones = `<button type='button' class= 'btn btn-outline-success btn-sm me-1' onclick = "BuscarRubro(${rubro.rubroID})"><i class="bi bi-pencil-square"></i> Editar</button>
+                           <button type='button' class= 'btn btn-outline-danger btn-sm' onclick = "EliminarRubro(${rubro.rubroID},1)"><i class="bi bi-trash3"></i> Deshabilitar</button>`
 
             if (rubro.eliminado) {
                 claseEliminado = 'table-danger';
-                botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm'onclick = "EliminarRubro(${rubro.rubroID},0)"><i class="bi bi-recycle"></i> Activar</btn>`
+                botones = `<button type='button' class = 'btn btn-outline-primary btn-sm' onclick = "EliminarRubro(${rubro.rubroID},0)"><i class="bi bi-arrow-clockwise"></i> Habilitar</button>`
             }
             $('#tbody-rubros').append(
                 `<tr class= 'tabla-hover ${claseEliminado}'>
@@ -79,10 +79,28 @@ const BuscarRubro = (rubroID) => {
     }).fail(e => console.log(e));
 }
 
-const EliminarRubro = (rubroID, elimina) => {
-    let url = '../../Rubros/EliminarRubro';
-    let data = {RubroID:rubroID, Elimina: elimina};
-    $.post(url,data).done(() => CompletarTablaRubro()).fail(e=>console.log(e))
+//const EliminarRubro = (rubroID, elimina) => {
+//    let url = '../../Rubros/EliminarRubro';
+//    let data = {RubroID:rubroID, Elimina: elimina};
+//    $.post(url,data).done(() => CompletarTablaRubro()).fail(e=>console.log(e))
+//}
+
+function EliminarRubro(rubroID, elimina) {
+    $.ajax({
+        type: 'POST',
+        url: '../../Rubros/EliminarRubro',
+        data: { RubroID: rubroID, Elimina: elimina },
+        success: function (resultado) {
+            if (resultado == 0) {
+                CompletarTablaRubro();
+            } else if (resultado == 3) {
+                alert('Rubro usandose')
+            }
+
+        },
+        error: function (data) { }
+
+    });
 }
 
 

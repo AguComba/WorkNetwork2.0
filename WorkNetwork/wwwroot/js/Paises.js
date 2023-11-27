@@ -9,12 +9,12 @@ const CompletarTablaPaises = async () => {
             $.each(paises, await function (index, pais) {
                 
                 let claseEliminado = '';
-                let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-3' onclick = "BuscarPais(${pais.paisID})"><i class="bi bi-pencil-square"></i> Editar</btn>
-                                <btn type='button' class = 'btn btn-outline-danger btn-sm' onclick = "EliminarPais(${pais.paisID},1)"><i class="bi bi-trash3"></i> Desactivar</btn>`
+                let botones = `<btn type='button' class= 'btn btn-outline-success btn-sm me-2' onclick = "BuscarPais(${pais.paisID})"><i class="bi bi-pencil-square"></i><i class="ocultarCol767"> Editar</i></btn>
+                                <btn type='button' class = 'btn btn-outline-danger btn-sm' onclick = "EliminarPais(${pais.paisID},1)"><i class="bi bi-trash3"></i><i class="ocultarCol767"> Deshabilitar<i/></btn>`
 
                 if (pais.eliminado) {
                     claseEliminado = 'table-danger';
-                    botones = `<btn type='button' class = 'btn btn-outline-warning btn-sm 'onclick = "EliminarPais(${pais.paisID},0)"><i class="bi bi-recycle"></i> Activar</btn>`
+                    botones = `<btn type='button' class = 'btn btn-outline-primary btn-sm 'onclick = "EliminarPais(${pais.paisID},0)"><i class="bi bi-arrow-clockwise"></i><i class="ocultarCol767"> Habilitar<i/></btn>`
 
                 }
                 $('#tbody-paises').append(`<tr class= 'tabla-hover ${claseEliminado} '>
@@ -104,7 +104,7 @@ function EliminarPais(paisID, elimina) {
                 CompletarTablaPaises();
             }
             else {
-                alert("No se puede eliminar porque contiene provincias o localidades activas.");
+                alert("No se puede deshabilitar porque hay localidades activas.");
             }
         },
         error: function (data) {

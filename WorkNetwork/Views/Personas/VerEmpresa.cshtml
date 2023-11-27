@@ -9,93 +9,85 @@
 
 <section id="perfilEmpresa" class="section profile">
     <div class="container position-relative d-flex flex-column text-center mt-1 mb-2"><h2> Perfil de @infoEmpresa.RazonSocial </h2></div>
-    <div class="container">
-        <div class="row ">
-            <div class="col-xl-4">
+        <div class="container">
+            <a asp-area="" asp-controller="home" asp-action="index"><i class="bi bi-arrow-left-circle" style="font-size:xx-large;" title="VOLVER ATRÁS"></i></a>
+            <div class="row ">
+                <div class="col-xl-4">
 
-                <div class="card">
-                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="data:@infoEmpresa.TipoImagen;base64,@infoEmpresa.Imagen" alt="" class="rounded-circle">
-                        <h2>@infoEmpresa.RazonSocial</h2>
-                        <h3>@infoEmpresa.CUIT</h3>
-                        <div class="social-links mt-2">
-                            @if (!string.IsNullOrEmpty(infoEmpresa.Twitter))
-                            {
-                                <a target="_blank" href="@infoEmpresa.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
-                            }
+                            <img src="data:@infoEmpresa.TipoImagen;base64,@infoEmpresa.Imagen" alt="" class="rounded-circle">
+                            <h2>@infoEmpresa.RazonSocial</h2>
+                            <h3>@infoEmpresa.CUIT</h3>
+                            <div class="social-links mt-2">
+                                @if (!string.IsNullOrEmpty(infoEmpresa.Twitter))
+                                {
+                                    <a target="_blank" href="@infoEmpresa.Twitter" class="twitter"><i class="bi bi-twitter"></i></a>
+                                }
 
-                            @if (!string.IsNullOrEmpty(infoEmpresa.Instagram))
-                            {
-                                <a target="_blank" href="@infoEmpresa.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
-                            }
+                                @if (!string.IsNullOrEmpty(infoEmpresa.Instagram))
+                                {
+                                    <a target="_blank" href="@infoEmpresa.Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                                }
 
-                            @if (!string.IsNullOrEmpty(infoEmpresa.Linkedin))
-                            {
-                                <a target="_blank" href="@infoEmpresa.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                            }
+                                @if (!string.IsNullOrEmpty(infoEmpresa.Linkedin))
+                                {
+                                    <a target="_blank" href="@infoEmpresa.Linkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                }
+                            </div>
                         </div>
                     </div>
+
                 </div>
+                <div class="col-xl-8">
+                    <div class="card">
+                        <div class="card-body pt-3">
 
-            </div>
-            <div class="col-xl-8">
-                <div class="card">
-                    <div class="card-body pt-3">
-                        
-                        <div class="tab-content pt-2">
+                            <div class="tab-content pt-2">
 
-                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                <h5 class="card-title mt-3">Sobre nosotros</h5>
-                                <p class="small fst-italic">@infoEmpresa.Descripcion</p>
+                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                    <h5 class="card-title mt-3">Sobre nosotros</h5>
+                                    <p class="small fst-italic">@infoEmpresa.Descripcion</p>
 
-                                <h5 class="card-title">Detalles del perfil</h5>
+                                    <h5 class="card-title">Detalles del perfil</h5>
 
-                               @*  <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Razon Social</div>
-                                    <div class="col-lg-9 col-md-8">@infoEmpresa.RazonSocial</div>
-                                </div> *@
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Rubro</div>
-                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Rubro</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Localidad</div>
-                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Localidad</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Domicilio</div>
-                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Domicilio</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Telefono</div>
-                                    <div class="col-lg-9 col-md-8">@infoEmpresa.Telefono1</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Correo</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        <a class="texty" title="Enviar Mensaje" href="mailto:@infoEmpresa.Correo">@infoEmpresa.Correo</a>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Rubro</div>
+                                        <div class="col-lg-9 col-md-8">@infoEmpresa.Rubro</div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Localidad</div>
+                                        <div class="col-lg-9 col-md-8">@infoEmpresa.Localidad</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Domicilio</div>
+                                        <div class="col-lg-9 col-md-8">@infoEmpresa.Domicilio</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Telefono</div>
+                                        <div class="col-lg-9 col-md-8">@infoEmpresa.Telefono1</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Correo</div>
+                                        <div class="col-lg-9 col-md-8">
+                                            <a class="texty" title="Enviar Mensaje" href="mailto:@infoEmpresa.Correo">@infoEmpresa.Correo</a>
+                                        </div>
+                                    </div>
+
                                 </div>
-
-                              
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </section>
 
 @section Scripts{
     <script src='~/js/Empresas.js'></script>
-    <script>
-        window.onload = CompletarTablaEmpresas();
-    </script>
+
 }
