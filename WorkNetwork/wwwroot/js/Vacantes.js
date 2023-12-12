@@ -229,7 +229,8 @@ const pustularVacante = () => {
             error: e => console.log("F")
         });
     } else {
-        alertPostVacante.removeClass('visually-hidden').text('Debe escribir porque es apto para esta vacante');
+        alertPostVacante.removeClass('visually-hidden').text('Debe describir porqu\u00E9 es apto para \u00E9sta vacante');
+        setTimeout(() => alertPostVacante.addClass("visually-hidden"), 5000);
     }
 }
 
@@ -264,6 +265,7 @@ const GuardarVacante = () => {
 
     if (fechaFinDate <= fechaHoy) {
         alertVacante.removeClass('visually-hidden').text("La fecha de finalizaci\u00F3n debe ser posterior a la actual");
+        setTimeout(() => alertVacante.addClass("visually-hidden"), 5000);
         return;
     }
 
@@ -318,7 +320,7 @@ const GuardarVacante = () => {
         } else alertVacante.removeClass('visually-hidden').text("Debe ingresar una descripci\u00F3n");
 
     } else alertVacante.removeClass('visually-hidden').text('Debe ingresar el t\u00EDtulo de la Vacante');
-
+      setTimeout(() => alertVacante.addClass("visually-hidden"), 5000);
 }
 
 $('#PaisID').change(() => BuscarProvincia());

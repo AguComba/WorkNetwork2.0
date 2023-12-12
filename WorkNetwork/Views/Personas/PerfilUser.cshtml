@@ -8,6 +8,10 @@
 <!-- Fin primera parte -->
 
 <section id="perfilEmpresa" class="section profile">
+    @if(ViewBag.VistaLectura == 2)
+    {
+        <a asp-area="" asp-controller="Vacantes" asp-action="index"><i class="bi bi-arrow-left-circle" style="font-size:xx-large; padding: 10px;" title="VOLVER ATR&Aacute;S"></i></a>
+    }
     <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Perfil</h2></div>
     <div class="container">
         <div class="row ">
@@ -80,7 +84,7 @@
                                 @if (ViewBag.VistaLectura == 2)
                                 {
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Correo Electrónico</div>
+                                        <div class="col-lg-3 col-md-4 label">Contacto</div>
                                         <div class="col-lg-9 col-md-8">
                                             <a class="texty" title="Enviar Mensaje" href="mailto:@infoUser.Correo">@infoUser.Correo</a>
                                         </div>

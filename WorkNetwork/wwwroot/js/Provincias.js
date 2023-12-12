@@ -52,11 +52,12 @@ const GuardarProvincia = () => {
                     }
                 }).fail(e => console.error(`Error cargar provincias '${e}'`))
             }
-            else alertProvincia.removeClass('visually-hidden').text('El pais no puede estar vacio');
+            else alertProvincia.removeClass('visually-hidden').text('Debe seleccionar un país');
 
         } else alertProvincia.removeClass('visually-hidden').text('El nombre de la provincia no puede contener números');
 
-    } else alertProvincia.removeClass('visually-hidden').text("El campo nombre no puede estar vacio");
+    } else alertProvincia.removeClass('visually-hidden').text("Debe escribir el nombre de la Provincia");
+    setTimeout(() => alertProvincia.addClass("visually-hidden"), 5000);
 }
 
 

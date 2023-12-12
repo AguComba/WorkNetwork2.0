@@ -66,12 +66,12 @@ const GuardarLocalidad = () => {
 
                 } else alertLocalidad.removeClass('visually-hidden').text('Sólo números');
 
-            } else alertLocalidad.removeClass('visually-hidden').text('Debe ingresar un código postal.');
+            } else alertLocalidad.removeClass('visually-hidden').text('Debe ingresar el código postal.');
 
         } else alertLocalidad.removeClass('visually-hidden').text('El nombre no es correcto');
 
-    } else alertLocalidad.removeClass('visually-hidden').text('Debe ingresar un nombre para la localidad.');
-
+    } else alertLocalidad.removeClass('visually-hidden').text('Debe ingresar el nombre de la localidad.');
+        setTimeout(() => alertLocalidad.addClass("visually-hidden"), 5000);
 }
 
 
@@ -127,7 +127,7 @@ function BuscarLocalidad(localidadID) {
 
 const AbrirModal = () => {
     $('#localidadID').val(0);
-    $('#Titulo-Modal-Localidad').text('Agregar nueva localidad');
+    $('#Titulo-Modal-Localidad').text('Agregar Nueva Localidad');
     $('#bottonEdit').text('Agregar');
     $('#modalCrearLocalidad').modal('show');
     $("#idProvincia").val(0);

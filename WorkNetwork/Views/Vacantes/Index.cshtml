@@ -11,8 +11,13 @@
 <section>
     <div class="container position-relative d-flex flex-column align-items-center mt-1"><h2>Vacantes</h2></div>
     <div class="container">
-
-        <button type="button" class='btn btn-login mb-3' onclick='AbrirModal(modalCrearVacante)'>Crear Vacante</button>
+        <div class="btn-cont">
+            <button type="button" class='btn btn-login mb-2' onclick='AbrirModal(modalCrearVacante)'>Crear Vacante</button>
+        </div>
+        <div class="text-cont">
+            <small>En <span style="color:red">rojo</span> las vacantes finalizadas</small>
+        </div>
+        
 
         <table class='table' style="margin-bottom: 10rem;">
             <thead class="table-dark">
@@ -21,7 +26,7 @@
                         Cargado el
                     </th>
                     <th>
-                        Finaliza el 
+                        Finaliza el
                     </th>
                     <th>
                         Vacante
@@ -41,7 +46,7 @@
         </table>
     </div>
 </section>
- 
+
 <!-- modal -->
 <div class="modal fade" id="modalCrearVacante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-lg modal-dialog modal-dialog-scrollable">
@@ -67,14 +72,14 @@
 
                                     <div>
                                         <label>Describa el puesto</label><small style="color:red"> *</small>
-                                            @*<input placeholder="Ingrese una descripción" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" required />*@                                        
-                                            <textarea class="form-control mb-3" id="descripcionVacante" name="descripcionVacante" rows="2" placeholder="Ingrese una descripción"></textarea>
+                                        @*<input placeholder="Ingrese una descripción" type="text" name="descripcionVacante" id="descripcionVacante" class="form-control mb-3" required />*@
+                                        <textarea class="form-control mb-3" id="descripcionVacante" name="descripcionVacante" rows="2" placeholder="Ingrese una descripción"></textarea>
                                     </div>
 
                                     <div>
                                         <label>Experiencia requerida</label><small style="color:red"> *</small>
-                                        <input placeholder="Experiencia requerida en años" type="text" id="expRequeridaVacante" name='experienciaRequerida' class='form-control mb-3' required />
-                                       
+                                        <input placeholder="Experiencia requerida en años" type="number" id="expRequeridaVacante" name='experienciaRequerida' class='form-control mb-3' required />
+
                                     </div>
 
                                     <div>
@@ -102,13 +107,13 @@
                                     <div>
                                         <label class="control-label">Fecha de finalización:</label><small style="color:red"> *</small>
                                         <input type="date" class="form-control mb-3" name='fechaFinalizacion' id="fechaFinalizacionVacante">
-                                        
+
                                     </div>
 
                                     <div>
                                         <label class="control-label">Idioma requerido</label>
                                         <input placeholder='Dejar en blanco si el puesto no requiere idiomas' type='text' name='idiomaVacante' id="idiomaVacante" class='form-control mb-3' />
-                                        
+
                                     </div>
 
                                     <div>
@@ -118,7 +123,7 @@
                                             <option value=0>Fulltime</option>
                                             <option value=1>Partime</option>
                                         </select>
-                                        
+
                                     </div>
 
                                     <div>
@@ -129,7 +134,7 @@
                                             <option value=1>Semi-presencial</option>
                                             <option value=2>Remoto</option>
                                         </select>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -144,9 +149,7 @@
         </div>
     </div>
 </div>
-<footer>
-    <small style="padding: 10px">En <span style="color:red">rojo</span> las vacantes finalizadas</small>
-</footer>
+
 
 @section Scripts{
     <script src="~/js/Vacantes.js"></script>

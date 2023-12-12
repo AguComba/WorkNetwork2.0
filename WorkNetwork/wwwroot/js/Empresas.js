@@ -166,6 +166,12 @@ const guardarEmpresa = () => {
     if (errorMessage) {
         alertEmpresa.textContent = errorMessage;        
         alertEmpresa.classList.add('alert-danger'); // Add text-danger class
+
+        setTimeout(() => {
+            alertEmpresa.textContent = '';  // Limpiar el mensaje después de 5 segundos
+            alertEmpresa.classList.remove('alert-danger'); // Remove text-danger class
+        }, 5000);
+
         return false;
     }
     else {        
@@ -249,6 +255,7 @@ const editarEmpresa = () => {
         } else alertEmpresa.removeClass('visually-hidden').text('La Razón Social contiene caracteres no permitidos');
 
     } else alertEmpresa.removeClass('visually-hidden').text('La Razón Social no puede estar vacía');
+    setTimeout(() => alertEmpresa.addClass("visually-hidden"), 5000);
 }
 
 

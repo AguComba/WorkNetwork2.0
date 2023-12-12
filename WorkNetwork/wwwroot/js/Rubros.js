@@ -48,12 +48,11 @@ const GuardarRubro = () => {
         } else alertRubro.removeClass('visually-hidden').text('Formato no aceptado');
 
     } else alertRubro.removeClass('visually-hidden');
-    
-
+    setTimeout(() => alertRubro.addClass("visually-hidden"), 5000);
 }
 
 const AbrirModal = () => {
-    $('#titulo-modal-rubro').text('Agregar nuevo rubro')
+    $('#titulo-modal-rubro').text('Agregar Nuevo Rubro')
     $('#idRubro').val(0);
     $('#modalCrearRubro').modal('show');
     $('#bottonEdit').text('Agregar');

@@ -11,14 +11,13 @@
     <div class="container position-relative d-flex flex-column align-items-center mt-1 mb-4"><h2>Gesti&oacuten de la Vacante</h2></div>
     <a asp-area="" asp-controller="vacantes" asp-action="index"><i class="bi bi-arrow-left-circle" style="font-size:xx-large; padding: 10px;" title="VOLVER ATR&Aacute;S"></i></a>
     <div class="container" data-aos="fade-up" data-aos-dalay="100">
-        <article class="blog-details">
-
+        
+        <h2 class="title" style="text-transform:uppercase">@vacanteMostrar.Nombre</h2>
+        <article class="blog-details"> 
+                        
             <div class="post-img">
-                <img src="data:@vacanteMostrar.TipoImagen;base64,@vacanteMostrar.ImagenVacante" alt="" class="img-fluid">
+                <img src="data:@vacanteMostrar.TipoImagen;base64,@vacanteMostrar.ImagenVacante" alt="" class="img-fluid w-50 mx-auto">
             </div>
-
-            <h2 class="title" style="text-transform:uppercase">@vacanteMostrar.Nombre</h2>
-
             <div class="meta-top">
                 <ul>
                     <li class="d-flex align-items-center"><i class="bi bi-person tags-gestion"></i>@vacanteMostrar.EmpresaNombre</li>
@@ -71,7 +70,7 @@
                  alt="" />
                 <div>
                     <div>
-                        <a class="fuente-titulo" href="/Personas/PerfilUser/@persona.PersonaID" title="IR AL PERFIL">@persona.NombrePersona @persona.ApellidoPersona <i class="bi bi-arrow-right-circle"></i></a>
+                        <a class="fuente-titulo" target="_blank" href="/Personas/PerfilUser/@persona.PersonaID" title="IR AL PERFIL">@persona.NombrePersona @persona.ApellidoPersona <i class="bi bi-arrow-right-circle"></i></a>
                     </div>
                     <div class="social-links">
                         @if (!string.IsNullOrEmpty(persona.Twitter))
@@ -91,23 +90,13 @@
                         
                         <a target="_blank" href="/Vacantes/VerPDF/@persona.PersonaID" title="VER CURRICULUM">
                             <i class="bi bi-person-video2"></i>
-                        </a>
-
-                        <!--Dirige al perfil del postulante-->
-                       
-                       @*  <a href="/Personas/PerfilUser/@persona.PersonaID">
-                            <i class="bi bi-person"></i> 
-                        </a> *@
-
-                        
+                        </a>                        
                     </div>
                     <p>
                         @persona.ComentarioVacante
                     </p>
                 </div>
-            </div>
-
-            
+            </div>                        
         }
     </div>
 </section>

@@ -11,13 +11,13 @@
     <div class="container position-relative d-flex flex-column align-items-center mt-1 mb-4"><h2>Detalle de la Vacante</h2></div>
     <a asp-area="" asp-controller="home" asp-action="index"><i class="bi bi-arrow-left-circle" style="font-size:xx-large; padding: 10px;" title="VOLVER ATRÁS"></i></a>
     <div class="container" data-aos="fade-up" data-aos-dalay="100">
+        <h2 class="title" style="text-transform:uppercase">@vacanteMostrar.Nombre</h2>
         <article class="blog-details">
 
             <div class="post-img">
-                <img src="data:@vacanteMostrar.TipoImagen;base64,@vacanteMostrar.ImagenVacante" alt="" class="img-fluid">
+                <img src="data:@vacanteMostrar.TipoImagen;base64,@vacanteMostrar.ImagenVacante" alt="" class="img-fluid w-50 mx-auto">
             </div>
 
-            <h2 class="title" style="text-transform:uppercase">@vacanteMostrar.Nombre</h2>
 
             <div class="meta-top">
                 <ul>
@@ -44,9 +44,9 @@
 
                 @{
                     int experiencia;
-                    if(int.TryParse(vacanteMostrar.ExperienciaRequerida, out experiencia))
+                    if (int.TryParse(vacanteMostrar.ExperienciaRequerida, out experiencia))
                     {
-                        if(experiencia == 1)
+                        if (experiencia == 1)
                         {
                             <h3>Se requiere al menos 1 año de experiencia</h3>
                         }
@@ -54,10 +54,10 @@
                         {
                             <h3>Se requieren al menos @experiencia años de experiencia</h3>
                         }
-                    }                                                     
-                   
-                }                              
-                
+                    }
+
+                }
+
                 <h3>Las postulaciones finalizan el <span>@vacanteMostrar.FechaDeFinalizacion.ToString("dd/MM/yyyy")</span></h3>
 
             </div>
@@ -80,7 +80,7 @@
         </article>
         <!-- End blog post -->
 
-        <div class="comments">
+        <div class="comments w-50">
             <div class="reply-form">
                 <h4>Postularme</h4>
                 <p>

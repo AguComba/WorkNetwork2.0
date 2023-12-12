@@ -33,21 +33,25 @@
             <a href="" class="logo d-flex align-items-center">
                 <h1>Work<span>-</span>Network <span>2.0</span></h1>
             </a>
+        </div>
     </header>
     <!-- End Header -->
-
-    <!-- ======= Hero Section ======= -->
+    <!-- ======= Seccion carrousel/Inicio Sesion/botones ======= -->
     <section id="hero" class="hero">
         <div class="info d-flex align-items-center">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 text-center">
                         <h2 data-aos="fade-down">Bienvenidos a <span>WorkNetwork 2.0</span></h2>
-                        <p data-aos="fade-up">Somos la nueva forma de la búsqueda laboral. 
-                            <br /> Si sos una empresa, podrás generar vacantes para conseguir a tu empleado ideal. </p>
-                        <p data-aos="fade-up">Si sos una persona y te encontrás en la búsqueda de un empleo. 
-                            <br /> Sumate a Work-Network 2.0 y da el primer paso a tu empleo soñado!</p>
-                            <br />
+                        <p data-aos="fade-up">
+                            Somos la nueva forma de la búsqueda laboral.
+                            <br /> Si sos una empresa, podrás generar vacantes para conseguir a tu empleado ideal.
+                        </p>
+                        <p data-aos="fade-up">
+                            Si sos una persona y te encontrás en la búsqueda de un empleo.
+                            <br /> Sumate a Work-Network 2.0 y da el primer paso a tu empleo soñado!
+                        </p>
+                        <br />
                         <a data-aos="fade-up" data-aos-delay="200" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="cursor:pointer;" class="btn-get-started">Iniciar Sesión</a>
                         <a data-aos="fade-up" data-aos-delay="200" href="#get-started" class="btn-get-started">Registrarme</a>
                     </div>
@@ -55,42 +59,39 @@
             </div>
         </div>
 
-        <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" style="margin-bottom: -30px">
+        <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
             <div class="carousel-item active" style="background: url(/img/carrusel-3.svg) center center / 800px 700px no-repeat"></div>
             <div class="carousel-item" style="background: url(/img/carrusel-5.png) center center / 1000px 700px no-repeat"></div>
             <div class="carousel-item" style="background: url(/img/carrusel-2.svg) center center / 800px 600px no-repeat"></div>
             <div class="carousel-item" style="background: url(/img/carrusel-4.png) center center / 1000px 700px no-repeat"></div>
-            <div class="carousel-item" style="background: url(/img/carrusel-1.png) center center / 1000px 700px no-repeat"></div>
+            @* <div class="carousel-item" style="background: url(/img/carrusel-1.png) center center / 1000px 700px no-repeat"></div> *@
 
         </div>
 
     </section>
     <!-- End Hero Section -->
-    
-    <!-- ======= Get Started Section ======= -->
-    <section id="About" class="get-started section-bg" style="margin-top: -75px">
-        <div class="container">
-
+    <!-- ======= Seccion Registro ======= -->
+    <section id="About" class="get-started section-bg row">
+        <div class="container col-lg-5">
             <div class="row justify-content-between">
-
                 <div class="justify-content-center d-flex align-items-center text-center" data-aos="fade-up">
                     <div class="content">
                         <h3>Estás mas cerca de formar parte de esta gran red!</h3>
-                        <p>Si sos una empresa buscando postulantes y tenes vacantes para ofrecer selecciona la opción "Soy una empresa"</p>
-                        <p>Si sos una persona buscando trabajo y queres formar parte de esta gran red selecciona la opción "Soy una persona"</p>
+                        <p>Si sos una empresa buscando postulantes y tenes vacantes para ofrecer selecciona la opción "Empresa"</p>
+                        <p>Si sos una persona buscando trabajo y queres formar parte de esta gran red selecciona la opción "Candidato"</p>
                     </div>
                 </div>
             </div>
         </div>
         <br />
-        <div id="get-started"class="container" data-aos="fade">
+        <div id="get-started" class="container col-lg-4" data-aos="fade">
             <form class="php-email-form">
                 <h3 class="text-center">Registresé acá</h3>
                 <p class="text-center">Ingrese sus datos y comience a formar parte de Work-Network 2.0</p>
                 <div class="row gy-3">
 
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <label>¿Sos una empresa o un posible candidato?</label>
                         <select class="form-select" id='rol' required aria-label='rol'>
                             <option value='' disabled selected>Soy...</option>
@@ -99,22 +100,22 @@
                         </select>
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <label>Ingrese su correo</label>
                         <input type="text" id='correo' autocomplete="off" name="name" class="form-control" placeholder="Correo Electrónico" required>
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <label>Establezca una contraseña</label>
                         <input type="password" id='pass' autocomplete="off" class="form-control" name="email" placeholder="Contraseña" required>
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <label>Repita la contraseña</label>
                         <input type="password" id='passRepeat' class="form-control" name="phone" placeholder="Repita la contraseña" required>
                     </div>
 
-                    <div class="col-md-12 text-center">
+                    <div class="col-md-14 text-center">
                         <div id="registerLoader" class="loading visually-hidden">Cargando</div>
                         <div id="registerError" class="error-message visually-hidden"></div>
 
@@ -127,7 +128,6 @@
         <!-- End Quote Form -->
     </section>
     <!-- End Get Started Section -->
-
     <!-- Modal INICIO SESION-->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -165,7 +165,6 @@
         </div>
     </div>
 
-
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     @await RenderSectionAsync("Scripts", required: false)
@@ -174,7 +173,6 @@
     <script src='~/lib/aos/aos.js'></script>
     <script src='~/js/main.js'></script>
     <script src='~/js/GestionDeUsuarios.js'></script>
-
 
 </body>
 </html>

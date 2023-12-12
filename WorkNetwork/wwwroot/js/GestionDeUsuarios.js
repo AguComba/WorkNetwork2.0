@@ -42,36 +42,51 @@ function registerPerson() {
     if (rol) {
         if (correo) {
             if (isValidEmail(correo)) {
-                if (pass === passConfirm && pass !== '') {
-                    $.post(url, data).done(
-                        (resultado) => {
-                            if (resultado) {
-                                window.location.href = '/'
-                            } else {
-                                $('#registerError').text('El usuario ya existe')
-                                $('#registerError').removeClass("visually-hidden");
-                                $('#registerLoader').addClass("visually-hidden");
-                                $("#registerBtn").removeClass("visually-hidden");
+                if (pass) {
+                    if (pass === passConfirm && pass !== '') {
+                        $.post(url, data).done(
+                            (resultado) => {
+                                if (resultado) {
+                                    window.location.href = '/'
+                                } else {
+                                    $('#registerError').text('El usuario ya existe')
+                                    $('#registerError').removeClass("visually-hidden");
+                                    $('#registerLoader').addClass("visually-hidden");
+                                    $("#registerBtn").removeClass("visually-hidden");
+                                    setTimeout(() => $("#registerError").addClass("visually-hidden"), 5000);
+                                }
                             }
-                        }
-                    )
+                        )
+                    } else {
+                        $('#registerError').text('Las contraseñas no coinciden')
+                        $('#registerError').removeClass("visually-hidden");
+                        $('#registerLoader').addClass("visually-hidden");
+                        $("#registerBtn").removeClass("visually-hidden");
+
+                        setTimeout(() => $("#registerError").addClass("visually-hidden"), 5000);
+                    }
                 } else {
-                    $('#registerError').text('Las contraseñas no coinciden')
+                    $('#registerError').text('Escriba una contraseña')
                     $('#registerError').removeClass("visually-hidden");
                     $('#registerLoader').addClass("visually-hidden");
                     $("#registerBtn").removeClass("visually-hidden");
+
+                    setTimeout(() => $("#registerError").addClass("visually-hidden"), 5000);
                 }
+
             } else {
                 $('#registerError').text('El Correo no es válido')
                 $('#registerError').removeClass("visually-hidden");
                 $('#registerLoader').addClass("visually-hidden");
                 $("#registerBtn").removeClass("visually-hidden");
+                setTimeout(() => $("#registerError").addClass("visually-hidden"), 5000);
             }
         } else {
             $('#registerError').text('Debe ingresar un correo')
             $('#registerError').removeClass("visually-hidden");
             $('#registerLoader').addClass("visually-hidden");
             $("#registerBtn").removeClass("visually-hidden");
+            setTimeout(() => $("#registerError").addClass("visually-hidden"), 5000);
         }
 
     } else {
@@ -79,6 +94,7 @@ function registerPerson() {
         $('#registerError').removeClass("visually-hidden");
         $('#registerLoader').addClass("visually-hidden");
         $("#registerBtn").removeClass("visually-hidden");
+        setTimeout(() => $("#registerError").addClass("visually-hidden"), 5000);
     }
 
 }
@@ -98,11 +114,13 @@ function login() {
         } else {
             $("#loginLoader").addClass('visually-hidden');
             $('#loginError').removeClass('visually-hidden');
-            $('#loginBtn').removeClass('visually-hidden')
+            $('#loginBtn').removeClass('visually-hidden');
+            setTimeout(() => $("#loginError").addClass("visually-hidden"), 5000);
         }
     }).fail(e => {
         $('#loginBtn').removeClass('visually-hidden')
         $('#loginError').removeClass('visually-hidden')
         $("#loginLoader").addClass('visually-hidden');
+        setTimeout(() => $("#loginError").addClass("visually-hidden"), 5000);
     })
 }

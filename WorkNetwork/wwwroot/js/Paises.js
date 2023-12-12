@@ -31,7 +31,7 @@ const CompletarTablaPaises = async () => {
 
 const AbrirModal = () => {
     $('#idPais').val(0);
-    $('#titulo-modal-pais').text('Agregar nuevo país');
+    $('#titulo-modal-pais').text('Agregar Nuevo País');
     $('#bottonEdit').text('Agregar');
     $('#alertPais').addClass('visually-hidden');
     $('#modalCrearPais').modal('show');
@@ -60,20 +60,20 @@ const GuardarPais = () => {
                     CompletarTablaPaises();
                 }
                 if (resultado == 2) {
-                    alertPais.removeClass('visually-hidden').text('El pais ingresado ya existe');
+                    alertPais.removeClass('visually-hidden').text('El país ingresado ya existe');
                 }
             }).fail(err => console.log('error en agregar el Pais: ', err));
 
         } else alertPais.removeClass('visually-hidden').text('El nombre del país no puede contener números');
 
-    } else alertPais.removeClass('visually-hidden').text('El campo nombre no puede estar vacio');
-    
+    } else alertPais.removeClass('visually-hidden').text('Debes ingresar el nombre del país');
+    setTimeout(() => alertPais.addClass("visually-hidden"), 5000);
 }
 
 const BuscarPais = (paisID)=>{
     $('#titulo-modal-pais').text('Editar Pais');
     $('#bottonEdit').text('Guardar Cambios');
-    $('#idPais').val(paisID);
+    $('#idPais').val(paisID);    
 
     $('#alertPais').addClass('visually-hidden');
     let url = '../../Paises/BuscarPais';

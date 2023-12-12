@@ -99,6 +99,14 @@ const guardarPersona = () => {
         }
     }
 
+    const hoy = new Date();
+    const fechaNac = new Date(nacimiento);
+    const difEdad = hoy.getFullYear() - fechaNac.getFullYear();
+    if (difEdad < 16 || (difEdad === 16 && hoy.getMonth() < fechaNac.getMonth()) || (difEdad === 16 && hoy.getMonth() === fechaNac.getMonth() && hoy.getDate() < fechaNac.getDate())) {
+        alert('Debes tener al menos 18 años para registrarte.');
+        return false;
+    }
+
     const errorMessages = {
         nombre: 'El nombre no puede quedar vacio.',
         apellido: 'El apellido no puede quedar vacio.',
@@ -112,8 +120,8 @@ const guardarPersona = () => {
         cv: 'Debe cargar el Curriculum',
         empresaFoto: 'Debe seleccionar una foto de perfil.', // New error message for file input
     };
-    const nombreRegex = /^[A-Za-z\s]+$/
-    const apellidoRegex = /^[A-Za-z\s]+$/
+    const nombreRegex = /^[A-Za-záéíóúñÁÉÍÓÚÜü\s]+$/
+    const apellidoRegex = /^[A-Za-záéíóúñÁÉÍÓÚÜü\s]+$/
     const telefonoRegex = /^\d+$/; // Only numbers allowed
     const dniRegex = /^\d+$/; // Only numbers allowed
     const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/[\w-]+\/?$/i;
@@ -127,7 +135,7 @@ const guardarPersona = () => {
     let errorMessage = '';
     if (nombre.trim() === '') { errorMessage = errorMessages.nombre; }
     else if (!nombreRegex.test(nombre)) { errorMessage = 'El nombre solo puede contener letras y espacios.'; }
-
+    
     else if (apellido.trim() === '') { errorMessage = errorMessages.apellido; }
     else if (!apellidoRegex.test(apellido)) { errorMessage = 'El apellido solo puede contener letras y espacios.'; }
 
@@ -140,11 +148,9 @@ const guardarPersona = () => {
     else if (domicilio.trim() === '') { errorMessage = errorMessages.domicilio; }
 
     else if (telefono.trim() === '') { errorMessage = errorMessages.telefono; }
-    else if (!telefonoRegex.test(telefono)) { errorMessage = 'El número  solo puede contener números.'; }
+    else if (!telefonoRegex.test(telefono)) { errorMessage = 'El número de teléfono solo puede contener números.'; }
     else if (telefono.length > 15) { errorMessage = 'El numero no puede tener  mas de 15 caracteres.' }
     else if (generoid === null) { errorMessage = errorMessages.generoid; }
-
-
 
     else if (!cv) { errorMessage = errorMessages.cv; }
     else if (!empresaFoto) { errorMessage = errorMessages.empresaFoto; }
@@ -152,6 +158,12 @@ const guardarPersona = () => {
     if (errorMessage) {
         alertPersona.textContent = errorMessage;
         alertPersona.classList.add('alert-danger'); // Add text-danger class
+
+        setTimeout(() => {
+            alertPersona.textContent = '';  // Limpiar el mensaje después de 5 segundos
+            alertPersona.classList.remove('alert-danger'); // Remove text-danger class
+        }, 5000);
+
         return false;
     }
     else {
@@ -246,6 +258,8 @@ const editarPersona = () => {
         } else alertPersona.removeClass('visually-hidden').text('El apellido es requerido');
 
     } else alertPersona.removeClass('visually-hidden').text('El nombre es requerido');
+    setTimeout(() => alertPersona.addClass("visually-hidden"), 5000);
+
 }
 
 
