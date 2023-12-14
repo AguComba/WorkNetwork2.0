@@ -34,9 +34,14 @@
             <a asp-area="" asp-controller="home" asp-action="index" class="logo d-flex align-items-center">
                 <h1>Work<span>-</span>Network <span>2.0</span></h1>
             </a>
-
-            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+            @if(!((ViewContext.RouteData.Values["controller"].ToString().Equals("Empresas") && 
+                ViewContext.RouteData.Values["action"].ToString().Equals("NewEmpresa")) ||
+                 (ViewContext.RouteData.Values["controller"].ToString().Equals("Personas") && 
+                ViewContext.RouteData.Values["action"].ToString().Equals("NewPerson"))))
+            {
+                <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+                <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+            }
             <nav id="navbar" class="navbar">
                 <ul>
 

@@ -115,11 +115,11 @@
             ViewBag.PaisID = new SelectList(paises.OrderBy(e => e.NombrePais), "PaisID", "NombrePais");
 
             var provincias = _context.Provincia.Where(x => x.Eliminado == false).ToList();
-            provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PAIS]" });
+            provincias.Add(new Provincia { ProvinciaID = 0, NombreProvincia = "[SELECCIONE UN PROVINCIA]" });
             ViewBag.ProvinciaID = new SelectList(provincias.OrderBy(x => x.NombreProvincia), "ProvinciaID", "NombreProvincia");
 
             var localidad = _context.Localidad.Where(x => x.Eliminado == false).ToList();
-            localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN PAIS]" });
+            localidad.Add(new Localidad { LocalidadID = 0, NombreLocalidad = "[SELECCIONE UN LOCALIDAD]" });
             ViewBag.LocalidadID = new SelectList(localidad.OrderBy(x => x.NombreLocalidad), "LocalidadID", "NombreLocalidad");
 
             var rubros = _context.Rubro.Where(x => x.Eliminado == false).ToList();

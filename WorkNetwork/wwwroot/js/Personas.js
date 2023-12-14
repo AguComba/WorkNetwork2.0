@@ -74,9 +74,7 @@ const guardarPersona = () => {
     const dni = $('#numeroDocumento').val();
     const nacimiento = $('#fecNac').val();
     const paisid = $("#paisID").val();
-    //BuscarProvincia();
-    const provID = $("#provinciaID").val();
-    //BuscarLocalidad();
+    const provinciaid = $("#provinciaID").val();
     const localidadid = $("#localidadID").val();
     const domicilio = $('#domicilio').val();
     const telefono = $('#telefono1Persona').val();
@@ -103,7 +101,7 @@ const guardarPersona = () => {
     const fechaNac = new Date(nacimiento);
     const difEdad = hoy.getFullYear() - fechaNac.getFullYear();
     if (difEdad < 16 || (difEdad === 16 && hoy.getMonth() < fechaNac.getMonth()) || (difEdad === 16 && hoy.getMonth() === fechaNac.getMonth() && hoy.getDate() < fechaNac.getDate())) {
-        alert('Debes tener al menos 18 años para registrarte.');
+        alert('Debes tener al menos 16 años para registrarte.');
         return false;
     }
 
@@ -113,7 +111,8 @@ const guardarPersona = () => {
         dni: 'El numero de documento es obligatorio.',
         nacimiento: 'Seleccione una fecha de nacimiento.',
         paisid: 'Debe seleccionar un pais',
-        localidadid: 'Debe seleccionar un pais primero',
+        provinciaid: 'No existe provincia para el país seleccionado',        
+        localidadid: 'No existe localidad para la provincia seleccionada',
         domicilio: 'El domicilio no debe quedar vacio.',
         telefono: 'El numero de telefono es obligatorio.',
         generoid: 'Debe seleccionar un genero',
@@ -145,6 +144,8 @@ const guardarPersona = () => {
 
     else if (nacimiento.trim() === '') { errorMessage = errorMessages.nacimiento; }
     else if (paisid === '0') { errorMessage = errorMessages.paisid; }
+    else if (provinciaid === '0') { errorMessage = errorMessages.provinciaid; }
+    else if (localidadid === '0') { errorMessage = errorMessages.localidadid; }
     else if (domicilio.trim() === '') { errorMessage = errorMessages.domicilio; }
 
     else if (telefono.trim() === '') { errorMessage = errorMessages.telefono; }
@@ -262,9 +263,23 @@ const editarPersona = () => {
 
 }
 
+$('#paisID').change(function () {    
+    BuscarProvincia(0);
+});
+
+//Si país llega en 0, se eliminan los valores del resto
+if ($("#paisID").val() == 0) {
+    var provincias = document.getElementById("provinciaID");
+    var localidades = document.getElementById("localidadID");
+    while (provincias.options.length > 1) {
+        provincias.remove(1); 
+    } while (localidades.options.length > 1) {
+        localidades.remove(1); 
+    }
+}
 
 function BuscarProvincia(provinciaID) {
-    $('#provinciaID').empty();
+    $('#provinciaID').empty();    
     $.ajax({
         type: 'POST',
         async: false,
@@ -282,9 +297,8 @@ function BuscarProvincia(provinciaID) {
 
             if (provinciaID > 0) {
                 $("#provinciaID").val(provinciaID);
-            }
-            BuscarLocalidad(0);
-
+            } else { BuscarLocalidad(0); }            
+            
         },
         error: function (data) {
             console.log('error en combo provincias ' + data)
@@ -292,22 +306,9 @@ function BuscarProvincia(provinciaID) {
     });
 }
 
-$('#paisID').change(function () {
-    $('#provinciaID').prop('disabled', false);
-    // Clear provincia dropdown
-    $('#provinciaID').empty();
-    // Clear localidad dropdown
-    $('#localidadID').empty();
-    // Call the function to populate provincia dropdown
-    BuscarProvincia(0);
-});
-
-
-$('#provinciaID').change(function () {
-    $('#localidadID').prop('disabled', false);
+$('#provinciaID').change(function () {    
     BuscarLocalidad(0);
 });
-
 
 const BuscarLocalidad = (localidadID) => {
     $('#localidadID').empty();

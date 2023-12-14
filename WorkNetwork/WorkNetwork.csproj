@@ -8,6 +8,10 @@
     <UserSecretsId>aspnet-WorkNetwork-4E5ED1D1-D666-4908-9557-E30270BD5811</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\js\FileName.cs" />
+  </ItemGroup>
+
 	<!--using Controllers-->
 	<ItemGroup>
 		<Using Include="Microsoft.AspNetCore.Authorization" />

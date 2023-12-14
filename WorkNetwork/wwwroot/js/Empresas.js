@@ -88,7 +88,8 @@ const guardarEmpresa = () => {
     const cuitEmpresa = $('#cuitEmpresa').val();
     const telefono1Empresa = $('#telefono1Empresa').val();
     const descripcion = $('#descripcion').val();
-    const paisid = $("#paisID").val();
+    const paisid = $("#paisID").val();    
+    const provinciaid = $("#provinciaID").val();
     const localidadid = $("#localidadID").val();
     const domicilio = $('#domicilio').val();
     const altura = $('#nro').val();
@@ -115,7 +116,8 @@ const guardarEmpresa = () => {
         telefono1Empresa: 'El numero de la empresa es obligatorio.',
         descripcion: 'La descripcion no puede quedar vacia.',
         paisid: 'Debe seleccionar un pais',
-        localidadid: 'Debe seleccionar un pais primero',
+        provinciaid: 'Debe seleccionar un pais primero',
+        localidadid: 'Debe seleccionar una provincia primero',
         domicilio: 'El domicilio no debe quedar vacio.',
         altura:'Seleccione la altura de su domicilio',
         rubroid: 'Debe seleccionar un rubro',
@@ -153,6 +155,8 @@ const guardarEmpresa = () => {
     else if (descripcion.length <10 || descripcion.length > 600) { errorMessage = 'La descripción debe estar entre 10 y 600 caracteres.' }
 
     else if (paisid === '0') { errorMessage = errorMessages.paisid; }
+    else if (provinciaid === '0') { errorMessage = errorMessages.provinciaid; }
+    else if (localidadid === '0') { errorMessage = errorMessages.localidadid; }
     
     // Determina cuál campo está vacío y establece el mensaje de error correspondiente
     else if (domicilio.trim() === '' || altura.trim() === '') { errorMessage = (domicilio.trim() === '') ? errorMessages.domicilio : errorMessages.altura; }
@@ -258,6 +262,20 @@ const editarEmpresa = () => {
     setTimeout(() => alertEmpresa.addClass("visually-hidden"), 5000);
 }
 
+$('#paisID').change(function () {    
+    BuscarProvincia(0);
+});
+
+//Si país llega en 0, se eliminan los valores del resto
+if ($("#paisID").val() == 0) {
+    var provincias = document.getElementById("provinciaID");
+    var localidades = document.getElementById("localidadID");
+    while (provincias.options.length > 1) {
+        provincias.remove(1);
+    } while (localidades.options.length > 1) {
+        localidades.remove(1);
+    }
+}
 
 function BuscarProvincia(provinciaID) {
     $('#provinciaID').empty();
@@ -278,8 +296,9 @@ function BuscarProvincia(provinciaID) {
 
             if (provinciaID > 0) {
                 $("#provinciaID").val(provinciaID);
+            } else {
+                BuscarLocalidad(0);
             }
-            //BuscarLocalidad(0);
 
         },
         error: function (data) {
@@ -288,28 +307,19 @@ function BuscarProvincia(provinciaID) {
     });
 }
 
-$('#paisID').change(function () {
-    $('#provinciaID').prop('disabled', false);
-    // Clear provincia dropdown
-    $('#provinciaID').empty();
-    // Clear localidad dropdown
-    $('#localidadID').empty();
-    // Call the function to populate provincia dropdown
-    BuscarProvincia(0);
-});
 
 
-$('#provinciaID').change(function() {
-    $('#localidadID').prop('disabled', false);
+
+$('#provinciaID').change(function() { 
     BuscarLocalidad(0);
 });
 
-const BuscarLocalidad = (localidadID) => {
+const BuscarLocalidad = (localidadID) => {    
     $('#localidadID').empty();
     let url = '../../Localidades/ComboLocalidades';
     let data = { id: $('#provinciaID').val() };
     $.post(url, data).done(localidades => {
-        localidades.length === 0            
+        localidades.length === 0
             ? $('#localidadID').append(`<option value=${0}>[NO EXISTEN LOCALIDADES]</option>`)
             : $.each(localidades, (i, localidad) => {
                 $('#localidadID').append(`<option value=${localidad.value}>${localidad.text}</option>`)
@@ -317,7 +327,7 @@ const BuscarLocalidad = (localidadID) => {
         if (localidadID > 0) {
             $("#localidadID").val(localidadID);
         }
-       
+
     }).fail(e => console.log('error en combo localidades' + e))
     return false
 }
